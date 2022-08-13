@@ -44,17 +44,17 @@
  */</span>
 
 <span class="comment">/* |cos(x) - c(x)| &lt; 2**-34.1 (~[-5.37e-11, 5.295e-11]). */</span>
-<span class="kw">const</span> <span class="ident">C0</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="op">-</span><span class="number">0.499999997251031003120</span>; <span class="comment">/* -0x1ffffffd0c5e81.0p-54 */</span>
-<span class="kw">const</span> <span class="ident">C1</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">0.0416666233237390631894</span>; <span class="comment">/*  0x155553e1053a42.0p-57 */</span>
-<span class="kw">const</span> <span class="ident">C2</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="op">-</span><span class="number">0.00138867637746099294692</span>; <span class="comment">/* -0x16c087e80f1e27.0p-62 */</span>
-<span class="kw">const</span> <span class="ident">C3</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">0.0000243904487962774090654</span>; <span class="comment">/*  0x199342e0ee5069.0p-68 */</span>
+<span class="kw">const</span> <span class="ident">C0</span>: <span class="ident">f64</span> = -<span class="number">0.499999997251031003120</span>; <span class="comment">/* -0x1ffffffd0c5e81.0p-54 */</span>
+<span class="kw">const</span> <span class="ident">C1</span>: <span class="ident">f64</span> = <span class="number">0.0416666233237390631894</span>; <span class="comment">/*  0x155553e1053a42.0p-57 */</span>
+<span class="kw">const</span> <span class="ident">C2</span>: <span class="ident">f64</span> = -<span class="number">0.00138867637746099294692</span>; <span class="comment">/* -0x16c087e80f1e27.0p-62 */</span>
+<span class="kw">const</span> <span class="ident">C3</span>: <span class="ident">f64</span> = <span class="number">0.0000243904487962774090654</span>; <span class="comment">/*  0x199342e0ee5069.0p-68 */</span>
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic::no_panic</span>)]</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">k_cosf</span>(<span class="ident">x</span>: <span class="ident">f64</span>) -&gt; <span class="ident">f32</span> {
-    <span class="kw">let</span> <span class="ident">z</span> <span class="op">=</span> <span class="ident">x</span> <span class="op">*</span> <span class="ident">x</span>;
-    <span class="kw">let</span> <span class="ident">w</span> <span class="op">=</span> <span class="ident">z</span> <span class="op">*</span> <span class="ident">z</span>;
-    <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">C2</span> <span class="op">+</span> <span class="ident">z</span> <span class="op">*</span> <span class="ident">C3</span>;
-    (((<span class="number">1.0</span> <span class="op">+</span> <span class="ident">z</span> <span class="op">*</span> <span class="ident">C0</span>) <span class="op">+</span> <span class="ident">w</span> <span class="op">*</span> <span class="ident">C1</span>) <span class="op">+</span> (<span class="ident">w</span> <span class="op">*</span> <span class="ident">z</span>) <span class="op">*</span> <span class="ident">r</span>) <span class="kw">as</span> <span class="ident">f32</span>
+    <span class="kw">let</span> <span class="ident">z</span> = <span class="ident">x</span> * <span class="ident">x</span>;
+    <span class="kw">let</span> <span class="ident">w</span> = <span class="ident">z</span> * <span class="ident">z</span>;
+    <span class="kw">let</span> <span class="ident">r</span> = <span class="ident">C2</span> + <span class="ident">z</span> * <span class="ident">C3</span>;
+    (((<span class="number">1.0</span> + <span class="ident">z</span> * <span class="ident">C0</span>) + <span class="ident">w</span> * <span class="ident">C1</span>) + (<span class="ident">w</span> * <span class="ident">z</span>) * <span class="ident">r</span>) <span class="kw">as</span> <span class="ident">f32</span>
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (34a6cae28 2022-08-09)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f22819bcc 2022-08-12)" ></div></body></html>

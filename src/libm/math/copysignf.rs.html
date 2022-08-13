@@ -16,11 +16,11 @@
 <span class="doccomment">/// first argument, `x`, and the sign of its second argument, `y`.</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic::no_panic</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copysignf</span>(<span class="ident">x</span>: <span class="ident">f32</span>, <span class="ident">y</span>: <span class="ident">f32</span>) -&gt; <span class="ident">f32</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ux</span> <span class="op">=</span> <span class="ident">x</span>.<span class="ident">to_bits</span>();
-    <span class="kw">let</span> <span class="ident">uy</span> <span class="op">=</span> <span class="ident">y</span>.<span class="ident">to_bits</span>();
-    <span class="ident">ux</span> <span class="op">&amp;=</span> <span class="number">0x7fffffff</span>;
-    <span class="ident">ux</span> <span class="op">|</span><span class="op">=</span> <span class="ident">uy</span> <span class="op">&amp;</span> <span class="number">0x80000000</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ux</span> = <span class="ident">x</span>.<span class="ident">to_bits</span>();
+    <span class="kw">let</span> <span class="ident">uy</span> = <span class="ident">y</span>.<span class="ident">to_bits</span>();
+    <span class="ident">ux</span> &amp;= <span class="number">0x7fffffff</span>;
+    <span class="ident">ux</span> |= <span class="ident">uy</span> &amp; <span class="number">0x80000000</span>;
     <span class="ident">f32::from_bits</span>(<span class="ident">ux</span>)
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (34a6cae28 2022-08-09)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f22819bcc 2022-08-12)" ></div></body></html>

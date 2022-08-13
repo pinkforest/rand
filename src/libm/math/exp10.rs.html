@@ -22,25 +22,25 @@
 <span id="22">22</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">exp2</span>, <span class="ident">modf</span>, <span class="ident">pow</span>};
 
-<span class="kw">const</span> <span class="ident">LN10</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">3.32192809488736234787031942948939</span>;
-<span class="kw">const</span> <span class="ident">P10</span>: <span class="kw-2">&amp;</span>[<span class="ident">f64</span>] <span class="op">=</span> <span class="kw-2">&amp;</span>[
+<span class="kw">const</span> <span class="ident">LN10</span>: <span class="ident">f64</span> = <span class="number">3.32192809488736234787031942948939</span>;
+<span class="kw">const</span> <span class="ident">P10</span>: <span class="kw-2">&amp;</span>[<span class="ident">f64</span>] = <span class="kw-2">&amp;</span>[
     <span class="number">1e-15</span>, <span class="number">1e-14</span>, <span class="number">1e-13</span>, <span class="number">1e-12</span>, <span class="number">1e-11</span>, <span class="number">1e-10</span>, <span class="number">1e-9</span>, <span class="number">1e-8</span>, <span class="number">1e-7</span>, <span class="number">1e-6</span>, <span class="number">1e-5</span>, <span class="number">1e-4</span>, <span class="number">1e-3</span>, <span class="number">1e-2</span>, <span class="number">1e-1</span>,
     <span class="number">1e0</span>, <span class="number">1e1</span>, <span class="number">1e2</span>, <span class="number">1e3</span>, <span class="number">1e4</span>, <span class="number">1e5</span>, <span class="number">1e6</span>, <span class="number">1e7</span>, <span class="number">1e8</span>, <span class="number">1e9</span>, <span class="number">1e10</span>, <span class="number">1e11</span>, <span class="number">1e12</span>, <span class="number">1e13</span>, <span class="number">1e14</span>, <span class="number">1e15</span>,
 ];
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic::no_panic</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exp10</span>(<span class="ident">x</span>: <span class="ident">f64</span>) -&gt; <span class="ident">f64</span> {
-    <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">y</span>, <span class="ident">n</span>) <span class="op">=</span> <span class="ident">modf</span>(<span class="ident">x</span>);
-    <span class="kw">let</span> <span class="ident">u</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="ident">n</span>.<span class="ident">to_bits</span>();
+    <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">y</span>, <span class="ident">n</span>) = <span class="ident">modf</span>(<span class="ident">x</span>);
+    <span class="kw">let</span> <span class="ident">u</span>: <span class="ident">u64</span> = <span class="ident">n</span>.<span class="ident">to_bits</span>();
     <span class="comment">/* fabs(n) &lt; 16 without raising invalid on nan */</span>
-    <span class="kw">if</span> (<span class="ident">u</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">52</span> <span class="op">&amp;</span> <span class="number">0x7ff</span>) <span class="op">&lt;</span> <span class="number">0x3ff</span> <span class="op">+</span> <span class="number">4</span> {
-        <span class="kw">if</span> <span class="ident">y</span> <span class="op">==</span> <span class="number">0.0</span> {
-            <span class="kw">return</span> <span class="macro">i!</span>(<span class="ident">P10</span>, ((<span class="ident">n</span> <span class="kw">as</span> <span class="ident">isize</span>) <span class="op">+</span> <span class="number">15</span>) <span class="kw">as</span> <span class="ident">usize</span>);
+    <span class="kw">if</span> (<span class="ident">u</span> &gt;&gt; <span class="number">52</span> &amp; <span class="number">0x7ff</span>) &lt; <span class="number">0x3ff</span> + <span class="number">4</span> {
+        <span class="kw">if</span> <span class="ident">y</span> == <span class="number">0.0</span> {
+            <span class="kw">return</span> <span class="macro">i!</span>(<span class="ident">P10</span>, ((<span class="ident">n</span> <span class="kw">as</span> <span class="ident">isize</span>) + <span class="number">15</span>) <span class="kw">as</span> <span class="ident">usize</span>);
         }
-        <span class="ident">y</span> <span class="op">=</span> <span class="ident">exp2</span>(<span class="ident">LN10</span> <span class="op">*</span> <span class="ident">y</span>);
-        <span class="kw">return</span> <span class="ident">y</span> <span class="op">*</span> <span class="macro">i!</span>(<span class="ident">P10</span>, ((<span class="ident">n</span> <span class="kw">as</span> <span class="ident">isize</span>) <span class="op">+</span> <span class="number">15</span>) <span class="kw">as</span> <span class="ident">usize</span>);
+        <span class="ident">y</span> = <span class="ident">exp2</span>(<span class="ident">LN10</span> * <span class="ident">y</span>);
+        <span class="kw">return</span> <span class="ident">y</span> * <span class="macro">i!</span>(<span class="ident">P10</span>, ((<span class="ident">n</span> <span class="kw">as</span> <span class="ident">isize</span>) + <span class="number">15</span>) <span class="kw">as</span> <span class="ident">usize</span>);
     }
     <span class="kw">return</span> <span class="ident">pow</span>(<span class="number">10.0</span>, <span class="ident">x</span>);
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (34a6cae28 2022-08-09)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f22819bcc 2022-08-12)" ></div></body></html>

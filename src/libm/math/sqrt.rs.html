@@ -348,159 +348,159 @@
     <span class="comment">// `f64.sqrt` native instruction, so we can leverage this for both code size</span>
     <span class="comment">// and speed.</span>
     <span class="macro">llvm_intrinsically_optimized!</span> {
-        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;wasm32&quot;</span>)]</span> {
-            <span class="kw">return</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">&lt;</span> <span class="number">0.0</span> {
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> = <span class="string">&quot;wasm32&quot;</span>)]</span> {
+            <span class="kw">return</span> <span class="kw">if</span> <span class="ident">x</span> &lt; <span class="number">0.0</span> {
                 <span class="ident">f64::NAN</span>
             } <span class="kw">else</span> {
                 <span class="kw">unsafe</span> { <span class="ident">::core::intrinsics::sqrtf64</span>(<span class="ident">x</span>) }
             }
         }
     }
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span> <span class="op">=</span> <span class="string">&quot;sse2&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span> = <span class="string">&quot;sse2&quot;</span>)]</span>
     {
         <span class="comment">// Note: This path is unlikely since LLVM will usually have already</span>
         <span class="comment">// optimized sqrt calls into hardware instructions if sse2 is available,</span>
         <span class="comment">// but if someone does end up here they&#39;ll apprected the speed increase.</span>
-        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86&quot;</span>)]</span>
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> = <span class="string">&quot;x86&quot;</span>)]</span>
         <span class="kw">use</span> <span class="ident">core::arch::x86</span>::<span class="kw-2">*</span>;
-        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86_64&quot;</span>)]</span>
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> = <span class="string">&quot;x86_64&quot;</span>)]</span>
         <span class="kw">use</span> <span class="ident">core::arch::x86_64</span>::<span class="kw-2">*</span>;
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">m</span> <span class="op">=</span> <span class="ident">_mm_set_sd</span>(<span class="ident">x</span>);
-            <span class="kw">let</span> <span class="ident">m_sqrt</span> <span class="op">=</span> <span class="ident">_mm_sqrt_pd</span>(<span class="ident">m</span>);
+            <span class="kw">let</span> <span class="ident">m</span> = <span class="ident">_mm_set_sd</span>(<span class="ident">x</span>);
+            <span class="kw">let</span> <span class="ident">m_sqrt</span> = <span class="ident">_mm_sqrt_pd</span>(<span class="ident">m</span>);
             <span class="ident">_mm_cvtsd_f64</span>(<span class="ident">m_sqrt</span>)
         }
     }
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_feature</span> <span class="op">=</span> <span class="string">&quot;sse2&quot;</span>))]</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_feature</span> = <span class="string">&quot;sse2&quot;</span>))]</span>
     {
         <span class="kw">use</span> <span class="ident">core::num::Wrapping</span>;
 
-        <span class="kw">const</span> <span class="ident">TINY</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">1.0e-300</span>;
+        <span class="kw">const</span> <span class="ident">TINY</span>: <span class="ident">f64</span> = <span class="number">1.0e-300</span>;
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">z</span>: <span class="ident">f64</span>;
-        <span class="kw">let</span> <span class="ident">sign</span>: <span class="ident">Wrapping</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Wrapping</span>(<span class="number">0x80000000</span>);
+        <span class="kw">let</span> <span class="ident">sign</span>: <span class="ident">Wrapping</span>&lt;<span class="ident">u32</span>&gt; = <span class="ident">Wrapping</span>(<span class="number">0x80000000</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ix0</span>: <span class="ident">i32</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s0</span>: <span class="ident">i32</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">q</span>: <span class="ident">i32</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">m</span>: <span class="ident">i32</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">t</span>: <span class="ident">i32</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span>: <span class="ident">i32</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">r</span>: <span class="ident">Wrapping</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">t1</span>: <span class="ident">Wrapping</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s1</span>: <span class="ident">Wrapping</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ix1</span>: <span class="ident">Wrapping</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">q1</span>: <span class="ident">Wrapping</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">r</span>: <span class="ident">Wrapping</span>&lt;<span class="ident">u32</span>&gt;;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">t1</span>: <span class="ident">Wrapping</span>&lt;<span class="ident">u32</span>&gt;;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s1</span>: <span class="ident">Wrapping</span>&lt;<span class="ident">u32</span>&gt;;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ix1</span>: <span class="ident">Wrapping</span>&lt;<span class="ident">u32</span>&gt;;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">q1</span>: <span class="ident">Wrapping</span>&lt;<span class="ident">u32</span>&gt;;
 
-        <span class="ident">ix0</span> <span class="op">=</span> (<span class="ident">x</span>.<span class="ident">to_bits</span>() <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">i32</span>;
-        <span class="ident">ix1</span> <span class="op">=</span> <span class="ident">Wrapping</span>(<span class="ident">x</span>.<span class="ident">to_bits</span>() <span class="kw">as</span> <span class="ident">u32</span>);
+        <span class="ident">ix0</span> = (<span class="ident">x</span>.<span class="ident">to_bits</span>() &gt;&gt; <span class="number">32</span>) <span class="kw">as</span> <span class="ident">i32</span>;
+        <span class="ident">ix1</span> = <span class="ident">Wrapping</span>(<span class="ident">x</span>.<span class="ident">to_bits</span>() <span class="kw">as</span> <span class="ident">u32</span>);
 
         <span class="comment">/* take care of Inf and NaN */</span>
-        <span class="kw">if</span> (<span class="ident">ix0</span> <span class="op">&amp;</span> <span class="number">0x7ff00000</span>) <span class="op">==</span> <span class="number">0x7ff00000</span> {
-            <span class="kw">return</span> <span class="ident">x</span> <span class="op">*</span> <span class="ident">x</span> <span class="op">+</span> <span class="ident">x</span>; <span class="comment">/* sqrt(NaN)=NaN, sqrt(+inf)=+inf, sqrt(-inf)=sNaN */</span>
+        <span class="kw">if</span> (<span class="ident">ix0</span> &amp; <span class="number">0x7ff00000</span>) == <span class="number">0x7ff00000</span> {
+            <span class="kw">return</span> <span class="ident">x</span> * <span class="ident">x</span> + <span class="ident">x</span>; <span class="comment">/* sqrt(NaN)=NaN, sqrt(+inf)=+inf, sqrt(-inf)=sNaN */</span>
         }
         <span class="comment">/* take care of zero */</span>
-        <span class="kw">if</span> <span class="ident">ix0</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0</span> {
-            <span class="kw">if</span> ((<span class="ident">ix0</span> <span class="op">&amp;</span> <span class="op">!</span>(<span class="ident">sign</span>.<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>)) <span class="op">|</span> <span class="ident">ix1</span>.<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>) <span class="op">==</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">ix0</span> &lt;= <span class="number">0</span> {
+            <span class="kw">if</span> ((<span class="ident">ix0</span> &amp; !(<span class="ident">sign</span>.<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>)) | <span class="ident">ix1</span>.<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>) == <span class="number">0</span> {
                 <span class="kw">return</span> <span class="ident">x</span>; <span class="comment">/* sqrt(+-0) = +-0 */</span>
             }
-            <span class="kw">if</span> <span class="ident">ix0</span> <span class="op">&lt;</span> <span class="number">0</span> {
-                <span class="kw">return</span> (<span class="ident">x</span> <span class="op">-</span> <span class="ident">x</span>) <span class="op">/</span> (<span class="ident">x</span> <span class="op">-</span> <span class="ident">x</span>); <span class="comment">/* sqrt(-ve) = sNaN */</span>
+            <span class="kw">if</span> <span class="ident">ix0</span> &lt; <span class="number">0</span> {
+                <span class="kw">return</span> (<span class="ident">x</span> - <span class="ident">x</span>) / (<span class="ident">x</span> - <span class="ident">x</span>); <span class="comment">/* sqrt(-ve) = sNaN */</span>
             }
         }
         <span class="comment">/* normalize x */</span>
-        <span class="ident">m</span> <span class="op">=</span> <span class="ident">ix0</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">20</span>;
-        <span class="kw">if</span> <span class="ident">m</span> <span class="op">==</span> <span class="number">0</span> {
+        <span class="ident">m</span> = <span class="ident">ix0</span> &gt;&gt; <span class="number">20</span>;
+        <span class="kw">if</span> <span class="ident">m</span> == <span class="number">0</span> {
             <span class="comment">/* subnormal x */</span>
-            <span class="kw">while</span> <span class="ident">ix0</span> <span class="op">==</span> <span class="number">0</span> {
-                <span class="ident">m</span> <span class="op">-</span><span class="op">=</span> <span class="number">21</span>;
-                <span class="ident">ix0</span> <span class="op">|</span><span class="op">=</span> (<span class="ident">ix1</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">11</span>).<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>;
-                <span class="ident">ix1</span> <span class="op">&lt;</span><span class="op">&lt;</span><span class="op">=</span> <span class="number">21</span>;
+            <span class="kw">while</span> <span class="ident">ix0</span> == <span class="number">0</span> {
+                <span class="ident">m</span> -= <span class="number">21</span>;
+                <span class="ident">ix0</span> |= (<span class="ident">ix1</span> &gt;&gt; <span class="number">11</span>).<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>;
+                <span class="ident">ix1</span> &lt;&lt;= <span class="number">21</span>;
             }
-            <span class="ident">i</span> <span class="op">=</span> <span class="number">0</span>;
-            <span class="kw">while</span> (<span class="ident">ix0</span> <span class="op">&amp;</span> <span class="number">0x00100000</span>) <span class="op">==</span> <span class="number">0</span> {
-                <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-                <span class="ident">ix0</span> <span class="op">&lt;</span><span class="op">&lt;</span><span class="op">=</span> <span class="number">1</span>;
+            <span class="ident">i</span> = <span class="number">0</span>;
+            <span class="kw">while</span> (<span class="ident">ix0</span> &amp; <span class="number">0x00100000</span>) == <span class="number">0</span> {
+                <span class="ident">i</span> += <span class="number">1</span>;
+                <span class="ident">ix0</span> &lt;&lt;= <span class="number">1</span>;
             }
-            <span class="ident">m</span> <span class="op">-</span><span class="op">=</span> <span class="ident">i</span> <span class="op">-</span> <span class="number">1</span>;
-            <span class="ident">ix0</span> <span class="op">|</span><span class="op">=</span> (<span class="ident">ix1</span> <span class="op">&gt;</span><span class="op">&gt;</span> (<span class="number">32</span> <span class="op">-</span> <span class="ident">i</span>) <span class="kw">as</span> <span class="ident">usize</span>).<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>;
-            <span class="ident">ix1</span> <span class="op">=</span> <span class="ident">ix1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="ident">i</span> <span class="kw">as</span> <span class="ident">usize</span>;
+            <span class="ident">m</span> -= <span class="ident">i</span> - <span class="number">1</span>;
+            <span class="ident">ix0</span> |= (<span class="ident">ix1</span> &gt;&gt; (<span class="number">32</span> - <span class="ident">i</span>) <span class="kw">as</span> <span class="ident">usize</span>).<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>;
+            <span class="ident">ix1</span> = <span class="ident">ix1</span> &lt;&lt; <span class="ident">i</span> <span class="kw">as</span> <span class="ident">usize</span>;
         }
-        <span class="ident">m</span> <span class="op">-</span><span class="op">=</span> <span class="number">1023</span>; <span class="comment">/* unbias exponent */</span>
-        <span class="ident">ix0</span> <span class="op">=</span> (<span class="ident">ix0</span> <span class="op">&amp;</span> <span class="number">0x000fffff</span>) <span class="op">|</span> <span class="number">0x00100000</span>;
-        <span class="kw">if</span> (<span class="ident">m</span> <span class="op">&amp;</span> <span class="number">1</span>) <span class="op">==</span> <span class="number">1</span> {
+        <span class="ident">m</span> -= <span class="number">1023</span>; <span class="comment">/* unbias exponent */</span>
+        <span class="ident">ix0</span> = (<span class="ident">ix0</span> &amp; <span class="number">0x000fffff</span>) | <span class="number">0x00100000</span>;
+        <span class="kw">if</span> (<span class="ident">m</span> &amp; <span class="number">1</span>) == <span class="number">1</span> {
             <span class="comment">/* odd m, double x to make it even */</span>
-            <span class="ident">ix0</span> <span class="op">+</span><span class="op">=</span> <span class="ident">ix0</span> <span class="op">+</span> ((<span class="ident">ix1</span> <span class="op">&amp;</span> <span class="ident">sign</span>) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">31</span>).<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>;
-            <span class="ident">ix1</span> <span class="op">+</span><span class="op">=</span> <span class="ident">ix1</span>;
+            <span class="ident">ix0</span> += <span class="ident">ix0</span> + ((<span class="ident">ix1</span> &amp; <span class="ident">sign</span>) &gt;&gt; <span class="number">31</span>).<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>;
+            <span class="ident">ix1</span> += <span class="ident">ix1</span>;
         }
-        <span class="ident">m</span> <span class="op">&gt;</span><span class="op">&gt;</span><span class="op">=</span> <span class="number">1</span>; <span class="comment">/* m = [m/2] */</span>
+        <span class="ident">m</span> &gt;&gt;= <span class="number">1</span>; <span class="comment">/* m = [m/2] */</span>
 
         <span class="comment">/* generate sqrt(x) bit by bit */</span>
-        <span class="ident">ix0</span> <span class="op">+</span><span class="op">=</span> <span class="ident">ix0</span> <span class="op">+</span> ((<span class="ident">ix1</span> <span class="op">&amp;</span> <span class="ident">sign</span>) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">31</span>).<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>;
-        <span class="ident">ix1</span> <span class="op">+</span><span class="op">=</span> <span class="ident">ix1</span>;
-        <span class="ident">q</span> <span class="op">=</span> <span class="number">0</span>; <span class="comment">/* [q,q1] = sqrt(x) */</span>
-        <span class="ident">q1</span> <span class="op">=</span> <span class="ident">Wrapping</span>(<span class="number">0</span>);
-        <span class="ident">s0</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="ident">s1</span> <span class="op">=</span> <span class="ident">Wrapping</span>(<span class="number">0</span>);
-        <span class="ident">r</span> <span class="op">=</span> <span class="ident">Wrapping</span>(<span class="number">0x00200000</span>); <span class="comment">/* r = moving bit from right to left */</span>
+        <span class="ident">ix0</span> += <span class="ident">ix0</span> + ((<span class="ident">ix1</span> &amp; <span class="ident">sign</span>) &gt;&gt; <span class="number">31</span>).<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>;
+        <span class="ident">ix1</span> += <span class="ident">ix1</span>;
+        <span class="ident">q</span> = <span class="number">0</span>; <span class="comment">/* [q,q1] = sqrt(x) */</span>
+        <span class="ident">q1</span> = <span class="ident">Wrapping</span>(<span class="number">0</span>);
+        <span class="ident">s0</span> = <span class="number">0</span>;
+        <span class="ident">s1</span> = <span class="ident">Wrapping</span>(<span class="number">0</span>);
+        <span class="ident">r</span> = <span class="ident">Wrapping</span>(<span class="number">0x00200000</span>); <span class="comment">/* r = moving bit from right to left */</span>
 
-        <span class="kw">while</span> <span class="ident">r</span> <span class="op">!</span><span class="op">=</span> <span class="ident">Wrapping</span>(<span class="number">0</span>) {
-            <span class="ident">t</span> <span class="op">=</span> <span class="ident">s0</span> <span class="op">+</span> <span class="ident">r</span>.<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>;
-            <span class="kw">if</span> <span class="ident">t</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">ix0</span> {
-                <span class="ident">s0</span> <span class="op">=</span> <span class="ident">t</span> <span class="op">+</span> <span class="ident">r</span>.<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>;
-                <span class="ident">ix0</span> <span class="op">-</span><span class="op">=</span> <span class="ident">t</span>;
-                <span class="ident">q</span> <span class="op">+</span><span class="op">=</span> <span class="ident">r</span>.<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>;
+        <span class="kw">while</span> <span class="ident">r</span> != <span class="ident">Wrapping</span>(<span class="number">0</span>) {
+            <span class="ident">t</span> = <span class="ident">s0</span> + <span class="ident">r</span>.<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>;
+            <span class="kw">if</span> <span class="ident">t</span> &lt;= <span class="ident">ix0</span> {
+                <span class="ident">s0</span> = <span class="ident">t</span> + <span class="ident">r</span>.<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>;
+                <span class="ident">ix0</span> -= <span class="ident">t</span>;
+                <span class="ident">q</span> += <span class="ident">r</span>.<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>;
             }
-            <span class="ident">ix0</span> <span class="op">+</span><span class="op">=</span> <span class="ident">ix0</span> <span class="op">+</span> ((<span class="ident">ix1</span> <span class="op">&amp;</span> <span class="ident">sign</span>) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">31</span>).<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>;
-            <span class="ident">ix1</span> <span class="op">+</span><span class="op">=</span> <span class="ident">ix1</span>;
-            <span class="ident">r</span> <span class="op">&gt;</span><span class="op">&gt;</span><span class="op">=</span> <span class="number">1</span>;
+            <span class="ident">ix0</span> += <span class="ident">ix0</span> + ((<span class="ident">ix1</span> &amp; <span class="ident">sign</span>) &gt;&gt; <span class="number">31</span>).<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>;
+            <span class="ident">ix1</span> += <span class="ident">ix1</span>;
+            <span class="ident">r</span> &gt;&gt;= <span class="number">1</span>;
         }
 
-        <span class="ident">r</span> <span class="op">=</span> <span class="ident">sign</span>;
-        <span class="kw">while</span> <span class="ident">r</span> <span class="op">!</span><span class="op">=</span> <span class="ident">Wrapping</span>(<span class="number">0</span>) {
-            <span class="ident">t1</span> <span class="op">=</span> <span class="ident">s1</span> <span class="op">+</span> <span class="ident">r</span>;
-            <span class="ident">t</span> <span class="op">=</span> <span class="ident">s0</span>;
-            <span class="kw">if</span> <span class="ident">t</span> <span class="op">&lt;</span> <span class="ident">ix0</span> <span class="op">|</span><span class="op">|</span> (<span class="ident">t</span> <span class="op">==</span> <span class="ident">ix0</span> <span class="op">&amp;&amp;</span> <span class="ident">t1</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">ix1</span>) {
-                <span class="ident">s1</span> <span class="op">=</span> <span class="ident">t1</span> <span class="op">+</span> <span class="ident">r</span>;
-                <span class="kw">if</span> (<span class="ident">t1</span> <span class="op">&amp;</span> <span class="ident">sign</span>) <span class="op">==</span> <span class="ident">sign</span> <span class="op">&amp;&amp;</span> (<span class="ident">s1</span> <span class="op">&amp;</span> <span class="ident">sign</span>) <span class="op">==</span> <span class="ident">Wrapping</span>(<span class="number">0</span>) {
-                    <span class="ident">s0</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
+        <span class="ident">r</span> = <span class="ident">sign</span>;
+        <span class="kw">while</span> <span class="ident">r</span> != <span class="ident">Wrapping</span>(<span class="number">0</span>) {
+            <span class="ident">t1</span> = <span class="ident">s1</span> + <span class="ident">r</span>;
+            <span class="ident">t</span> = <span class="ident">s0</span>;
+            <span class="kw">if</span> <span class="ident">t</span> &lt; <span class="ident">ix0</span> || (<span class="ident">t</span> == <span class="ident">ix0</span> &amp;&amp; <span class="ident">t1</span> &lt;= <span class="ident">ix1</span>) {
+                <span class="ident">s1</span> = <span class="ident">t1</span> + <span class="ident">r</span>;
+                <span class="kw">if</span> (<span class="ident">t1</span> &amp; <span class="ident">sign</span>) == <span class="ident">sign</span> &amp;&amp; (<span class="ident">s1</span> &amp; <span class="ident">sign</span>) == <span class="ident">Wrapping</span>(<span class="number">0</span>) {
+                    <span class="ident">s0</span> += <span class="number">1</span>;
                 }
-                <span class="ident">ix0</span> <span class="op">-</span><span class="op">=</span> <span class="ident">t</span>;
-                <span class="kw">if</span> <span class="ident">ix1</span> <span class="op">&lt;</span> <span class="ident">t1</span> {
-                    <span class="ident">ix0</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
+                <span class="ident">ix0</span> -= <span class="ident">t</span>;
+                <span class="kw">if</span> <span class="ident">ix1</span> &lt; <span class="ident">t1</span> {
+                    <span class="ident">ix0</span> -= <span class="number">1</span>;
                 }
-                <span class="ident">ix1</span> <span class="op">-</span><span class="op">=</span> <span class="ident">t1</span>;
-                <span class="ident">q1</span> <span class="op">+</span><span class="op">=</span> <span class="ident">r</span>;
+                <span class="ident">ix1</span> -= <span class="ident">t1</span>;
+                <span class="ident">q1</span> += <span class="ident">r</span>;
             }
-            <span class="ident">ix0</span> <span class="op">+</span><span class="op">=</span> <span class="ident">ix0</span> <span class="op">+</span> ((<span class="ident">ix1</span> <span class="op">&amp;</span> <span class="ident">sign</span>) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">31</span>).<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>;
-            <span class="ident">ix1</span> <span class="op">+</span><span class="op">=</span> <span class="ident">ix1</span>;
-            <span class="ident">r</span> <span class="op">&gt;</span><span class="op">&gt;</span><span class="op">=</span> <span class="number">1</span>;
+            <span class="ident">ix0</span> += <span class="ident">ix0</span> + ((<span class="ident">ix1</span> &amp; <span class="ident">sign</span>) &gt;&gt; <span class="number">31</span>).<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>;
+            <span class="ident">ix1</span> += <span class="ident">ix1</span>;
+            <span class="ident">r</span> &gt;&gt;= <span class="number">1</span>;
         }
 
         <span class="comment">/* use floating add to find out rounding direction */</span>
-        <span class="kw">if</span> (<span class="ident">ix0</span> <span class="kw">as</span> <span class="ident">u32</span> <span class="op">|</span> <span class="ident">ix1</span>.<span class="number">0</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
-            <span class="ident">z</span> <span class="op">=</span> <span class="number">1.0</span> <span class="op">-</span> <span class="ident">TINY</span>; <span class="comment">/* raise inexact flag */</span>
-            <span class="kw">if</span> <span class="ident">z</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">1.0</span> {
-                <span class="ident">z</span> <span class="op">=</span> <span class="number">1.0</span> <span class="op">+</span> <span class="ident">TINY</span>;
-                <span class="kw">if</span> <span class="ident">q1</span>.<span class="number">0</span> <span class="op">==</span> <span class="number">0xffffffff</span> {
-                    <span class="ident">q1</span> <span class="op">=</span> <span class="ident">Wrapping</span>(<span class="number">0</span>);
-                    <span class="ident">q</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-                } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">z</span> <span class="op">&gt;</span> <span class="number">1.0</span> {
-                    <span class="kw">if</span> <span class="ident">q1</span>.<span class="number">0</span> <span class="op">==</span> <span class="number">0xfffffffe</span> {
-                        <span class="ident">q</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
+        <span class="kw">if</span> (<span class="ident">ix0</span> <span class="kw">as</span> <span class="ident">u32</span> | <span class="ident">ix1</span>.<span class="number">0</span>) != <span class="number">0</span> {
+            <span class="ident">z</span> = <span class="number">1.0</span> - <span class="ident">TINY</span>; <span class="comment">/* raise inexact flag */</span>
+            <span class="kw">if</span> <span class="ident">z</span> &gt;= <span class="number">1.0</span> {
+                <span class="ident">z</span> = <span class="number">1.0</span> + <span class="ident">TINY</span>;
+                <span class="kw">if</span> <span class="ident">q1</span>.<span class="number">0</span> == <span class="number">0xffffffff</span> {
+                    <span class="ident">q1</span> = <span class="ident">Wrapping</span>(<span class="number">0</span>);
+                    <span class="ident">q</span> += <span class="number">1</span>;
+                } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">z</span> &gt; <span class="number">1.0</span> {
+                    <span class="kw">if</span> <span class="ident">q1</span>.<span class="number">0</span> == <span class="number">0xfffffffe</span> {
+                        <span class="ident">q</span> += <span class="number">1</span>;
                     }
-                    <span class="ident">q1</span> <span class="op">+</span><span class="op">=</span> <span class="ident">Wrapping</span>(<span class="number">2</span>);
+                    <span class="ident">q1</span> += <span class="ident">Wrapping</span>(<span class="number">2</span>);
                 } <span class="kw">else</span> {
-                    <span class="ident">q1</span> <span class="op">+</span><span class="op">=</span> <span class="ident">q1</span> <span class="op">&amp;</span> <span class="ident">Wrapping</span>(<span class="number">1</span>);
+                    <span class="ident">q1</span> += <span class="ident">q1</span> &amp; <span class="ident">Wrapping</span>(<span class="number">1</span>);
                 }
             }
         }
-        <span class="ident">ix0</span> <span class="op">=</span> (<span class="ident">q</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">1</span>) <span class="op">+</span> <span class="number">0x3fe00000</span>;
-        <span class="ident">ix1</span> <span class="op">=</span> <span class="ident">q1</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">1</span>;
-        <span class="kw">if</span> (<span class="ident">q</span> <span class="op">&amp;</span> <span class="number">1</span>) <span class="op">==</span> <span class="number">1</span> {
-            <span class="ident">ix1</span> <span class="op">|</span><span class="op">=</span> <span class="ident">sign</span>;
+        <span class="ident">ix0</span> = (<span class="ident">q</span> &gt;&gt; <span class="number">1</span>) + <span class="number">0x3fe00000</span>;
+        <span class="ident">ix1</span> = <span class="ident">q1</span> &gt;&gt; <span class="number">1</span>;
+        <span class="kw">if</span> (<span class="ident">q</span> &amp; <span class="number">1</span>) == <span class="number">1</span> {
+            <span class="ident">ix1</span> |= <span class="ident">sign</span>;
         }
-        <span class="ident">ix0</span> <span class="op">+</span><span class="op">=</span> <span class="ident">m</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">20</span>;
-        <span class="ident">f64::from_bits</span>((<span class="ident">ix0</span> <span class="kw">as</span> <span class="ident">u64</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">32</span> <span class="op">|</span> <span class="ident">ix1</span>.<span class="number">0</span> <span class="kw">as</span> <span class="ident">u64</span>)
+        <span class="ident">ix0</span> += <span class="ident">m</span> &lt;&lt; <span class="number">20</span>;
+        <span class="ident">f64::from_bits</span>((<span class="ident">ix0</span> <span class="kw">as</span> <span class="ident">u64</span>) &lt;&lt; <span class="number">32</span> | <span class="ident">ix1</span>.<span class="number">0</span> <span class="kw">as</span> <span class="ident">u64</span>)
     }
 }
 
@@ -519,12 +519,12 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">spec_tests</span>() {
         <span class="comment">// Not Asserted: FE_INVALID exception is raised if argument is negative.</span>
-        <span class="macro">assert!</span>(<span class="ident">sqrt</span>(<span class="op">-</span><span class="number">1.0</span>).<span class="ident">is_nan</span>());
+        <span class="macro">assert!</span>(<span class="ident">sqrt</span>(-<span class="number">1.0</span>).<span class="ident">is_nan</span>());
         <span class="macro">assert!</span>(<span class="ident">sqrt</span>(<span class="ident">NAN</span>).<span class="ident">is_nan</span>());
-        <span class="kw">for</span> <span class="ident">f</span> <span class="kw">in</span> [<span class="number">0.0</span>, <span class="op">-</span><span class="number">0.0</span>, <span class="ident">INFINITY</span>].<span class="ident">iter</span>().<span class="ident">copied</span>() {
+        <span class="kw">for</span> <span class="ident">f</span> <span class="kw">in</span> [<span class="number">0.0</span>, -<span class="number">0.0</span>, <span class="ident">INFINITY</span>].<span class="ident">iter</span>().<span class="ident">copied</span>() {
             <span class="macro">assert_eq!</span>(<span class="ident">sqrt</span>(<span class="ident">f</span>), <span class="ident">f</span>);
         }
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (34a6cae28 2022-08-09)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f22819bcc 2022-08-12)" ></div></body></html>

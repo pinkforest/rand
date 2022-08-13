@@ -76,75 +76,75 @@
 
 <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::sqrt</span>;
 
-<span class="kw">const</span> <span class="ident">SPLIT</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">134217728.</span> <span class="op">+</span> <span class="number">1.</span>; <span class="comment">// 0x1p27 + 1 === (2 ^ 27) + 1</span>
+<span class="kw">const</span> <span class="ident">SPLIT</span>: <span class="ident">f64</span> = <span class="number">134217728.</span> + <span class="number">1.</span>; <span class="comment">// 0x1p27 + 1 === (2 ^ 27) + 1</span>
 
 <span class="kw">fn</span> <span class="ident">sq</span>(<span class="ident">x</span>: <span class="ident">f64</span>) -&gt; (<span class="ident">f64</span>, <span class="ident">f64</span>) {
     <span class="kw">let</span> <span class="ident">xh</span>: <span class="ident">f64</span>;
     <span class="kw">let</span> <span class="ident">xl</span>: <span class="ident">f64</span>;
     <span class="kw">let</span> <span class="ident">xc</span>: <span class="ident">f64</span>;
 
-    <span class="ident">xc</span> <span class="op">=</span> <span class="ident">x</span> <span class="op">*</span> <span class="ident">SPLIT</span>;
-    <span class="ident">xh</span> <span class="op">=</span> <span class="ident">x</span> <span class="op">-</span> <span class="ident">xc</span> <span class="op">+</span> <span class="ident">xc</span>;
-    <span class="ident">xl</span> <span class="op">=</span> <span class="ident">x</span> <span class="op">-</span> <span class="ident">xh</span>;
-    <span class="kw">let</span> <span class="ident">hi</span> <span class="op">=</span> <span class="ident">x</span> <span class="op">*</span> <span class="ident">x</span>;
-    <span class="kw">let</span> <span class="ident">lo</span> <span class="op">=</span> <span class="ident">xh</span> <span class="op">*</span> <span class="ident">xh</span> <span class="op">-</span> <span class="ident">hi</span> <span class="op">+</span> <span class="number">2.</span> <span class="op">*</span> <span class="ident">xh</span> <span class="op">*</span> <span class="ident">xl</span> <span class="op">+</span> <span class="ident">xl</span> <span class="op">*</span> <span class="ident">xl</span>;
+    <span class="ident">xc</span> = <span class="ident">x</span> * <span class="ident">SPLIT</span>;
+    <span class="ident">xh</span> = <span class="ident">x</span> - <span class="ident">xc</span> + <span class="ident">xc</span>;
+    <span class="ident">xl</span> = <span class="ident">x</span> - <span class="ident">xh</span>;
+    <span class="kw">let</span> <span class="ident">hi</span> = <span class="ident">x</span> * <span class="ident">x</span>;
+    <span class="kw">let</span> <span class="ident">lo</span> = <span class="ident">xh</span> * <span class="ident">xh</span> - <span class="ident">hi</span> + <span class="number">2.</span> * <span class="ident">xh</span> * <span class="ident">xl</span> + <span class="ident">xl</span> * <span class="ident">xl</span>;
     (<span class="ident">hi</span>, <span class="ident">lo</span>)
 }
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic::no_panic</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hypot</span>(<span class="kw-2">mut</span> <span class="ident">x</span>: <span class="ident">f64</span>, <span class="kw-2">mut</span> <span class="ident">y</span>: <span class="ident">f64</span>) -&gt; <span class="ident">f64</span> {
-    <span class="kw">let</span> <span class="ident">x1p700</span> <span class="op">=</span> <span class="ident">f64::from_bits</span>(<span class="number">0x6bb0000000000000</span>); <span class="comment">// 0x1p700 === 2 ^ 700</span>
-    <span class="kw">let</span> <span class="ident">x1p_700</span> <span class="op">=</span> <span class="ident">f64::from_bits</span>(<span class="number">0x1430000000000000</span>); <span class="comment">// 0x1p-700 === 2 ^ -700</span>
+    <span class="kw">let</span> <span class="ident">x1p700</span> = <span class="ident">f64::from_bits</span>(<span class="number">0x6bb0000000000000</span>); <span class="comment">// 0x1p700 === 2 ^ 700</span>
+    <span class="kw">let</span> <span class="ident">x1p_700</span> = <span class="ident">f64::from_bits</span>(<span class="number">0x1430000000000000</span>); <span class="comment">// 0x1p-700 === 2 ^ -700</span>
 
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">uxi</span> <span class="op">=</span> <span class="ident">x</span>.<span class="ident">to_bits</span>();
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">uyi</span> <span class="op">=</span> <span class="ident">y</span>.<span class="ident">to_bits</span>();
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">uxi</span> = <span class="ident">x</span>.<span class="ident">to_bits</span>();
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">uyi</span> = <span class="ident">y</span>.<span class="ident">to_bits</span>();
     <span class="kw">let</span> <span class="ident">uti</span>;
     <span class="kw">let</span> <span class="ident">ex</span>: <span class="ident">i64</span>;
     <span class="kw">let</span> <span class="ident">ey</span>: <span class="ident">i64</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">z</span>: <span class="ident">f64</span>;
 
     <span class="comment">/* arrange |x| &gt;= |y| */</span>
-    <span class="ident">uxi</span> <span class="op">&amp;=</span> <span class="op">-</span><span class="number">1i64</span> <span class="kw">as</span> <span class="ident">u64</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">1</span>;
-    <span class="ident">uyi</span> <span class="op">&amp;=</span> <span class="op">-</span><span class="number">1i64</span> <span class="kw">as</span> <span class="ident">u64</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">1</span>;
-    <span class="kw">if</span> <span class="ident">uxi</span> <span class="op">&lt;</span> <span class="ident">uyi</span> {
-        <span class="ident">uti</span> <span class="op">=</span> <span class="ident">uxi</span>;
-        <span class="ident">uxi</span> <span class="op">=</span> <span class="ident">uyi</span>;
-        <span class="ident">uyi</span> <span class="op">=</span> <span class="ident">uti</span>;
+    <span class="ident">uxi</span> &amp;= -<span class="number">1i64</span> <span class="kw">as</span> <span class="ident">u64</span> &gt;&gt; <span class="number">1</span>;
+    <span class="ident">uyi</span> &amp;= -<span class="number">1i64</span> <span class="kw">as</span> <span class="ident">u64</span> &gt;&gt; <span class="number">1</span>;
+    <span class="kw">if</span> <span class="ident">uxi</span> &lt; <span class="ident">uyi</span> {
+        <span class="ident">uti</span> = <span class="ident">uxi</span>;
+        <span class="ident">uxi</span> = <span class="ident">uyi</span>;
+        <span class="ident">uyi</span> = <span class="ident">uti</span>;
     }
 
     <span class="comment">/* special cases */</span>
-    <span class="ident">ex</span> <span class="op">=</span> (<span class="ident">uxi</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">52</span>) <span class="kw">as</span> <span class="ident">i64</span>;
-    <span class="ident">ey</span> <span class="op">=</span> (<span class="ident">uyi</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">52</span>) <span class="kw">as</span> <span class="ident">i64</span>;
-    <span class="ident">x</span> <span class="op">=</span> <span class="ident">f64::from_bits</span>(<span class="ident">uxi</span>);
-    <span class="ident">y</span> <span class="op">=</span> <span class="ident">f64::from_bits</span>(<span class="ident">uyi</span>);
+    <span class="ident">ex</span> = (<span class="ident">uxi</span> &gt;&gt; <span class="number">52</span>) <span class="kw">as</span> <span class="ident">i64</span>;
+    <span class="ident">ey</span> = (<span class="ident">uyi</span> &gt;&gt; <span class="number">52</span>) <span class="kw">as</span> <span class="ident">i64</span>;
+    <span class="ident">x</span> = <span class="ident">f64::from_bits</span>(<span class="ident">uxi</span>);
+    <span class="ident">y</span> = <span class="ident">f64::from_bits</span>(<span class="ident">uyi</span>);
     <span class="comment">/* note: hypot(inf,nan) == inf */</span>
-    <span class="kw">if</span> <span class="ident">ey</span> <span class="op">==</span> <span class="number">0x7ff</span> {
+    <span class="kw">if</span> <span class="ident">ey</span> == <span class="number">0x7ff</span> {
         <span class="kw">return</span> <span class="ident">y</span>;
     }
-    <span class="kw">if</span> <span class="ident">ex</span> <span class="op">==</span> <span class="number">0x7ff</span> <span class="op">|</span><span class="op">|</span> <span class="ident">uyi</span> <span class="op">==</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">ex</span> == <span class="number">0x7ff</span> || <span class="ident">uyi</span> == <span class="number">0</span> {
         <span class="kw">return</span> <span class="ident">x</span>;
     }
     <span class="comment">/* note: hypot(x,y) ~= x + y*y/x/2 with inexact for small y/x */</span>
     <span class="comment">/* 64 difference is enough for ld80 double_t */</span>
-    <span class="kw">if</span> <span class="ident">ex</span> <span class="op">-</span> <span class="ident">ey</span> <span class="op">&gt;</span> <span class="number">64</span> {
-        <span class="kw">return</span> <span class="ident">x</span> <span class="op">+</span> <span class="ident">y</span>;
+    <span class="kw">if</span> <span class="ident">ex</span> - <span class="ident">ey</span> &gt; <span class="number">64</span> {
+        <span class="kw">return</span> <span class="ident">x</span> + <span class="ident">y</span>;
     }
 
     <span class="comment">/* precise sqrt argument in nearest rounding mode without overflow */</span>
     <span class="comment">/* xh*xh must not overflow and xl*xl must not underflow in sq */</span>
-    <span class="ident">z</span> <span class="op">=</span> <span class="number">1.</span>;
-    <span class="kw">if</span> <span class="ident">ex</span> <span class="op">&gt;</span> <span class="number">0x3ff</span> <span class="op">+</span> <span class="number">510</span> {
-        <span class="ident">z</span> <span class="op">=</span> <span class="ident">x1p700</span>;
-        <span class="ident">x</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p_700</span>;
-        <span class="ident">y</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p_700</span>;
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">ey</span> <span class="op">&lt;</span> <span class="number">0x3ff</span> <span class="op">-</span> <span class="number">450</span> {
-        <span class="ident">z</span> <span class="op">=</span> <span class="ident">x1p_700</span>;
-        <span class="ident">x</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p700</span>;
-        <span class="ident">y</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p700</span>;
+    <span class="ident">z</span> = <span class="number">1.</span>;
+    <span class="kw">if</span> <span class="ident">ex</span> &gt; <span class="number">0x3ff</span> + <span class="number">510</span> {
+        <span class="ident">z</span> = <span class="ident">x1p700</span>;
+        <span class="ident">x</span> <span class="kw-2">*</span>= <span class="ident">x1p_700</span>;
+        <span class="ident">y</span> <span class="kw-2">*</span>= <span class="ident">x1p_700</span>;
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">ey</span> &lt; <span class="number">0x3ff</span> - <span class="number">450</span> {
+        <span class="ident">z</span> = <span class="ident">x1p_700</span>;
+        <span class="ident">x</span> <span class="kw-2">*</span>= <span class="ident">x1p700</span>;
+        <span class="ident">y</span> <span class="kw-2">*</span>= <span class="ident">x1p700</span>;
     }
-    <span class="kw">let</span> (<span class="ident">hx</span>, <span class="ident">lx</span>) <span class="op">=</span> <span class="ident">sq</span>(<span class="ident">x</span>);
-    <span class="kw">let</span> (<span class="ident">hy</span>, <span class="ident">ly</span>) <span class="op">=</span> <span class="ident">sq</span>(<span class="ident">y</span>);
-    <span class="ident">z</span> <span class="op">*</span> <span class="ident">sqrt</span>(<span class="ident">ly</span> <span class="op">+</span> <span class="ident">lx</span> <span class="op">+</span> <span class="ident">hy</span> <span class="op">+</span> <span class="ident">hx</span>)
+    <span class="kw">let</span> (<span class="ident">hx</span>, <span class="ident">lx</span>) = <span class="ident">sq</span>(<span class="ident">x</span>);
+    <span class="kw">let</span> (<span class="ident">hy</span>, <span class="ident">ly</span>) = <span class="ident">sq</span>(<span class="ident">y</span>);
+    <span class="ident">z</span> * <span class="ident">sqrt</span>(<span class="ident">ly</span> + <span class="ident">lx</span> + <span class="ident">hy</span> + <span class="ident">hx</span>)
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (34a6cae28 2022-08-09)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f22819bcc 2022-08-12)" ></div></body></html>

@@ -26,7 +26,7 @@
 <span id="26">26</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">log1pf</span>, <span class="ident">logf</span>, <span class="ident">sqrtf</span>};
 
-<span class="kw">const</span> <span class="ident">LN2</span>: <span class="ident">f32</span> <span class="op">=</span> <span class="number">0.693147180559945309417232121458176568</span>;
+<span class="kw">const</span> <span class="ident">LN2</span>: <span class="ident">f32</span> = <span class="number">0.693147180559945309417232121458176568</span>;
 
 <span class="doccomment">/// Inverse hyperbolic cosine (f32)</span>
 <span class="doccomment">///</span>
@@ -35,20 +35,20 @@
 <span class="doccomment">/// `x` must be a number greater than or equal to 1.</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic::no_panic</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">acoshf</span>(<span class="ident">x</span>: <span class="ident">f32</span>) -&gt; <span class="ident">f32</span> {
-    <span class="kw">let</span> <span class="ident">u</span> <span class="op">=</span> <span class="ident">x</span>.<span class="ident">to_bits</span>();
-    <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">u</span> <span class="op">&amp;</span> <span class="number">0x7fffffff</span>;
+    <span class="kw">let</span> <span class="ident">u</span> = <span class="ident">x</span>.<span class="ident">to_bits</span>();
+    <span class="kw">let</span> <span class="ident">a</span> = <span class="ident">u</span> &amp; <span class="number">0x7fffffff</span>;
 
-    <span class="kw">if</span> <span class="ident">a</span> <span class="op">&lt;</span> <span class="number">0x3f800000</span> <span class="op">+</span> (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">23</span>) {
+    <span class="kw">if</span> <span class="ident">a</span> &lt; <span class="number">0x3f800000</span> + (<span class="number">1</span> &lt;&lt; <span class="number">23</span>) {
         <span class="comment">/* |x| &lt; 2, invalid if x &lt; 1 or nan */</span>
         <span class="comment">/* up to 2ulp error in [1,1.125] */</span>
-        <span class="kw">return</span> <span class="ident">log1pf</span>(<span class="ident">x</span> <span class="op">-</span> <span class="number">1.0</span> <span class="op">+</span> <span class="ident">sqrtf</span>((<span class="ident">x</span> <span class="op">-</span> <span class="number">1.0</span>) <span class="op">*</span> (<span class="ident">x</span> <span class="op">-</span> <span class="number">1.0</span>) <span class="op">+</span> <span class="number">2.0</span> <span class="op">*</span> (<span class="ident">x</span> <span class="op">-</span> <span class="number">1.0</span>)));
+        <span class="kw">return</span> <span class="ident">log1pf</span>(<span class="ident">x</span> - <span class="number">1.0</span> + <span class="ident">sqrtf</span>((<span class="ident">x</span> - <span class="number">1.0</span>) * (<span class="ident">x</span> - <span class="number">1.0</span>) + <span class="number">2.0</span> * (<span class="ident">x</span> - <span class="number">1.0</span>)));
     }
-    <span class="kw">if</span> <span class="ident">a</span> <span class="op">&lt;</span> <span class="number">0x3f800000</span> <span class="op">+</span> (<span class="number">12</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">23</span>) {
+    <span class="kw">if</span> <span class="ident">a</span> &lt; <span class="number">0x3f800000</span> + (<span class="number">12</span> &lt;&lt; <span class="number">23</span>) {
         <span class="comment">/* |x| &lt; 0x1p12 */</span>
-        <span class="kw">return</span> <span class="ident">logf</span>(<span class="number">2.0</span> <span class="op">*</span> <span class="ident">x</span> <span class="op">-</span> <span class="number">1.0</span> <span class="op">/</span> (<span class="ident">x</span> <span class="op">+</span> <span class="ident">sqrtf</span>(<span class="ident">x</span> <span class="op">*</span> <span class="ident">x</span> <span class="op">-</span> <span class="number">1.0</span>)));
+        <span class="kw">return</span> <span class="ident">logf</span>(<span class="number">2.0</span> * <span class="ident">x</span> - <span class="number">1.0</span> / (<span class="ident">x</span> + <span class="ident">sqrtf</span>(<span class="ident">x</span> * <span class="ident">x</span> - <span class="number">1.0</span>)));
     }
     <span class="comment">/* x &gt;= 0x1p12 */</span>
-    <span class="kw">return</span> <span class="ident">logf</span>(<span class="ident">x</span>) <span class="op">+</span> <span class="ident">LN2</span>;
+    <span class="kw">return</span> <span class="ident">logf</span>(<span class="ident">x</span>) + <span class="ident">LN2</span>;
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (34a6cae28 2022-08-09)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f22819bcc 2022-08-12)" ></div></body></html>

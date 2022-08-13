@@ -183,10 +183,10 @@
 
 <span class="kw">use</span> <span class="ident">core::fmt</span>;
 <span class="kw">use</span> <span class="ident">rand_core</span>::{<span class="ident">impls</span>, <span class="ident">le</span>, <span class="ident">Error</span>, <span class="ident">RngCore</span>, <span class="ident">SeedableRng</span>};
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde1&quot;</span>)]</span> <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> = <span class="string">&quot;serde1&quot;</span>)]</span> <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
 
 <span class="comment">// This is the default multiplier used by PCG for 64-bit state.</span>
-<span class="kw">const</span> <span class="ident">MULTIPLIER</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">6364136223846793005</span>;
+<span class="kw">const</span> <span class="ident">MULTIPLIER</span>: <span class="ident">u64</span> = <span class="number">6364136223846793005</span>;
 
 <span class="doccomment">/// A PCG random number generator (XSH RR 64/32 (LCG) variant).</span>
 <span class="doccomment">///</span>
@@ -204,14 +204,14 @@
 <span class="doccomment">/// Note that two generators with different stream parameter may be closely</span>
 <span class="doccomment">/// correlated.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde1&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> = <span class="string">&quot;serde1&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Lcg64Xsh32</span> {
     <span class="ident">state</span>: <span class="ident">u64</span>,
     <span class="ident">increment</span>: <span class="ident">u64</span>,
 }
 
 <span class="doccomment">/// [`Lcg64Xsh32`] is also officially known as `pcg32`.</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Pcg32</span> <span class="op">=</span> <span class="ident">Lcg64Xsh32</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Pcg32</span> = <span class="ident">Lcg64Xsh32</span>;
 
 <span class="kw">impl</span> <span class="ident">Lcg64Xsh32</span> {
     <span class="doccomment">/// Multi-step advance functions (jump-ahead, jump-back)</span>
@@ -228,22 +228,22 @@
     <span class="doccomment">/// number of times.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">advance</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">delta</span>: <span class="ident">u64</span>) {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">acc_mult</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">1</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">acc_plus</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cur_mult</span> <span class="op">=</span> <span class="ident">MULTIPLIER</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cur_plus</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">increment</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">mdelta</span> <span class="op">=</span> <span class="ident">delta</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">acc_mult</span>: <span class="ident">u64</span> = <span class="number">1</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">acc_plus</span>: <span class="ident">u64</span> = <span class="number">0</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cur_mult</span> = <span class="ident">MULTIPLIER</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cur_plus</span> = <span class="self">self</span>.<span class="ident">increment</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">mdelta</span> = <span class="ident">delta</span>;
 
-        <span class="kw">while</span> <span class="ident">mdelta</span> <span class="op">&gt;</span> <span class="number">0</span> {
-            <span class="kw">if</span> (<span class="ident">mdelta</span> <span class="op">&amp;</span> <span class="number">1</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
-                <span class="ident">acc_mult</span> <span class="op">=</span> <span class="ident">acc_mult</span>.<span class="ident">wrapping_mul</span>(<span class="ident">cur_mult</span>);
-                <span class="ident">acc_plus</span> <span class="op">=</span> <span class="ident">acc_plus</span>.<span class="ident">wrapping_mul</span>(<span class="ident">cur_mult</span>).<span class="ident">wrapping_add</span>(<span class="ident">cur_plus</span>);
+        <span class="kw">while</span> <span class="ident">mdelta</span> &gt; <span class="number">0</span> {
+            <span class="kw">if</span> (<span class="ident">mdelta</span> &amp; <span class="number">1</span>) != <span class="number">0</span> {
+                <span class="ident">acc_mult</span> = <span class="ident">acc_mult</span>.<span class="ident">wrapping_mul</span>(<span class="ident">cur_mult</span>);
+                <span class="ident">acc_plus</span> = <span class="ident">acc_plus</span>.<span class="ident">wrapping_mul</span>(<span class="ident">cur_mult</span>).<span class="ident">wrapping_add</span>(<span class="ident">cur_plus</span>);
             }
-            <span class="ident">cur_plus</span> <span class="op">=</span> <span class="ident">cur_mult</span>.<span class="ident">wrapping_add</span>(<span class="number">1</span>).<span class="ident">wrapping_mul</span>(<span class="ident">cur_plus</span>);
-            <span class="ident">cur_mult</span> <span class="op">=</span> <span class="ident">cur_mult</span>.<span class="ident">wrapping_mul</span>(<span class="ident">cur_mult</span>);
-            <span class="ident">mdelta</span> <span class="op">/</span><span class="op">=</span> <span class="number">2</span>;
+            <span class="ident">cur_plus</span> = <span class="ident">cur_mult</span>.<span class="ident">wrapping_add</span>(<span class="number">1</span>).<span class="ident">wrapping_mul</span>(<span class="ident">cur_plus</span>);
+            <span class="ident">cur_mult</span> = <span class="ident">cur_mult</span>.<span class="ident">wrapping_mul</span>(<span class="ident">cur_mult</span>);
+            <span class="ident">mdelta</span> /= <span class="number">2</span>;
         }
-        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">acc_mult</span>.<span class="ident">wrapping_mul</span>(<span class="self">self</span>.<span class="ident">state</span>).<span class="ident">wrapping_add</span>(<span class="ident">acc_plus</span>);
+        <span class="self">self</span>.<span class="ident">state</span> = <span class="ident">acc_mult</span>.<span class="ident">wrapping_mul</span>(<span class="self">self</span>.<span class="ident">state</span>).<span class="ident">wrapping_add</span>(<span class="ident">acc_plus</span>);
     }
 
     <span class="doccomment">/// Construct an instance compatible with PCG seed and stream.</span>
@@ -261,15 +261,15 @@
     <span class="comment">// Note: stream is 1442695040888963407u64 &gt;&gt; 1</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">state</span>: <span class="ident">u64</span>, <span class="ident">stream</span>: <span class="ident">u64</span>) -&gt; <span class="self">Self</span> {
         <span class="comment">// The increment must be odd, hence we discard one bit:</span>
-        <span class="kw">let</span> <span class="ident">increment</span> <span class="op">=</span> (<span class="ident">stream</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">1</span>) <span class="op">|</span> <span class="number">1</span>;
+        <span class="kw">let</span> <span class="ident">increment</span> = (<span class="ident">stream</span> &lt;&lt; <span class="number">1</span>) | <span class="number">1</span>;
         <span class="ident">Lcg64Xsh32::from_state_incr</span>(<span class="ident">state</span>, <span class="ident">increment</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">from_state_incr</span>(<span class="ident">state</span>: <span class="ident">u64</span>, <span class="ident">increment</span>: <span class="ident">u64</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pcg</span> <span class="op">=</span> <span class="ident">Lcg64Xsh32</span> { <span class="ident">state</span>, <span class="ident">increment</span> };
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pcg</span> = <span class="ident">Lcg64Xsh32</span> { <span class="ident">state</span>, <span class="ident">increment</span> };
         <span class="comment">// Move away from initial value:</span>
-        <span class="ident">pcg</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">pcg</span>.<span class="ident">state</span>.<span class="ident">wrapping_add</span>(<span class="ident">pcg</span>.<span class="ident">increment</span>);
+        <span class="ident">pcg</span>.<span class="ident">state</span> = <span class="ident">pcg</span>.<span class="ident">state</span>.<span class="ident">wrapping_add</span>(<span class="ident">pcg</span>.<span class="ident">increment</span>);
         <span class="ident">pcg</span>.<span class="ident">step</span>();
         <span class="ident">pcg</span>
     }
@@ -277,7 +277,7 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">step</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) {
         <span class="comment">// prepare the LCG for the next round</span>
-        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>
+        <span class="self">self</span>.<span class="ident">state</span> = <span class="self">self</span>
             .<span class="ident">state</span>
             .<span class="ident">wrapping_mul</span>(<span class="ident">MULTIPLIER</span>)
             .<span class="ident">wrapping_add</span>(<span class="self">self</span>.<span class="ident">increment</span>);
@@ -292,33 +292,33 @@
 }
 
 <span class="kw">impl</span> <span class="ident">SeedableRng</span> <span class="kw">for</span> <span class="ident">Lcg64Xsh32</span> {
-    <span class="kw">type</span> <span class="ident">Seed</span> <span class="op">=</span> [<span class="ident">u8</span>; <span class="number">16</span>];
+    <span class="kw">type</span> <span class="ident">Seed</span> = [<span class="ident">u8</span>; <span class="number">16</span>];
 
     <span class="doccomment">/// We use a single 127-bit seed to initialise the state and select a stream.</span>
     <span class="doccomment">/// One `seed` bit (lowest bit of `seed[8]`) is ignored.</span>
     <span class="kw">fn</span> <span class="ident">from_seed</span>(<span class="ident">seed</span>: <span class="ident"><span class="self">Self</span>::Seed</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">seed_u64</span> <span class="op">=</span> [<span class="number">0u64</span>; <span class="number">2</span>];
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">seed_u64</span> = [<span class="number">0u64</span>; <span class="number">2</span>];
         <span class="ident">le::read_u64_into</span>(<span class="kw-2">&amp;</span><span class="ident">seed</span>, <span class="kw-2">&amp;mut</span> <span class="ident">seed_u64</span>);
 
         <span class="comment">// The increment must be odd, hence we discard one bit:</span>
-        <span class="ident">Lcg64Xsh32::from_state_incr</span>(<span class="ident">seed_u64</span>[<span class="number">0</span>], <span class="ident">seed_u64</span>[<span class="number">1</span>] <span class="op">|</span> <span class="number">1</span>)
+        <span class="ident">Lcg64Xsh32::from_state_incr</span>(<span class="ident">seed_u64</span>[<span class="number">0</span>], <span class="ident">seed_u64</span>[<span class="number">1</span>] | <span class="number">1</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">RngCore</span> <span class="kw">for</span> <span class="ident">Lcg64Xsh32</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">next_u32</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="ident">u32</span> {
-        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>;
+        <span class="kw">let</span> <span class="ident">state</span> = <span class="self">self</span>.<span class="ident">state</span>;
         <span class="self">self</span>.<span class="ident">step</span>();
 
         <span class="comment">// Output function XSH RR: xorshift high (bits), followed by a random rotate</span>
         <span class="comment">// Constants are for 64-bit state, 32-bit output</span>
-        <span class="kw">const</span> <span class="ident">ROTATE</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">59</span>; <span class="comment">// 64 - 5</span>
-        <span class="kw">const</span> <span class="ident">XSHIFT</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">18</span>; <span class="comment">// (5 + 32) / 2</span>
-        <span class="kw">const</span> <span class="ident">SPARE</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">27</span>; <span class="comment">// 64 - 32 - 5</span>
+        <span class="kw">const</span> <span class="ident">ROTATE</span>: <span class="ident">u32</span> = <span class="number">59</span>; <span class="comment">// 64 - 5</span>
+        <span class="kw">const</span> <span class="ident">XSHIFT</span>: <span class="ident">u32</span> = <span class="number">18</span>; <span class="comment">// (5 + 32) / 2</span>
+        <span class="kw">const</span> <span class="ident">SPARE</span>: <span class="ident">u32</span> = <span class="number">27</span>; <span class="comment">// 64 - 32 - 5</span>
 
-        <span class="kw">let</span> <span class="ident">rot</span> <span class="op">=</span> (<span class="ident">state</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">ROTATE</span>) <span class="kw">as</span> <span class="ident">u32</span>;
-        <span class="kw">let</span> <span class="ident">xsh</span> <span class="op">=</span> (((<span class="ident">state</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">XSHIFT</span>) <span class="op">^</span> <span class="ident">state</span>) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">SPARE</span>) <span class="kw">as</span> <span class="ident">u32</span>;
+        <span class="kw">let</span> <span class="ident">rot</span> = (<span class="ident">state</span> &gt;&gt; <span class="ident">ROTATE</span>) <span class="kw">as</span> <span class="ident">u32</span>;
+        <span class="kw">let</span> <span class="ident">xsh</span> = (((<span class="ident">state</span> &gt;&gt; <span class="ident">XSHIFT</span>) ^ <span class="ident">state</span>) &gt;&gt; <span class="ident">SPARE</span>) <span class="kw">as</span> <span class="ident">u32</span>;
         <span class="ident">xsh</span>.<span class="ident">rotate_right</span>(<span class="ident">rot</span>)
     }
 
@@ -333,10 +333,10 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">try_fill_bytes</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">dest</span>: <span class="kw-2">&amp;mut</span> [<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_fill_bytes</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">dest</span>: <span class="kw-2">&amp;mut</span> [<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="ident">Error</span>&gt; {
         <span class="self">self</span>.<span class="ident">fill_bytes</span>(<span class="ident">dest</span>);
         <span class="prelude-val">Ok</span>(())
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="rand_pcg" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (34a6cae28 2022-08-09)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="rand_pcg" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f22819bcc 2022-08-12)" ></div></body></html>

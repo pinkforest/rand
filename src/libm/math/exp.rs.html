@@ -221,15 +221,15 @@
 
 <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::scalbn</span>;
 
-<span class="kw">const</span> <span class="ident">HALF</span>: [<span class="ident">f64</span>; <span class="number">2</span>] <span class="op">=</span> [<span class="number">0.5</span>, <span class="op">-</span><span class="number">0.5</span>];
-<span class="kw">const</span> <span class="ident">LN2HI</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">6.93147180369123816490e-01</span>; <span class="comment">/* 0x3fe62e42, 0xfee00000 */</span>
-<span class="kw">const</span> <span class="ident">LN2LO</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">1.90821492927058770002e-10</span>; <span class="comment">/* 0x3dea39ef, 0x35793c76 */</span>
-<span class="kw">const</span> <span class="ident">INVLN2</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">1.44269504088896338700e+00</span>; <span class="comment">/* 0x3ff71547, 0x652b82fe */</span>
-<span class="kw">const</span> <span class="ident">P1</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">1.66666666666666019037e-01</span>; <span class="comment">/* 0x3FC55555, 0x5555553E */</span>
-<span class="kw">const</span> <span class="ident">P2</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="op">-</span><span class="number">2.77777777770155933842e-03</span>; <span class="comment">/* 0xBF66C16C, 0x16BEBD93 */</span>
-<span class="kw">const</span> <span class="ident">P3</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">6.61375632143793436117e-05</span>; <span class="comment">/* 0x3F11566A, 0xAF25DE2C */</span>
-<span class="kw">const</span> <span class="ident">P4</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="op">-</span><span class="number">1.65339022054652515390e-06</span>; <span class="comment">/* 0xBEBBBD41, 0xC5D26BF1 */</span>
-<span class="kw">const</span> <span class="ident">P5</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">4.13813679705723846039e-08</span>; <span class="comment">/* 0x3E663769, 0x72BEA4D0 */</span>
+<span class="kw">const</span> <span class="ident">HALF</span>: [<span class="ident">f64</span>; <span class="number">2</span>] = [<span class="number">0.5</span>, -<span class="number">0.5</span>];
+<span class="kw">const</span> <span class="ident">LN2HI</span>: <span class="ident">f64</span> = <span class="number">6.93147180369123816490e-01</span>; <span class="comment">/* 0x3fe62e42, 0xfee00000 */</span>
+<span class="kw">const</span> <span class="ident">LN2LO</span>: <span class="ident">f64</span> = <span class="number">1.90821492927058770002e-10</span>; <span class="comment">/* 0x3dea39ef, 0x35793c76 */</span>
+<span class="kw">const</span> <span class="ident">INVLN2</span>: <span class="ident">f64</span> = <span class="number">1.44269504088896338700e+00</span>; <span class="comment">/* 0x3ff71547, 0x652b82fe */</span>
+<span class="kw">const</span> <span class="ident">P1</span>: <span class="ident">f64</span> = <span class="number">1.66666666666666019037e-01</span>; <span class="comment">/* 0x3FC55555, 0x5555553E */</span>
+<span class="kw">const</span> <span class="ident">P2</span>: <span class="ident">f64</span> = -<span class="number">2.77777777770155933842e-03</span>; <span class="comment">/* 0xBF66C16C, 0x16BEBD93 */</span>
+<span class="kw">const</span> <span class="ident">P3</span>: <span class="ident">f64</span> = <span class="number">6.61375632143793436117e-05</span>; <span class="comment">/* 0x3F11566A, 0xAF25DE2C */</span>
+<span class="kw">const</span> <span class="ident">P4</span>: <span class="ident">f64</span> = -<span class="number">1.65339022054652515390e-06</span>; <span class="comment">/* 0xBEBBBD41, 0xC5D26BF1 */</span>
+<span class="kw">const</span> <span class="ident">P5</span>: <span class="ident">f64</span> = <span class="number">4.13813679705723846039e-08</span>; <span class="comment">/* 0x3E663769, 0x72BEA4D0 */</span>
 
 <span class="doccomment">/// Exponential, base *e* (f64)</span>
 <span class="doccomment">///</span>
@@ -237,8 +237,8 @@
 <span class="doccomment">/// (where *e* is the base of the natural system of logarithms, approximately 2.71828).</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic::no_panic</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exp</span>(<span class="kw-2">mut</span> <span class="ident">x</span>: <span class="ident">f64</span>) -&gt; <span class="ident">f64</span> {
-    <span class="kw">let</span> <span class="ident">x1p1023</span> <span class="op">=</span> <span class="ident">f64::from_bits</span>(<span class="number">0x7fe0000000000000</span>); <span class="comment">// 0x1p1023 === 2 ^ 1023</span>
-    <span class="kw">let</span> <span class="ident">x1p_149</span> <span class="op">=</span> <span class="ident">f64::from_bits</span>(<span class="number">0x36a0000000000000</span>); <span class="comment">// 0x1p-149 === 2 ^ -149</span>
+    <span class="kw">let</span> <span class="ident">x1p1023</span> = <span class="ident">f64::from_bits</span>(<span class="number">0x7fe0000000000000</span>); <span class="comment">// 0x1p1023 === 2 ^ 1023</span>
+    <span class="kw">let</span> <span class="ident">x1p_149</span> = <span class="ident">f64::from_bits</span>(<span class="number">0x36a0000000000000</span>); <span class="comment">// 0x1p-149 === 2 ^ -149</span>
 
     <span class="kw">let</span> <span class="ident">hi</span>: <span class="ident">f64</span>;
     <span class="kw">let</span> <span class="ident">lo</span>: <span class="ident">f64</span>;
@@ -249,62 +249,62 @@
     <span class="kw">let</span> <span class="ident">sign</span>: <span class="ident">i32</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hx</span>: <span class="ident">u32</span>;
 
-    <span class="ident">hx</span> <span class="op">=</span> (<span class="ident">x</span>.<span class="ident">to_bits</span>() <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span>;
-    <span class="ident">sign</span> <span class="op">=</span> (<span class="ident">hx</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">31</span>) <span class="kw">as</span> <span class="ident">i32</span>;
-    <span class="ident">hx</span> <span class="op">&amp;=</span> <span class="number">0x7fffffff</span>; <span class="comment">/* high word of |x| */</span>
+    <span class="ident">hx</span> = (<span class="ident">x</span>.<span class="ident">to_bits</span>() &gt;&gt; <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span>;
+    <span class="ident">sign</span> = (<span class="ident">hx</span> &gt;&gt; <span class="number">31</span>) <span class="kw">as</span> <span class="ident">i32</span>;
+    <span class="ident">hx</span> &amp;= <span class="number">0x7fffffff</span>; <span class="comment">/* high word of |x| */</span>
 
     <span class="comment">/* special cases */</span>
-    <span class="kw">if</span> <span class="ident">hx</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x4086232b</span> {
+    <span class="kw">if</span> <span class="ident">hx</span> &gt;= <span class="number">0x4086232b</span> {
         <span class="comment">/* if |x| &gt;= 708.39... */</span>
         <span class="kw">if</span> <span class="ident">x</span>.<span class="ident">is_nan</span>() {
             <span class="kw">return</span> <span class="ident">x</span>;
         }
-        <span class="kw">if</span> <span class="ident">x</span> <span class="op">&gt;</span> <span class="number">709.782712893383973096</span> {
+        <span class="kw">if</span> <span class="ident">x</span> &gt; <span class="number">709.782712893383973096</span> {
             <span class="comment">/* overflow if x!=inf */</span>
-            <span class="ident">x</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p1023</span>;
+            <span class="ident">x</span> <span class="kw-2">*</span>= <span class="ident">x1p1023</span>;
             <span class="kw">return</span> <span class="ident">x</span>;
         }
-        <span class="kw">if</span> <span class="ident">x</span> <span class="op">&lt;</span> <span class="op">-</span><span class="number">708.39641853226410622</span> {
+        <span class="kw">if</span> <span class="ident">x</span> &lt; -<span class="number">708.39641853226410622</span> {
             <span class="comment">/* underflow if x!=-inf */</span>
-            <span class="macro">force_eval!</span>((<span class="op">-</span><span class="ident">x1p_149</span> <span class="op">/</span> <span class="ident">x</span>) <span class="kw">as</span> <span class="ident">f32</span>);
-            <span class="kw">if</span> <span class="ident">x</span> <span class="op">&lt;</span> <span class="op">-</span><span class="number">745.13321910194110842</span> {
+            <span class="macro">force_eval!</span>((-<span class="ident">x1p_149</span> / <span class="ident">x</span>) <span class="kw">as</span> <span class="ident">f32</span>);
+            <span class="kw">if</span> <span class="ident">x</span> &lt; -<span class="number">745.13321910194110842</span> {
                 <span class="kw">return</span> <span class="number">0.</span>;
             }
         }
     }
 
     <span class="comment">/* argument reduction */</span>
-    <span class="kw">if</span> <span class="ident">hx</span> <span class="op">&gt;</span> <span class="number">0x3fd62e42</span> {
+    <span class="kw">if</span> <span class="ident">hx</span> &gt; <span class="number">0x3fd62e42</span> {
         <span class="comment">/* if |x| &gt; 0.5 ln2 */</span>
-        <span class="kw">if</span> <span class="ident">hx</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x3ff0a2b2</span> {
+        <span class="kw">if</span> <span class="ident">hx</span> &gt;= <span class="number">0x3ff0a2b2</span> {
             <span class="comment">/* if |x| &gt;= 1.5 ln2 */</span>
-            <span class="ident">k</span> <span class="op">=</span> (<span class="ident">INVLN2</span> <span class="op">*</span> <span class="ident">x</span> <span class="op">+</span> <span class="macro">i!</span>(<span class="ident">HALF</span>, <span class="ident">sign</span> <span class="kw">as</span> <span class="ident">usize</span>)) <span class="kw">as</span> <span class="ident">i32</span>;
+            <span class="ident">k</span> = (<span class="ident">INVLN2</span> * <span class="ident">x</span> + <span class="macro">i!</span>(<span class="ident">HALF</span>, <span class="ident">sign</span> <span class="kw">as</span> <span class="ident">usize</span>)) <span class="kw">as</span> <span class="ident">i32</span>;
         } <span class="kw">else</span> {
-            <span class="ident">k</span> <span class="op">=</span> <span class="number">1</span> <span class="op">-</span> <span class="ident">sign</span> <span class="op">-</span> <span class="ident">sign</span>;
+            <span class="ident">k</span> = <span class="number">1</span> - <span class="ident">sign</span> - <span class="ident">sign</span>;
         }
-        <span class="ident">hi</span> <span class="op">=</span> <span class="ident">x</span> <span class="op">-</span> <span class="ident">k</span> <span class="kw">as</span> <span class="ident">f64</span> <span class="op">*</span> <span class="ident">LN2HI</span>; <span class="comment">/* k*ln2hi is exact here */</span>
-        <span class="ident">lo</span> <span class="op">=</span> <span class="ident">k</span> <span class="kw">as</span> <span class="ident">f64</span> <span class="op">*</span> <span class="ident">LN2LO</span>;
-        <span class="ident">x</span> <span class="op">=</span> <span class="ident">hi</span> <span class="op">-</span> <span class="ident">lo</span>;
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">hx</span> <span class="op">&gt;</span> <span class="number">0x3e300000</span> {
+        <span class="ident">hi</span> = <span class="ident">x</span> - <span class="ident">k</span> <span class="kw">as</span> <span class="ident">f64</span> * <span class="ident">LN2HI</span>; <span class="comment">/* k*ln2hi is exact here */</span>
+        <span class="ident">lo</span> = <span class="ident">k</span> <span class="kw">as</span> <span class="ident">f64</span> * <span class="ident">LN2LO</span>;
+        <span class="ident">x</span> = <span class="ident">hi</span> - <span class="ident">lo</span>;
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">hx</span> &gt; <span class="number">0x3e300000</span> {
         <span class="comment">/* if |x| &gt; 2**-28 */</span>
-        <span class="ident">k</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="ident">hi</span> <span class="op">=</span> <span class="ident">x</span>;
-        <span class="ident">lo</span> <span class="op">=</span> <span class="number">0.</span>;
+        <span class="ident">k</span> = <span class="number">0</span>;
+        <span class="ident">hi</span> = <span class="ident">x</span>;
+        <span class="ident">lo</span> = <span class="number">0.</span>;
     } <span class="kw">else</span> {
         <span class="comment">/* inexact if x!=0 */</span>
-        <span class="macro">force_eval!</span>(<span class="ident">x1p1023</span> <span class="op">+</span> <span class="ident">x</span>);
-        <span class="kw">return</span> <span class="number">1.</span> <span class="op">+</span> <span class="ident">x</span>;
+        <span class="macro">force_eval!</span>(<span class="ident">x1p1023</span> + <span class="ident">x</span>);
+        <span class="kw">return</span> <span class="number">1.</span> + <span class="ident">x</span>;
     }
 
     <span class="comment">/* x is now in primary range */</span>
-    <span class="ident">xx</span> <span class="op">=</span> <span class="ident">x</span> <span class="op">*</span> <span class="ident">x</span>;
-    <span class="ident">c</span> <span class="op">=</span> <span class="ident">x</span> <span class="op">-</span> <span class="ident">xx</span> <span class="op">*</span> (<span class="ident">P1</span> <span class="op">+</span> <span class="ident">xx</span> <span class="op">*</span> (<span class="ident">P2</span> <span class="op">+</span> <span class="ident">xx</span> <span class="op">*</span> (<span class="ident">P3</span> <span class="op">+</span> <span class="ident">xx</span> <span class="op">*</span> (<span class="ident">P4</span> <span class="op">+</span> <span class="ident">xx</span> <span class="op">*</span> <span class="ident">P5</span>))));
-    <span class="ident">y</span> <span class="op">=</span> <span class="number">1.</span> <span class="op">+</span> (<span class="ident">x</span> <span class="op">*</span> <span class="ident">c</span> <span class="op">/</span> (<span class="number">2.</span> <span class="op">-</span> <span class="ident">c</span>) <span class="op">-</span> <span class="ident">lo</span> <span class="op">+</span> <span class="ident">hi</span>);
-    <span class="kw">if</span> <span class="ident">k</span> <span class="op">==</span> <span class="number">0</span> {
+    <span class="ident">xx</span> = <span class="ident">x</span> * <span class="ident">x</span>;
+    <span class="ident">c</span> = <span class="ident">x</span> - <span class="ident">xx</span> * (<span class="ident">P1</span> + <span class="ident">xx</span> * (<span class="ident">P2</span> + <span class="ident">xx</span> * (<span class="ident">P3</span> + <span class="ident">xx</span> * (<span class="ident">P4</span> + <span class="ident">xx</span> * <span class="ident">P5</span>))));
+    <span class="ident">y</span> = <span class="number">1.</span> + (<span class="ident">x</span> * <span class="ident">c</span> / (<span class="number">2.</span> - <span class="ident">c</span>) - <span class="ident">lo</span> + <span class="ident">hi</span>);
+    <span class="kw">if</span> <span class="ident">k</span> == <span class="number">0</span> {
         <span class="ident">y</span>
     } <span class="kw">else</span> {
         <span class="ident">scalbn</span>(<span class="ident">y</span>, <span class="ident">k</span>)
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (34a6cae28 2022-08-09)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f22819bcc 2022-08-12)" ></div></body></html>

@@ -82,7 +82,7 @@
 </pre><pre class="rust"><code><span class="attribute">#![<span class="ident">allow</span>(<span class="ident">unreachable_code</span>)]</span>
 <span class="kw">use</span> <span class="ident">core::f64</span>;
 
-<span class="kw">const</span> <span class="ident">TOINT</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">1.</span> <span class="op">/</span> <span class="ident">f64::EPSILON</span>;
+<span class="kw">const</span> <span class="ident">TOINT</span>: <span class="ident">f64</span> = <span class="number">1.</span> / <span class="ident">f64::EPSILON</span>;
 
 <span class="doccomment">/// Floor (f64)</span>
 <span class="doccomment">///</span>
@@ -93,21 +93,21 @@
     <span class="comment">// `f64.floor` native instruction, so we can leverage this for both code size</span>
     <span class="comment">// and speed.</span>
     <span class="macro">llvm_intrinsically_optimized!</span> {
-        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;wasm32&quot;</span>)]</span> {
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> = <span class="string">&quot;wasm32&quot;</span>)]</span> {
             <span class="kw">return</span> <span class="kw">unsafe</span> { <span class="ident">::core::intrinsics::floorf64</span>(<span class="ident">x</span>) }
         }
     }
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86&quot;</span>, <span class="ident">not</span>(<span class="ident">target_feature</span> <span class="op">=</span> <span class="string">&quot;sse2&quot;</span>)))]</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_arch</span> = <span class="string">&quot;x86&quot;</span>, <span class="ident">not</span>(<span class="ident">target_feature</span> = <span class="string">&quot;sse2&quot;</span>)))]</span>
     {
         <span class="comment">//use an alternative implementation on x86, because the</span>
         <span class="comment">//main implementation fails with the x87 FPU used by</span>
         <span class="comment">//debian i386, probablly due to excess precision issues.</span>
         <span class="comment">//basic implementation taken from https://github.com/rust-lang/libm/issues/219</span>
         <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::fabs</span>;
-        <span class="kw">if</span> <span class="ident">fabs</span>(<span class="ident">x</span>).<span class="ident">to_bits</span>() <span class="op">&lt;</span> <span class="number">4503599627370496.0_f64</span>.<span class="ident">to_bits</span>() {
-            <span class="kw">let</span> <span class="ident">truncated</span> <span class="op">=</span> <span class="ident">x</span> <span class="kw">as</span> <span class="ident">i64</span> <span class="kw">as</span> <span class="ident">f64</span>;
-            <span class="kw">if</span> <span class="ident">truncated</span> <span class="op">&gt;</span> <span class="ident">x</span> {
-                <span class="kw">return</span> <span class="ident">truncated</span> <span class="op">-</span> <span class="number">1.0</span>;
+        <span class="kw">if</span> <span class="ident">fabs</span>(<span class="ident">x</span>).<span class="ident">to_bits</span>() &lt; <span class="number">4503599627370496.0_f64</span>.<span class="ident">to_bits</span>() {
+            <span class="kw">let</span> <span class="ident">truncated</span> = <span class="ident">x</span> <span class="kw">as</span> <span class="ident">i64</span> <span class="kw">as</span> <span class="ident">f64</span>;
+            <span class="kw">if</span> <span class="ident">truncated</span> &gt; <span class="ident">x</span> {
+                <span class="kw">return</span> <span class="ident">truncated</span> - <span class="number">1.0</span>;
             } <span class="kw">else</span> {
                 <span class="kw">return</span> <span class="ident">truncated</span>;
             }
@@ -115,27 +115,27 @@
             <span class="kw">return</span> <span class="ident">x</span>;
         }
     }
-    <span class="kw">let</span> <span class="ident">ui</span> <span class="op">=</span> <span class="ident">x</span>.<span class="ident">to_bits</span>();
-    <span class="kw">let</span> <span class="ident">e</span> <span class="op">=</span> ((<span class="ident">ui</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">52</span>) <span class="op">&amp;</span> <span class="number">0x7ff</span>) <span class="kw">as</span> <span class="ident">i32</span>;
+    <span class="kw">let</span> <span class="ident">ui</span> = <span class="ident">x</span>.<span class="ident">to_bits</span>();
+    <span class="kw">let</span> <span class="ident">e</span> = ((<span class="ident">ui</span> &gt;&gt; <span class="number">52</span>) &amp; <span class="number">0x7ff</span>) <span class="kw">as</span> <span class="ident">i32</span>;
 
-    <span class="kw">if</span> (<span class="ident">e</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x3ff</span> <span class="op">+</span> <span class="number">52</span>) <span class="op">|</span><span class="op">|</span> (<span class="ident">x</span> <span class="op">==</span> <span class="number">0.</span>) {
+    <span class="kw">if</span> (<span class="ident">e</span> &gt;= <span class="number">0x3ff</span> + <span class="number">52</span>) || (<span class="ident">x</span> == <span class="number">0.</span>) {
         <span class="kw">return</span> <span class="ident">x</span>;
     }
     <span class="comment">/* y = int(x) - x, where int(x) is an integer neighbor of x */</span>
-    <span class="kw">let</span> <span class="ident">y</span> <span class="op">=</span> <span class="kw">if</span> (<span class="ident">ui</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">63</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
-        <span class="ident">x</span> <span class="op">-</span> <span class="ident">TOINT</span> <span class="op">+</span> <span class="ident">TOINT</span> <span class="op">-</span> <span class="ident">x</span>
+    <span class="kw">let</span> <span class="ident">y</span> = <span class="kw">if</span> (<span class="ident">ui</span> &gt;&gt; <span class="number">63</span>) != <span class="number">0</span> {
+        <span class="ident">x</span> - <span class="ident">TOINT</span> + <span class="ident">TOINT</span> - <span class="ident">x</span>
     } <span class="kw">else</span> {
-        <span class="ident">x</span> <span class="op">+</span> <span class="ident">TOINT</span> <span class="op">-</span> <span class="ident">TOINT</span> <span class="op">-</span> <span class="ident">x</span>
+        <span class="ident">x</span> + <span class="ident">TOINT</span> - <span class="ident">TOINT</span> - <span class="ident">x</span>
     };
     <span class="comment">/* special case because of non-nearest rounding modes */</span>
-    <span class="kw">if</span> <span class="ident">e</span> <span class="op">&lt;</span> <span class="number">0x3ff</span> {
+    <span class="kw">if</span> <span class="ident">e</span> &lt; <span class="number">0x3ff</span> {
         <span class="macro">force_eval!</span>(<span class="ident">y</span>);
-        <span class="kw">return</span> <span class="kw">if</span> (<span class="ident">ui</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">63</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span> { <span class="op">-</span><span class="number">1.</span> } <span class="kw">else</span> { <span class="number">0.</span> };
+        <span class="kw">return</span> <span class="kw">if</span> (<span class="ident">ui</span> &gt;&gt; <span class="number">63</span>) != <span class="number">0</span> { -<span class="number">1.</span> } <span class="kw">else</span> { <span class="number">0.</span> };
     }
-    <span class="kw">if</span> <span class="ident">y</span> <span class="op">&gt;</span> <span class="number">0.</span> {
-        <span class="ident">x</span> <span class="op">+</span> <span class="ident">y</span> <span class="op">-</span> <span class="number">1.</span>
+    <span class="kw">if</span> <span class="ident">y</span> &gt; <span class="number">0.</span> {
+        <span class="ident">x</span> + <span class="ident">y</span> - <span class="number">1.</span>
     } <span class="kw">else</span> {
-        <span class="ident">x</span> <span class="op">+</span> <span class="ident">y</span>
+        <span class="ident">x</span> + <span class="ident">y</span>
     }
 }
 
@@ -155,10 +155,10 @@
     <span class="kw">fn</span> <span class="ident">spec_tests</span>() {
         <span class="comment">// Not Asserted: that the current rounding mode has no effect.</span>
         <span class="macro">assert!</span>(<span class="ident">floor</span>(<span class="ident">NAN</span>).<span class="ident">is_nan</span>());
-        <span class="kw">for</span> <span class="ident">f</span> <span class="kw">in</span> [<span class="number">0.0</span>, <span class="op">-</span><span class="number">0.0</span>, <span class="ident">INFINITY</span>, <span class="ident">NEG_INFINITY</span>].<span class="ident">iter</span>().<span class="ident">copied</span>() {
+        <span class="kw">for</span> <span class="ident">f</span> <span class="kw">in</span> [<span class="number">0.0</span>, -<span class="number">0.0</span>, <span class="ident">INFINITY</span>, <span class="ident">NEG_INFINITY</span>].<span class="ident">iter</span>().<span class="ident">copied</span>() {
             <span class="macro">assert_eq!</span>(<span class="ident">floor</span>(<span class="ident">f</span>), <span class="ident">f</span>);
         }
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (34a6cae28 2022-08-09)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f22819bcc 2022-08-12)" ></div></body></html>

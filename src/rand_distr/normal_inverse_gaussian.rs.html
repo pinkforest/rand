@@ -125,7 +125,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="ident">fmt::Result</span> {
         <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw">match</span> <span class="self">self</span> {
             <span class="ident">Error::AlphaNegativeOrNull</span> =&gt; <span class="string">&quot;alpha &lt;= 0 or is NaN in normal inverse Gaussian distribution&quot;</span>,
             <span class="ident">Error::AbsoluteBetaNotLessThanAlpha</span> =&gt; <span class="string">&quot;|beta| &gt;= alpha or is NaN in normal inverse Gaussian distribution&quot;</span>,
@@ -133,45 +133,45 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">doc_cfg</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> = <span class="string">&quot;std&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">doc_cfg</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> = <span class="string">&quot;std&quot;</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">std::error::Error</span> <span class="kw">for</span> <span class="ident">Error</span> {}
 
 <span class="doccomment">/// The [normal-inverse Gaussian distribution](https://en.wikipedia.org/wiki/Normal-inverse_Gaussian_distribution)</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde1&quot;</span>, <span class="ident">derive</span>(<span class="ident">serde::Serialize</span>, <span class="ident">serde::Deserialize</span>))]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">NormalInverseGaussian</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> = <span class="string">&quot;serde1&quot;</span>, <span class="ident">derive</span>(<span class="ident">serde::Serialize</span>, <span class="ident">serde::Deserialize</span>))]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">NormalInverseGaussian</span>&lt;<span class="ident">F</span>&gt;
 <span class="kw">where</span>
     <span class="ident">F</span>: <span class="ident">Float</span>,
-    <span class="ident">StandardNormal</span>: <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>,
-    <span class="ident">Standard</span>: <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>,
+    <span class="ident">StandardNormal</span>: <span class="ident">Distribution</span>&lt;<span class="ident">F</span>&gt;,
+    <span class="ident">Standard</span>: <span class="ident">Distribution</span>&lt;<span class="ident">F</span>&gt;,
 {
     <span class="ident">beta</span>: <span class="ident">F</span>,
-    <span class="ident">inverse_gaussian</span>: <span class="ident">InverseGaussian</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>,
+    <span class="ident">inverse_gaussian</span>: <span class="ident">InverseGaussian</span>&lt;<span class="ident">F</span>&gt;,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="ident">NormalInverseGaussian</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>
+<span class="kw">impl</span>&lt;<span class="ident">F</span>&gt; <span class="ident">NormalInverseGaussian</span>&lt;<span class="ident">F</span>&gt;
 <span class="kw">where</span>
     <span class="ident">F</span>: <span class="ident">Float</span>,
-    <span class="ident">StandardNormal</span>: <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>,
-    <span class="ident">Standard</span>: <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>,
+    <span class="ident">StandardNormal</span>: <span class="ident">Distribution</span>&lt;<span class="ident">F</span>&gt;,
+    <span class="ident">Standard</span>: <span class="ident">Distribution</span>&lt;<span class="ident">F</span>&gt;,
 {
     <span class="doccomment">/// Construct a new `NormalInverseGaussian` distribution with the given alpha (tail heaviness) and</span>
     <span class="doccomment">/// beta (asymmetry) parameters.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">alpha</span>: <span class="ident">F</span>, <span class="ident">beta</span>: <span class="ident">F</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">NormalInverseGaussian</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="op">!</span>(<span class="ident">alpha</span> <span class="op">&gt;</span> <span class="ident">F::zero</span>()) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">alpha</span>: <span class="ident">F</span>, <span class="ident">beta</span>: <span class="ident">F</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="ident">NormalInverseGaussian</span>&lt;<span class="ident">F</span>&gt;, <span class="ident">Error</span>&gt; {
+        <span class="kw">if</span> !(<span class="ident">alpha</span> &gt; <span class="ident">F::zero</span>()) {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::AlphaNegativeOrNull</span>);
         }
 
-        <span class="kw">if</span> <span class="op">!</span>(<span class="ident">beta</span>.<span class="ident">abs</span>() <span class="op">&lt;</span> <span class="ident">alpha</span>) {
+        <span class="kw">if</span> !(<span class="ident">beta</span>.<span class="ident">abs</span>() &lt; <span class="ident">alpha</span>) {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::AbsoluteBetaNotLessThanAlpha</span>);
         }
 
-        <span class="kw">let</span> <span class="ident">gamma</span> <span class="op">=</span> (<span class="ident">alpha</span> <span class="op">*</span> <span class="ident">alpha</span> <span class="op">-</span> <span class="ident">beta</span> <span class="op">*</span> <span class="ident">beta</span>).<span class="ident">sqrt</span>();
+        <span class="kw">let</span> <span class="ident">gamma</span> = (<span class="ident">alpha</span> * <span class="ident">alpha</span> - <span class="ident">beta</span> * <span class="ident">beta</span>).<span class="ident">sqrt</span>();
 
-        <span class="kw">let</span> <span class="ident">mu</span> <span class="op">=</span> <span class="ident">F::one</span>() <span class="op">/</span> <span class="ident">gamma</span>;
+        <span class="kw">let</span> <span class="ident">mu</span> = <span class="ident">F::one</span>() / <span class="ident">gamma</span>;
 
-        <span class="kw">let</span> <span class="ident">inverse_gaussian</span> <span class="op">=</span> <span class="ident">InverseGaussian::new</span>(<span class="ident">mu</span>, <span class="ident">F::one</span>()).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">inverse_gaussian</span> = <span class="ident">InverseGaussian::new</span>(<span class="ident">mu</span>, <span class="ident">F::one</span>()).<span class="ident">unwrap</span>();
 
         <span class="prelude-val">Ok</span>(<span class="self">Self</span> {
             <span class="ident">beta</span>,
@@ -180,17 +180,17 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">NormalInverseGaussian</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>
+<span class="kw">impl</span>&lt;<span class="ident">F</span>&gt; <span class="ident">Distribution</span>&lt;<span class="ident">F</span>&gt; <span class="kw">for</span> <span class="ident">NormalInverseGaussian</span>&lt;<span class="ident">F</span>&gt;
 <span class="kw">where</span>
     <span class="ident">F</span>: <span class="ident">Float</span>,
-    <span class="ident">StandardNormal</span>: <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>,
-    <span class="ident">Standard</span>: <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>,
+    <span class="ident">StandardNormal</span>: <span class="ident">Distribution</span>&lt;<span class="ident">F</span>&gt;,
+    <span class="ident">Standard</span>: <span class="ident">Distribution</span>&lt;<span class="ident">F</span>&gt;,
 {
-    <span class="kw">fn</span> <span class="ident">sample</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rng</span>: <span class="kw-2">&amp;mut</span> <span class="ident">R</span>) -&gt; <span class="ident">F</span>
-    <span class="kw">where</span> <span class="ident">R</span>: <span class="ident">Rng</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span> {
-        <span class="kw">let</span> <span class="ident">inv_gauss</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">sample</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inverse_gaussian</span>);
+    <span class="kw">fn</span> <span class="ident">sample</span>&lt;<span class="ident">R</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rng</span>: <span class="kw-2">&amp;mut</span> <span class="ident">R</span>) -&gt; <span class="ident">F</span>
+    <span class="kw">where</span> <span class="ident">R</span>: <span class="ident">Rng</span> + <span class="question-mark">?</span><span class="ident">Sized</span> {
+        <span class="kw">let</span> <span class="ident">inv_gauss</span> = <span class="ident">rng</span>.<span class="ident">sample</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inverse_gaussian</span>);
 
-        <span class="self">self</span>.<span class="ident">beta</span> <span class="op">*</span> <span class="ident">inv_gauss</span> <span class="op">+</span> <span class="ident">inv_gauss</span>.<span class="ident">sqrt</span>() <span class="op">*</span> <span class="ident">rng</span>.<span class="ident">sample</span>(<span class="ident">StandardNormal</span>)
+        <span class="self">self</span>.<span class="ident">beta</span> * <span class="ident">inv_gauss</span> + <span class="ident">inv_gauss</span>.<span class="ident">sqrt</span>() * <span class="ident">rng</span>.<span class="ident">sample</span>(<span class="ident">StandardNormal</span>)
     }
 }
 
@@ -200,8 +200,8 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_normal_inverse_gaussian</span>() {
-        <span class="kw">let</span> <span class="ident">norm_inv_gauss</span> <span class="op">=</span> <span class="ident">NormalInverseGaussian::new</span>(<span class="number">2.0</span>, <span class="number">1.0</span>).<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rng</span> <span class="op">=</span> <span class="ident"><span class="kw">crate</span>::test::rng</span>(<span class="number">210</span>);
+        <span class="kw">let</span> <span class="ident">norm_inv_gauss</span> = <span class="ident">NormalInverseGaussian::new</span>(<span class="number">2.0</span>, <span class="number">1.0</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rng</span> = <span class="ident"><span class="kw">crate</span>::test::rng</span>(<span class="number">210</span>);
         <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="number">1000</span> {
             <span class="ident">norm_inv_gauss</span>.<span class="ident">sample</span>(<span class="kw-2">&amp;mut</span> <span class="ident">rng</span>);
         }
@@ -209,8 +209,8 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_normal_inverse_gaussian_invalid_param</span>() {
-        <span class="macro">assert!</span>(<span class="ident">NormalInverseGaussian::new</span>(<span class="op">-</span><span class="number">1.0</span>, <span class="number">1.0</span>).<span class="ident">is_err</span>());
-        <span class="macro">assert!</span>(<span class="ident">NormalInverseGaussian::new</span>(<span class="op">-</span><span class="number">1.0</span>, <span class="op">-</span><span class="number">1.0</span>).<span class="ident">is_err</span>());
+        <span class="macro">assert!</span>(<span class="ident">NormalInverseGaussian::new</span>(-<span class="number">1.0</span>, <span class="number">1.0</span>).<span class="ident">is_err</span>());
+        <span class="macro">assert!</span>(<span class="ident">NormalInverseGaussian::new</span>(-<span class="number">1.0</span>, -<span class="number">1.0</span>).<span class="ident">is_err</span>());
         <span class="macro">assert!</span>(<span class="ident">NormalInverseGaussian::new</span>(<span class="number">1.0</span>, <span class="number">2.0</span>).<span class="ident">is_err</span>());
         <span class="macro">assert!</span>(<span class="ident">NormalInverseGaussian::new</span>(<span class="number">2.0</span>, <span class="number">1.0</span>).<span class="ident">is_ok</span>());
     }
@@ -221,4 +221,4 @@
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="rand_distr" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (34a6cae28 2022-08-09)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="rand_distr" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f22819bcc 2022-08-12)" ></div></body></html>

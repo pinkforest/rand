@@ -29,32 +29,32 @@
 <span id="29">29</span>
 </pre><pre class="rust"><code><span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic::no_panic</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scalbnf</span>(<span class="kw-2">mut</span> <span class="ident">x</span>: <span class="ident">f32</span>, <span class="kw-2">mut</span> <span class="ident">n</span>: <span class="ident">i32</span>) -&gt; <span class="ident">f32</span> {
-    <span class="kw">let</span> <span class="ident">x1p127</span> <span class="op">=</span> <span class="ident">f32::from_bits</span>(<span class="number">0x7f000000</span>); <span class="comment">// 0x1p127f === 2 ^ 127</span>
-    <span class="kw">let</span> <span class="ident">x1p_126</span> <span class="op">=</span> <span class="ident">f32::from_bits</span>(<span class="number">0x800000</span>); <span class="comment">// 0x1p-126f === 2 ^ -126</span>
-    <span class="kw">let</span> <span class="ident">x1p24</span> <span class="op">=</span> <span class="ident">f32::from_bits</span>(<span class="number">0x4b800000</span>); <span class="comment">// 0x1p24f === 2 ^ 24</span>
+    <span class="kw">let</span> <span class="ident">x1p127</span> = <span class="ident">f32::from_bits</span>(<span class="number">0x7f000000</span>); <span class="comment">// 0x1p127f === 2 ^ 127</span>
+    <span class="kw">let</span> <span class="ident">x1p_126</span> = <span class="ident">f32::from_bits</span>(<span class="number">0x800000</span>); <span class="comment">// 0x1p-126f === 2 ^ -126</span>
+    <span class="kw">let</span> <span class="ident">x1p24</span> = <span class="ident">f32::from_bits</span>(<span class="number">0x4b800000</span>); <span class="comment">// 0x1p24f === 2 ^ 24</span>
 
-    <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span> <span class="number">127</span> {
-        <span class="ident">x</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p127</span>;
-        <span class="ident">n</span> <span class="op">-</span><span class="op">=</span> <span class="number">127</span>;
-        <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span> <span class="number">127</span> {
-            <span class="ident">x</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p127</span>;
-            <span class="ident">n</span> <span class="op">-</span><span class="op">=</span> <span class="number">127</span>;
-            <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span> <span class="number">127</span> {
-                <span class="ident">n</span> <span class="op">=</span> <span class="number">127</span>;
+    <span class="kw">if</span> <span class="ident">n</span> &gt; <span class="number">127</span> {
+        <span class="ident">x</span> <span class="kw-2">*</span>= <span class="ident">x1p127</span>;
+        <span class="ident">n</span> -= <span class="number">127</span>;
+        <span class="kw">if</span> <span class="ident">n</span> &gt; <span class="number">127</span> {
+            <span class="ident">x</span> <span class="kw-2">*</span>= <span class="ident">x1p127</span>;
+            <span class="ident">n</span> -= <span class="number">127</span>;
+            <span class="kw">if</span> <span class="ident">n</span> &gt; <span class="number">127</span> {
+                <span class="ident">n</span> = <span class="number">127</span>;
             }
         }
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span> <span class="op">-</span><span class="number">126</span> {
-        <span class="ident">x</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p_126</span> <span class="op">*</span> <span class="ident">x1p24</span>;
-        <span class="ident">n</span> <span class="op">+</span><span class="op">=</span> <span class="number">126</span> <span class="op">-</span> <span class="number">24</span>;
-        <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span> <span class="op">-</span><span class="number">126</span> {
-            <span class="ident">x</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p_126</span> <span class="op">*</span> <span class="ident">x1p24</span>;
-            <span class="ident">n</span> <span class="op">+</span><span class="op">=</span> <span class="number">126</span> <span class="op">-</span> <span class="number">24</span>;
-            <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span> <span class="op">-</span><span class="number">126</span> {
-                <span class="ident">n</span> <span class="op">=</span> <span class="op">-</span><span class="number">126</span>;
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">n</span> &lt; -<span class="number">126</span> {
+        <span class="ident">x</span> <span class="kw-2">*</span>= <span class="ident">x1p_126</span> * <span class="ident">x1p24</span>;
+        <span class="ident">n</span> += <span class="number">126</span> - <span class="number">24</span>;
+        <span class="kw">if</span> <span class="ident">n</span> &lt; -<span class="number">126</span> {
+            <span class="ident">x</span> <span class="kw-2">*</span>= <span class="ident">x1p_126</span> * <span class="ident">x1p24</span>;
+            <span class="ident">n</span> += <span class="number">126</span> - <span class="number">24</span>;
+            <span class="kw">if</span> <span class="ident">n</span> &lt; -<span class="number">126</span> {
+                <span class="ident">n</span> = -<span class="number">126</span>;
             }
         }
     }
-    <span class="ident">x</span> <span class="op">*</span> <span class="ident">f32::from_bits</span>(((<span class="number">0x7f</span> <span class="op">+</span> <span class="ident">n</span>) <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">23</span>)
+    <span class="ident">x</span> * <span class="ident">f32::from_bits</span>(((<span class="number">0x7f</span> + <span class="ident">n</span>) <span class="kw">as</span> <span class="ident">u32</span>) &lt;&lt; <span class="number">23</span>)
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (34a6cae28 2022-08-09)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f22819bcc 2022-08-12)" ></div></body></html>

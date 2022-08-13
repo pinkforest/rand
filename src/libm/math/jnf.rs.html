@@ -283,65 +283,65 @@
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">b</span>: <span class="ident">f32</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">temp</span>: <span class="ident">f32</span>;
 
-    <span class="ident">ix</span> <span class="op">=</span> <span class="ident">x</span>.<span class="ident">to_bits</span>();
-    <span class="ident">sign</span> <span class="op">=</span> (<span class="ident">ix</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">31</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span>;
-    <span class="ident">ix</span> <span class="op">&amp;=</span> <span class="number">0x7fffffff</span>;
-    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;</span> <span class="number">0x7f800000</span> {
+    <span class="ident">ix</span> = <span class="ident">x</span>.<span class="ident">to_bits</span>();
+    <span class="ident">sign</span> = (<span class="ident">ix</span> &gt;&gt; <span class="number">31</span>) != <span class="number">0</span>;
+    <span class="ident">ix</span> &amp;= <span class="number">0x7fffffff</span>;
+    <span class="kw">if</span> <span class="ident">ix</span> &gt; <span class="number">0x7f800000</span> {
         <span class="comment">/* nan */</span>
         <span class="kw">return</span> <span class="ident">x</span>;
     }
 
     <span class="comment">/* J(-n,x) = J(n,-x), use |n|-1 to avoid overflow in -n */</span>
-    <span class="kw">if</span> <span class="ident">n</span> <span class="op">==</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">n</span> == <span class="number">0</span> {
         <span class="kw">return</span> <span class="ident">j0f</span>(<span class="ident">x</span>);
     }
-    <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span> <span class="number">0</span> {
-        <span class="ident">nm1</span> <span class="op">=</span> <span class="op">-</span>(<span class="ident">n</span> <span class="op">+</span> <span class="number">1</span>);
-        <span class="ident">x</span> <span class="op">=</span> <span class="op">-</span><span class="ident">x</span>;
-        <span class="ident">sign</span> <span class="op">=</span> <span class="op">!</span><span class="ident">sign</span>;
+    <span class="kw">if</span> <span class="ident">n</span> &lt; <span class="number">0</span> {
+        <span class="ident">nm1</span> = -(<span class="ident">n</span> + <span class="number">1</span>);
+        <span class="ident">x</span> = -<span class="ident">x</span>;
+        <span class="ident">sign</span> = !<span class="ident">sign</span>;
     } <span class="kw">else</span> {
-        <span class="ident">nm1</span> <span class="op">=</span> <span class="ident">n</span> <span class="op">-</span> <span class="number">1</span>;
+        <span class="ident">nm1</span> = <span class="ident">n</span> - <span class="number">1</span>;
     }
-    <span class="kw">if</span> <span class="ident">nm1</span> <span class="op">==</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">nm1</span> == <span class="number">0</span> {
         <span class="kw">return</span> <span class="ident">j1f</span>(<span class="ident">x</span>);
     }
 
-    <span class="ident">sign</span> <span class="op">&amp;=</span> (<span class="ident">n</span> <span class="op">&amp;</span> <span class="number">1</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span>; <span class="comment">/* even n: 0, odd n: signbit(x) */</span>
-    <span class="ident">x</span> <span class="op">=</span> <span class="ident">fabsf</span>(<span class="ident">x</span>);
-    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">==</span> <span class="number">0</span> <span class="op">|</span><span class="op">|</span> <span class="ident">ix</span> <span class="op">==</span> <span class="number">0x7f800000</span> {
+    <span class="ident">sign</span> &amp;= (<span class="ident">n</span> &amp; <span class="number">1</span>) != <span class="number">0</span>; <span class="comment">/* even n: 0, odd n: signbit(x) */</span>
+    <span class="ident">x</span> = <span class="ident">fabsf</span>(<span class="ident">x</span>);
+    <span class="kw">if</span> <span class="ident">ix</span> == <span class="number">0</span> || <span class="ident">ix</span> == <span class="number">0x7f800000</span> {
         <span class="comment">/* if x is 0 or inf */</span>
-        <span class="ident">b</span> <span class="op">=</span> <span class="number">0.0</span>;
-    } <span class="kw">else</span> <span class="kw">if</span> (<span class="ident">nm1</span> <span class="kw">as</span> <span class="ident">f32</span>) <span class="op">&lt;</span> <span class="ident">x</span> {
+        <span class="ident">b</span> = <span class="number">0.0</span>;
+    } <span class="kw">else</span> <span class="kw">if</span> (<span class="ident">nm1</span> <span class="kw">as</span> <span class="ident">f32</span>) &lt; <span class="ident">x</span> {
         <span class="comment">/* Safe to use J(n+1,x)=2n/x *J(n,x)-J(n-1,x) */</span>
-        <span class="ident">a</span> <span class="op">=</span> <span class="ident">j0f</span>(<span class="ident">x</span>);
-        <span class="ident">b</span> <span class="op">=</span> <span class="ident">j1f</span>(<span class="ident">x</span>);
-        <span class="ident">i</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="kw">while</span> <span class="ident">i</span> <span class="op">&lt;</span> <span class="ident">nm1</span> {
-            <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-            <span class="ident">temp</span> <span class="op">=</span> <span class="ident">b</span>;
-            <span class="ident">b</span> <span class="op">=</span> <span class="ident">b</span> <span class="op">*</span> (<span class="number">2.0</span> <span class="op">*</span> (<span class="ident">i</span> <span class="kw">as</span> <span class="ident">f32</span>) <span class="op">/</span> <span class="ident">x</span>) <span class="op">-</span> <span class="ident">a</span>;
-            <span class="ident">a</span> <span class="op">=</span> <span class="ident">temp</span>;
+        <span class="ident">a</span> = <span class="ident">j0f</span>(<span class="ident">x</span>);
+        <span class="ident">b</span> = <span class="ident">j1f</span>(<span class="ident">x</span>);
+        <span class="ident">i</span> = <span class="number">0</span>;
+        <span class="kw">while</span> <span class="ident">i</span> &lt; <span class="ident">nm1</span> {
+            <span class="ident">i</span> += <span class="number">1</span>;
+            <span class="ident">temp</span> = <span class="ident">b</span>;
+            <span class="ident">b</span> = <span class="ident">b</span> * (<span class="number">2.0</span> * (<span class="ident">i</span> <span class="kw">as</span> <span class="ident">f32</span>) / <span class="ident">x</span>) - <span class="ident">a</span>;
+            <span class="ident">a</span> = <span class="ident">temp</span>;
         }
     } <span class="kw">else</span> {
-        <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;</span> <span class="number">0x35800000</span> {
+        <span class="kw">if</span> <span class="ident">ix</span> &lt; <span class="number">0x35800000</span> {
             <span class="comment">/* x &lt; 2**-20 */</span>
             <span class="comment">/* x is tiny, return the first Taylor expansion of J(n,x)
              * J(n,x) = 1/n!*(x/2)^n  - ...
              */</span>
-            <span class="kw">if</span> <span class="ident">nm1</span> <span class="op">&gt;</span> <span class="number">8</span> {
+            <span class="kw">if</span> <span class="ident">nm1</span> &gt; <span class="number">8</span> {
                 <span class="comment">/* underflow */</span>
-                <span class="ident">nm1</span> <span class="op">=</span> <span class="number">8</span>;
+                <span class="ident">nm1</span> = <span class="number">8</span>;
             }
-            <span class="ident">temp</span> <span class="op">=</span> <span class="number">0.5</span> <span class="op">*</span> <span class="ident">x</span>;
-            <span class="ident">b</span> <span class="op">=</span> <span class="ident">temp</span>;
-            <span class="ident">a</span> <span class="op">=</span> <span class="number">1.0</span>;
-            <span class="ident">i</span> <span class="op">=</span> <span class="number">2</span>;
-            <span class="kw">while</span> <span class="ident">i</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">nm1</span> <span class="op">+</span> <span class="number">1</span> {
-                <span class="ident">a</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">i</span> <span class="kw">as</span> <span class="ident">f32</span>; <span class="comment">/* a = n! */</span>
-                <span class="ident">b</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">temp</span>; <span class="comment">/* b = (x/2)^n */</span>
-                <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
+            <span class="ident">temp</span> = <span class="number">0.5</span> * <span class="ident">x</span>;
+            <span class="ident">b</span> = <span class="ident">temp</span>;
+            <span class="ident">a</span> = <span class="number">1.0</span>;
+            <span class="ident">i</span> = <span class="number">2</span>;
+            <span class="kw">while</span> <span class="ident">i</span> &lt;= <span class="ident">nm1</span> + <span class="number">1</span> {
+                <span class="ident">a</span> <span class="kw-2">*</span>= <span class="ident">i</span> <span class="kw">as</span> <span class="ident">f32</span>; <span class="comment">/* a = n! */</span>
+                <span class="ident">b</span> <span class="kw-2">*</span>= <span class="ident">temp</span>; <span class="comment">/* b = (x/2)^n */</span>
+                <span class="ident">i</span> += <span class="number">1</span>;
             }
-            <span class="ident">b</span> <span class="op">=</span> <span class="ident">b</span> <span class="op">/</span> <span class="ident">a</span>;
+            <span class="ident">b</span> = <span class="ident">b</span> / <span class="ident">a</span>;
         } <span class="kw">else</span> {
             <span class="comment">/* use backward recurrence */</span>
             <span class="comment">/*                      x      x^2      x^2
@@ -382,28 +382,28 @@
             <span class="kw">let</span> <span class="ident">nf</span>: <span class="ident">f32</span>;
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">k</span>: <span class="ident">i32</span>;
 
-            <span class="ident">nf</span> <span class="op">=</span> (<span class="ident">nm1</span> <span class="kw">as</span> <span class="ident">f32</span>) <span class="op">+</span> <span class="number">1.0</span>;
-            <span class="ident">w</span> <span class="op">=</span> <span class="number">2.0</span> <span class="op">*</span> (<span class="ident">nf</span> <span class="kw">as</span> <span class="ident">f32</span>) <span class="op">/</span> <span class="ident">x</span>;
-            <span class="ident">h</span> <span class="op">=</span> <span class="number">2.0</span> <span class="op">/</span> <span class="ident">x</span>;
-            <span class="ident">z</span> <span class="op">=</span> <span class="ident">w</span> <span class="op">+</span> <span class="ident">h</span>;
-            <span class="ident">q0</span> <span class="op">=</span> <span class="ident">w</span>;
-            <span class="ident">q1</span> <span class="op">=</span> <span class="ident">w</span> <span class="op">*</span> <span class="ident">z</span> <span class="op">-</span> <span class="number">1.0</span>;
-            <span class="ident">k</span> <span class="op">=</span> <span class="number">1</span>;
-            <span class="kw">while</span> <span class="ident">q1</span> <span class="op">&lt;</span> <span class="number">1.0e4</span> {
-                <span class="ident">k</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-                <span class="ident">z</span> <span class="op">+</span><span class="op">=</span> <span class="ident">h</span>;
-                <span class="ident">tmp</span> <span class="op">=</span> <span class="ident">z</span> <span class="op">*</span> <span class="ident">q1</span> <span class="op">-</span> <span class="ident">q0</span>;
-                <span class="ident">q0</span> <span class="op">=</span> <span class="ident">q1</span>;
-                <span class="ident">q1</span> <span class="op">=</span> <span class="ident">tmp</span>;
+            <span class="ident">nf</span> = (<span class="ident">nm1</span> <span class="kw">as</span> <span class="ident">f32</span>) + <span class="number">1.0</span>;
+            <span class="ident">w</span> = <span class="number">2.0</span> * (<span class="ident">nf</span> <span class="kw">as</span> <span class="ident">f32</span>) / <span class="ident">x</span>;
+            <span class="ident">h</span> = <span class="number">2.0</span> / <span class="ident">x</span>;
+            <span class="ident">z</span> = <span class="ident">w</span> + <span class="ident">h</span>;
+            <span class="ident">q0</span> = <span class="ident">w</span>;
+            <span class="ident">q1</span> = <span class="ident">w</span> * <span class="ident">z</span> - <span class="number">1.0</span>;
+            <span class="ident">k</span> = <span class="number">1</span>;
+            <span class="kw">while</span> <span class="ident">q1</span> &lt; <span class="number">1.0e4</span> {
+                <span class="ident">k</span> += <span class="number">1</span>;
+                <span class="ident">z</span> += <span class="ident">h</span>;
+                <span class="ident">tmp</span> = <span class="ident">z</span> * <span class="ident">q1</span> - <span class="ident">q0</span>;
+                <span class="ident">q0</span> = <span class="ident">q1</span>;
+                <span class="ident">q1</span> = <span class="ident">tmp</span>;
             }
-            <span class="ident">t</span> <span class="op">=</span> <span class="number">0.0</span>;
-            <span class="ident">i</span> <span class="op">=</span> <span class="ident">k</span>;
-            <span class="kw">while</span> <span class="ident">i</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0</span> {
-                <span class="ident">t</span> <span class="op">=</span> <span class="number">1.0</span> <span class="op">/</span> (<span class="number">2.0</span> <span class="op">*</span> ((<span class="ident">i</span> <span class="kw">as</span> <span class="ident">f32</span>) <span class="op">+</span> <span class="ident">nf</span>) <span class="op">/</span> <span class="ident">x</span> <span class="op">-</span> <span class="ident">t</span>);
-                <span class="ident">i</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
+            <span class="ident">t</span> = <span class="number">0.0</span>;
+            <span class="ident">i</span> = <span class="ident">k</span>;
+            <span class="kw">while</span> <span class="ident">i</span> &gt;= <span class="number">0</span> {
+                <span class="ident">t</span> = <span class="number">1.0</span> / (<span class="number">2.0</span> * ((<span class="ident">i</span> <span class="kw">as</span> <span class="ident">f32</span>) + <span class="ident">nf</span>) / <span class="ident">x</span> - <span class="ident">t</span>);
+                <span class="ident">i</span> -= <span class="number">1</span>;
             }
-            <span class="ident">a</span> <span class="op">=</span> <span class="ident">t</span>;
-            <span class="ident">b</span> <span class="op">=</span> <span class="number">1.0</span>;
+            <span class="ident">a</span> = <span class="ident">t</span>;
+            <span class="ident">b</span> = <span class="number">1.0</span>;
             <span class="comment">/*  estimate log((2/x)^n*n!) = n*log(2/x)+n*ln(n)
              *  Hence, if n*(log(2n/x)) &gt; ...
              *  single 8.8722839355e+01
@@ -412,43 +412,43 @@
              *  then recurrent value may overflow and the result is
              *  likely underflow to zero
              */</span>
-            <span class="ident">tmp</span> <span class="op">=</span> <span class="ident">nf</span> <span class="op">*</span> <span class="ident">logf</span>(<span class="ident">fabsf</span>(<span class="ident">w</span>));
-            <span class="kw">if</span> <span class="ident">tmp</span> <span class="op">&lt;</span> <span class="number">88.721679688</span> {
-                <span class="ident">i</span> <span class="op">=</span> <span class="ident">nm1</span>;
-                <span class="kw">while</span> <span class="ident">i</span> <span class="op">&gt;</span> <span class="number">0</span> {
-                    <span class="ident">temp</span> <span class="op">=</span> <span class="ident">b</span>;
-                    <span class="ident">b</span> <span class="op">=</span> <span class="number">2.0</span> <span class="op">*</span> (<span class="ident">i</span> <span class="kw">as</span> <span class="ident">f32</span>) <span class="op">*</span> <span class="ident">b</span> <span class="op">/</span> <span class="ident">x</span> <span class="op">-</span> <span class="ident">a</span>;
-                    <span class="ident">a</span> <span class="op">=</span> <span class="ident">temp</span>;
-                    <span class="ident">i</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
+            <span class="ident">tmp</span> = <span class="ident">nf</span> * <span class="ident">logf</span>(<span class="ident">fabsf</span>(<span class="ident">w</span>));
+            <span class="kw">if</span> <span class="ident">tmp</span> &lt; <span class="number">88.721679688</span> {
+                <span class="ident">i</span> = <span class="ident">nm1</span>;
+                <span class="kw">while</span> <span class="ident">i</span> &gt; <span class="number">0</span> {
+                    <span class="ident">temp</span> = <span class="ident">b</span>;
+                    <span class="ident">b</span> = <span class="number">2.0</span> * (<span class="ident">i</span> <span class="kw">as</span> <span class="ident">f32</span>) * <span class="ident">b</span> / <span class="ident">x</span> - <span class="ident">a</span>;
+                    <span class="ident">a</span> = <span class="ident">temp</span>;
+                    <span class="ident">i</span> -= <span class="number">1</span>;
                 }
             } <span class="kw">else</span> {
-                <span class="ident">i</span> <span class="op">=</span> <span class="ident">nm1</span>;
-                <span class="kw">while</span> <span class="ident">i</span> <span class="op">&gt;</span> <span class="number">0</span> {
-                    <span class="ident">temp</span> <span class="op">=</span> <span class="ident">b</span>;
-                    <span class="ident">b</span> <span class="op">=</span> <span class="number">2.0</span> <span class="op">*</span> (<span class="ident">i</span> <span class="kw">as</span> <span class="ident">f32</span>) <span class="op">*</span> <span class="ident">b</span> <span class="op">/</span> <span class="ident">x</span> <span class="op">-</span> <span class="ident">a</span>;
-                    <span class="ident">a</span> <span class="op">=</span> <span class="ident">temp</span>;
+                <span class="ident">i</span> = <span class="ident">nm1</span>;
+                <span class="kw">while</span> <span class="ident">i</span> &gt; <span class="number">0</span> {
+                    <span class="ident">temp</span> = <span class="ident">b</span>;
+                    <span class="ident">b</span> = <span class="number">2.0</span> * (<span class="ident">i</span> <span class="kw">as</span> <span class="ident">f32</span>) * <span class="ident">b</span> / <span class="ident">x</span> - <span class="ident">a</span>;
+                    <span class="ident">a</span> = <span class="ident">temp</span>;
                     <span class="comment">/* scale b to avoid spurious overflow */</span>
-                    <span class="kw">let</span> <span class="ident">x1p60</span> <span class="op">=</span> <span class="ident">f32::from_bits</span>(<span class="number">0x5d800000</span>); <span class="comment">// 0x1p60 == 2^60</span>
-                    <span class="kw">if</span> <span class="ident">b</span> <span class="op">&gt;</span> <span class="ident">x1p60</span> {
-                        <span class="ident">a</span> <span class="op">/</span><span class="op">=</span> <span class="ident">b</span>;
-                        <span class="ident">t</span> <span class="op">/</span><span class="op">=</span> <span class="ident">b</span>;
-                        <span class="ident">b</span> <span class="op">=</span> <span class="number">1.0</span>;
+                    <span class="kw">let</span> <span class="ident">x1p60</span> = <span class="ident">f32::from_bits</span>(<span class="number">0x5d800000</span>); <span class="comment">// 0x1p60 == 2^60</span>
+                    <span class="kw">if</span> <span class="ident">b</span> &gt; <span class="ident">x1p60</span> {
+                        <span class="ident">a</span> /= <span class="ident">b</span>;
+                        <span class="ident">t</span> /= <span class="ident">b</span>;
+                        <span class="ident">b</span> = <span class="number">1.0</span>;
                     }
-                    <span class="ident">i</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
+                    <span class="ident">i</span> -= <span class="number">1</span>;
                 }
             }
-            <span class="ident">z</span> <span class="op">=</span> <span class="ident">j0f</span>(<span class="ident">x</span>);
-            <span class="ident">w</span> <span class="op">=</span> <span class="ident">j1f</span>(<span class="ident">x</span>);
-            <span class="kw">if</span> <span class="ident">fabsf</span>(<span class="ident">z</span>) <span class="op">&gt;</span><span class="op">=</span> <span class="ident">fabsf</span>(<span class="ident">w</span>) {
-                <span class="ident">b</span> <span class="op">=</span> <span class="ident">t</span> <span class="op">*</span> <span class="ident">z</span> <span class="op">/</span> <span class="ident">b</span>;
+            <span class="ident">z</span> = <span class="ident">j0f</span>(<span class="ident">x</span>);
+            <span class="ident">w</span> = <span class="ident">j1f</span>(<span class="ident">x</span>);
+            <span class="kw">if</span> <span class="ident">fabsf</span>(<span class="ident">z</span>) &gt;= <span class="ident">fabsf</span>(<span class="ident">w</span>) {
+                <span class="ident">b</span> = <span class="ident">t</span> * <span class="ident">z</span> / <span class="ident">b</span>;
             } <span class="kw">else</span> {
-                <span class="ident">b</span> <span class="op">=</span> <span class="ident">t</span> <span class="op">*</span> <span class="ident">w</span> <span class="op">/</span> <span class="ident">a</span>;
+                <span class="ident">b</span> = <span class="ident">t</span> * <span class="ident">w</span> / <span class="ident">a</span>;
             }
         }
     }
 
     <span class="kw">if</span> <span class="ident">sign</span> {
-        <span class="op">-</span><span class="ident">b</span>
+        -<span class="ident">b</span>
     } <span class="kw">else</span> {
         <span class="ident">b</span>
     }
@@ -464,57 +464,57 @@
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">b</span>: <span class="ident">f32</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">temp</span>: <span class="ident">f32</span>;
 
-    <span class="ident">ix</span> <span class="op">=</span> <span class="ident">x</span>.<span class="ident">to_bits</span>();
-    <span class="ident">sign</span> <span class="op">=</span> (<span class="ident">ix</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">31</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span>;
-    <span class="ident">ix</span> <span class="op">&amp;=</span> <span class="number">0x7fffffff</span>;
-    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;</span> <span class="number">0x7f800000</span> {
+    <span class="ident">ix</span> = <span class="ident">x</span>.<span class="ident">to_bits</span>();
+    <span class="ident">sign</span> = (<span class="ident">ix</span> &gt;&gt; <span class="number">31</span>) != <span class="number">0</span>;
+    <span class="ident">ix</span> &amp;= <span class="number">0x7fffffff</span>;
+    <span class="kw">if</span> <span class="ident">ix</span> &gt; <span class="number">0x7f800000</span> {
         <span class="comment">/* nan */</span>
         <span class="kw">return</span> <span class="ident">x</span>;
     }
-    <span class="kw">if</span> <span class="ident">sign</span> <span class="op">&amp;&amp;</span> <span class="ident">ix</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">sign</span> &amp;&amp; <span class="ident">ix</span> != <span class="number">0</span> {
         <span class="comment">/* x &lt; 0 */</span>
-        <span class="kw">return</span> <span class="number">0.0</span> <span class="op">/</span> <span class="number">0.0</span>;
+        <span class="kw">return</span> <span class="number">0.0</span> / <span class="number">0.0</span>;
     }
-    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">==</span> <span class="number">0x7f800000</span> {
+    <span class="kw">if</span> <span class="ident">ix</span> == <span class="number">0x7f800000</span> {
         <span class="kw">return</span> <span class="number">0.0</span>;
     }
 
-    <span class="kw">if</span> <span class="ident">n</span> <span class="op">==</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">n</span> == <span class="number">0</span> {
         <span class="kw">return</span> <span class="ident">y0f</span>(<span class="ident">x</span>);
     }
-    <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span> <span class="number">0</span> {
-        <span class="ident">nm1</span> <span class="op">=</span> <span class="op">-</span>(<span class="ident">n</span> <span class="op">+</span> <span class="number">1</span>);
-        <span class="ident">sign</span> <span class="op">=</span> (<span class="ident">n</span> <span class="op">&amp;</span> <span class="number">1</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span>;
+    <span class="kw">if</span> <span class="ident">n</span> &lt; <span class="number">0</span> {
+        <span class="ident">nm1</span> = -(<span class="ident">n</span> + <span class="number">1</span>);
+        <span class="ident">sign</span> = (<span class="ident">n</span> &amp; <span class="number">1</span>) != <span class="number">0</span>;
     } <span class="kw">else</span> {
-        <span class="ident">nm1</span> <span class="op">=</span> <span class="ident">n</span> <span class="op">-</span> <span class="number">1</span>;
-        <span class="ident">sign</span> <span class="op">=</span> <span class="bool-val">false</span>;
+        <span class="ident">nm1</span> = <span class="ident">n</span> - <span class="number">1</span>;
+        <span class="ident">sign</span> = <span class="bool-val">false</span>;
     }
-    <span class="kw">if</span> <span class="ident">nm1</span> <span class="op">==</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">nm1</span> == <span class="number">0</span> {
         <span class="kw">if</span> <span class="ident">sign</span> {
-            <span class="kw">return</span> <span class="op">-</span><span class="ident">y1f</span>(<span class="ident">x</span>);
+            <span class="kw">return</span> -<span class="ident">y1f</span>(<span class="ident">x</span>);
         } <span class="kw">else</span> {
             <span class="kw">return</span> <span class="ident">y1f</span>(<span class="ident">x</span>);
         }
     }
 
-    <span class="ident">a</span> <span class="op">=</span> <span class="ident">y0f</span>(<span class="ident">x</span>);
-    <span class="ident">b</span> <span class="op">=</span> <span class="ident">y1f</span>(<span class="ident">x</span>);
+    <span class="ident">a</span> = <span class="ident">y0f</span>(<span class="ident">x</span>);
+    <span class="ident">b</span> = <span class="ident">y1f</span>(<span class="ident">x</span>);
     <span class="comment">/* quit if b is -inf */</span>
-    <span class="ident">ib</span> <span class="op">=</span> <span class="ident">b</span>.<span class="ident">to_bits</span>();
-    <span class="ident">i</span> <span class="op">=</span> <span class="number">0</span>;
-    <span class="kw">while</span> <span class="ident">i</span> <span class="op">&lt;</span> <span class="ident">nm1</span> <span class="op">&amp;&amp;</span> <span class="ident">ib</span> <span class="op">!</span><span class="op">=</span> <span class="number">0xff800000</span> {
-        <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-        <span class="ident">temp</span> <span class="op">=</span> <span class="ident">b</span>;
-        <span class="ident">b</span> <span class="op">=</span> (<span class="number">2.0</span> <span class="op">*</span> (<span class="ident">i</span> <span class="kw">as</span> <span class="ident">f32</span>) <span class="op">/</span> <span class="ident">x</span>) <span class="op">*</span> <span class="ident">b</span> <span class="op">-</span> <span class="ident">a</span>;
-        <span class="ident">ib</span> <span class="op">=</span> <span class="ident">b</span>.<span class="ident">to_bits</span>();
-        <span class="ident">a</span> <span class="op">=</span> <span class="ident">temp</span>;
+    <span class="ident">ib</span> = <span class="ident">b</span>.<span class="ident">to_bits</span>();
+    <span class="ident">i</span> = <span class="number">0</span>;
+    <span class="kw">while</span> <span class="ident">i</span> &lt; <span class="ident">nm1</span> &amp;&amp; <span class="ident">ib</span> != <span class="number">0xff800000</span> {
+        <span class="ident">i</span> += <span class="number">1</span>;
+        <span class="ident">temp</span> = <span class="ident">b</span>;
+        <span class="ident">b</span> = (<span class="number">2.0</span> * (<span class="ident">i</span> <span class="kw">as</span> <span class="ident">f32</span>) / <span class="ident">x</span>) * <span class="ident">b</span> - <span class="ident">a</span>;
+        <span class="ident">ib</span> = <span class="ident">b</span>.<span class="ident">to_bits</span>();
+        <span class="ident">a</span> = <span class="ident">temp</span>;
     }
 
     <span class="kw">if</span> <span class="ident">sign</span> {
-        <span class="op">-</span><span class="ident">b</span>
+        -<span class="ident">b</span>
     } <span class="kw">else</span> {
         <span class="ident">b</span>
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (34a6cae28 2022-08-09)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f22819bcc 2022-08-12)" ></div></body></html>

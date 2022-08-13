@@ -216,31 +216,31 @@
 <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::fabs</span>;
 <span class="kw">use</span> <span class="ident">core::f64</span>;
 
-<span class="kw">const</span> <span class="ident">ATANHI</span>: [<span class="ident">f64</span>; <span class="number">4</span>] <span class="op">=</span> [
+<span class="kw">const</span> <span class="ident">ATANHI</span>: [<span class="ident">f64</span>; <span class="number">4</span>] = [
     <span class="number">4.63647609000806093515e-01</span>, <span class="comment">/* atan(0.5)hi 0x3FDDAC67, 0x0561BB4F */</span>
     <span class="number">7.85398163397448278999e-01</span>, <span class="comment">/* atan(1.0)hi 0x3FE921FB, 0x54442D18 */</span>
     <span class="number">9.82793723247329054082e-01</span>, <span class="comment">/* atan(1.5)hi 0x3FEF730B, 0xD281F69B */</span>
     <span class="number">1.57079632679489655800e+00</span>, <span class="comment">/* atan(inf)hi 0x3FF921FB, 0x54442D18 */</span>
 ];
 
-<span class="kw">const</span> <span class="ident">ATANLO</span>: [<span class="ident">f64</span>; <span class="number">4</span>] <span class="op">=</span> [
+<span class="kw">const</span> <span class="ident">ATANLO</span>: [<span class="ident">f64</span>; <span class="number">4</span>] = [
     <span class="number">2.26987774529616870924e-17</span>, <span class="comment">/* atan(0.5)lo 0x3C7A2B7F, 0x222F65E2 */</span>
     <span class="number">3.06161699786838301793e-17</span>, <span class="comment">/* atan(1.0)lo 0x3C81A626, 0x33145C07 */</span>
     <span class="number">1.39033110312309984516e-17</span>, <span class="comment">/* atan(1.5)lo 0x3C700788, 0x7AF0CBBD */</span>
     <span class="number">6.12323399573676603587e-17</span>, <span class="comment">/* atan(inf)lo 0x3C91A626, 0x33145C07 */</span>
 ];
 
-<span class="kw">const</span> <span class="ident">AT</span>: [<span class="ident">f64</span>; <span class="number">11</span>] <span class="op">=</span> [
+<span class="kw">const</span> <span class="ident">AT</span>: [<span class="ident">f64</span>; <span class="number">11</span>] = [
     <span class="number">3.33333333333329318027e-01</span>,  <span class="comment">/* 0x3FD55555, 0x5555550D */</span>
-    <span class="op">-</span><span class="number">1.99999999998764832476e-01</span>, <span class="comment">/* 0xBFC99999, 0x9998EBC4 */</span>
+    -<span class="number">1.99999999998764832476e-01</span>, <span class="comment">/* 0xBFC99999, 0x9998EBC4 */</span>
     <span class="number">1.42857142725034663711e-01</span>,  <span class="comment">/* 0x3FC24924, 0x920083FF */</span>
-    <span class="op">-</span><span class="number">1.11111104054623557880e-01</span>, <span class="comment">/* 0xBFBC71C6, 0xFE231671 */</span>
+    -<span class="number">1.11111104054623557880e-01</span>, <span class="comment">/* 0xBFBC71C6, 0xFE231671 */</span>
     <span class="number">9.09088713343650656196e-02</span>,  <span class="comment">/* 0x3FB745CD, 0xC54C206E */</span>
-    <span class="op">-</span><span class="number">7.69187620504482999495e-02</span>, <span class="comment">/* 0xBFB3B0F2, 0xAF749A6D */</span>
+    -<span class="number">7.69187620504482999495e-02</span>, <span class="comment">/* 0xBFB3B0F2, 0xAF749A6D */</span>
     <span class="number">6.66107313738753120669e-02</span>,  <span class="comment">/* 0x3FB10D66, 0xA0D03D51 */</span>
-    <span class="op">-</span><span class="number">5.83357013379057348645e-02</span>, <span class="comment">/* 0xBFADDE2D, 0x52DEFD9A */</span>
+    -<span class="number">5.83357013379057348645e-02</span>, <span class="comment">/* 0xBFADDE2D, 0x52DEFD9A */</span>
     <span class="number">4.97687799461593236017e-02</span>,  <span class="comment">/* 0x3FA97B4B, 0x24760DEB */</span>
-    <span class="op">-</span><span class="number">3.65315727442169155270e-02</span>, <span class="comment">/* 0xBFA2B444, 0x2C6A6C2F */</span>
+    -<span class="number">3.65315727442169155270e-02</span>, <span class="comment">/* 0xBFA2B444, 0x2C6A6C2F */</span>
     <span class="number">1.62858201153657823623e-02</span>,  <span class="comment">/* 0x3F90AD3A, 0xE322DA11 */</span>
 ];
 
@@ -250,24 +250,24 @@
 <span class="doccomment">/// Returns a value in radians, in the range of -pi/2 to pi/2.</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic::no_panic</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">atan</span>(<span class="ident">x</span>: <span class="ident">f64</span>) -&gt; <span class="ident">f64</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">x</span>;
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ix</span> <span class="op">=</span> (<span class="ident">x</span>.<span class="ident">to_bits</span>() <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span>;
-    <span class="kw">let</span> <span class="ident">sign</span> <span class="op">=</span> <span class="ident">ix</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">31</span>;
-    <span class="ident">ix</span> <span class="op">&amp;=</span> <span class="number">0x7fff_ffff</span>;
-    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x4410_0000</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">x</span> = <span class="ident">x</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ix</span> = (<span class="ident">x</span>.<span class="ident">to_bits</span>() &gt;&gt; <span class="number">32</span>) <span class="kw">as</span> <span class="ident">u32</span>;
+    <span class="kw">let</span> <span class="ident">sign</span> = <span class="ident">ix</span> &gt;&gt; <span class="number">31</span>;
+    <span class="ident">ix</span> &amp;= <span class="number">0x7fff_ffff</span>;
+    <span class="kw">if</span> <span class="ident">ix</span> &gt;= <span class="number">0x4410_0000</span> {
         <span class="kw">if</span> <span class="ident">x</span>.<span class="ident">is_nan</span>() {
             <span class="kw">return</span> <span class="ident">x</span>;
         }
 
-        <span class="kw">let</span> <span class="ident">z</span> <span class="op">=</span> <span class="ident">ATANHI</span>[<span class="number">3</span>] <span class="op">+</span> <span class="ident">f64::from_bits</span>(<span class="number">0x0380_0000</span>); <span class="comment">// 0x1p-120f</span>
-        <span class="kw">return</span> <span class="kw">if</span> <span class="ident">sign</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> { <span class="op">-</span><span class="ident">z</span> } <span class="kw">else</span> { <span class="ident">z</span> };
+        <span class="kw">let</span> <span class="ident">z</span> = <span class="ident">ATANHI</span>[<span class="number">3</span>] + <span class="ident">f64::from_bits</span>(<span class="number">0x0380_0000</span>); <span class="comment">// 0x1p-120f</span>
+        <span class="kw">return</span> <span class="kw">if</span> <span class="ident">sign</span> != <span class="number">0</span> { -<span class="ident">z</span> } <span class="kw">else</span> { <span class="ident">z</span> };
     }
 
-    <span class="kw">let</span> <span class="ident">id</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;</span> <span class="number">0x3fdc_0000</span> {
+    <span class="kw">let</span> <span class="ident">id</span> = <span class="kw">if</span> <span class="ident">ix</span> &lt; <span class="number">0x3fdc_0000</span> {
         <span class="comment">/* |x| &lt; 0.4375 */</span>
-        <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;</span> <span class="number">0x3e40_0000</span> {
+        <span class="kw">if</span> <span class="ident">ix</span> &lt; <span class="number">0x3e40_0000</span> {
             <span class="comment">/* |x| &lt; 2^-27 */</span>
-            <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;</span> <span class="number">0x0010_0000</span> {
+            <span class="kw">if</span> <span class="ident">ix</span> &lt; <span class="number">0x0010_0000</span> {
                 <span class="comment">/* raise underflow for subnormal x */</span>
                 <span class="macro">force_eval!</span>(<span class="ident">x</span> <span class="kw">as</span> <span class="ident">f32</span>);
             }
@@ -275,45 +275,45 @@
             <span class="kw">return</span> <span class="ident">x</span>;
         }
 
-        <span class="op">-</span><span class="number">1</span>
+        -<span class="number">1</span>
     } <span class="kw">else</span> {
-        <span class="ident">x</span> <span class="op">=</span> <span class="ident">fabs</span>(<span class="ident">x</span>);
-        <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;</span> <span class="number">0x3ff30000</span> {
+        <span class="ident">x</span> = <span class="ident">fabs</span>(<span class="ident">x</span>);
+        <span class="kw">if</span> <span class="ident">ix</span> &lt; <span class="number">0x3ff30000</span> {
             <span class="comment">/* |x| &lt; 1.1875 */</span>
-            <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;</span> <span class="number">0x3fe60000</span> {
+            <span class="kw">if</span> <span class="ident">ix</span> &lt; <span class="number">0x3fe60000</span> {
                 <span class="comment">/* 7/16 &lt;= |x| &lt; 11/16 */</span>
-                <span class="ident">x</span> <span class="op">=</span> (<span class="number">2.</span> <span class="op">*</span> <span class="ident">x</span> <span class="op">-</span> <span class="number">1.</span>) <span class="op">/</span> (<span class="number">2.</span> <span class="op">+</span> <span class="ident">x</span>);
+                <span class="ident">x</span> = (<span class="number">2.</span> * <span class="ident">x</span> - <span class="number">1.</span>) / (<span class="number">2.</span> + <span class="ident">x</span>);
                 <span class="number">0</span>
             } <span class="kw">else</span> {
                 <span class="comment">/* 11/16 &lt;= |x| &lt; 19/16 */</span>
-                <span class="ident">x</span> <span class="op">=</span> (<span class="ident">x</span> <span class="op">-</span> <span class="number">1.</span>) <span class="op">/</span> (<span class="ident">x</span> <span class="op">+</span> <span class="number">1.</span>);
+                <span class="ident">x</span> = (<span class="ident">x</span> - <span class="number">1.</span>) / (<span class="ident">x</span> + <span class="number">1.</span>);
                 <span class="number">1</span>
             }
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;</span> <span class="number">0x40038000</span> {
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">ix</span> &lt; <span class="number">0x40038000</span> {
             <span class="comment">/* |x| &lt; 2.4375 */</span>
-            <span class="ident">x</span> <span class="op">=</span> (<span class="ident">x</span> <span class="op">-</span> <span class="number">1.5</span>) <span class="op">/</span> (<span class="number">1.</span> <span class="op">+</span> <span class="number">1.5</span> <span class="op">*</span> <span class="ident">x</span>);
+            <span class="ident">x</span> = (<span class="ident">x</span> - <span class="number">1.5</span>) / (<span class="number">1.</span> + <span class="number">1.5</span> * <span class="ident">x</span>);
             <span class="number">2</span>
         } <span class="kw">else</span> {
             <span class="comment">/* 2.4375 &lt;= |x| &lt; 2^66 */</span>
-            <span class="ident">x</span> <span class="op">=</span> <span class="op">-</span><span class="number">1.</span> <span class="op">/</span> <span class="ident">x</span>;
+            <span class="ident">x</span> = -<span class="number">1.</span> / <span class="ident">x</span>;
             <span class="number">3</span>
         }
     };
 
-    <span class="kw">let</span> <span class="ident">z</span> <span class="op">=</span> <span class="ident">x</span> <span class="op">*</span> <span class="ident">x</span>;
-    <span class="kw">let</span> <span class="ident">w</span> <span class="op">=</span> <span class="ident">z</span> <span class="op">*</span> <span class="ident">z</span>;
+    <span class="kw">let</span> <span class="ident">z</span> = <span class="ident">x</span> * <span class="ident">x</span>;
+    <span class="kw">let</span> <span class="ident">w</span> = <span class="ident">z</span> * <span class="ident">z</span>;
     <span class="comment">/* break sum from i=0 to 10 AT[i]z**(i+1) into odd and even poly */</span>
-    <span class="kw">let</span> <span class="ident">s1</span> <span class="op">=</span> <span class="ident">z</span> <span class="op">*</span> (<span class="ident">AT</span>[<span class="number">0</span>] <span class="op">+</span> <span class="ident">w</span> <span class="op">*</span> (<span class="ident">AT</span>[<span class="number">2</span>] <span class="op">+</span> <span class="ident">w</span> <span class="op">*</span> (<span class="ident">AT</span>[<span class="number">4</span>] <span class="op">+</span> <span class="ident">w</span> <span class="op">*</span> (<span class="ident">AT</span>[<span class="number">6</span>] <span class="op">+</span> <span class="ident">w</span> <span class="op">*</span> (<span class="ident">AT</span>[<span class="number">8</span>] <span class="op">+</span> <span class="ident">w</span> <span class="op">*</span> <span class="ident">AT</span>[<span class="number">10</span>])))));
-    <span class="kw">let</span> <span class="ident">s2</span> <span class="op">=</span> <span class="ident">w</span> <span class="op">*</span> (<span class="ident">AT</span>[<span class="number">1</span>] <span class="op">+</span> <span class="ident">w</span> <span class="op">*</span> (<span class="ident">AT</span>[<span class="number">3</span>] <span class="op">+</span> <span class="ident">w</span> <span class="op">*</span> (<span class="ident">AT</span>[<span class="number">5</span>] <span class="op">+</span> <span class="ident">w</span> <span class="op">*</span> (<span class="ident">AT</span>[<span class="number">7</span>] <span class="op">+</span> <span class="ident">w</span> <span class="op">*</span> <span class="ident">AT</span>[<span class="number">9</span>]))));
+    <span class="kw">let</span> <span class="ident">s1</span> = <span class="ident">z</span> * (<span class="ident">AT</span>[<span class="number">0</span>] + <span class="ident">w</span> * (<span class="ident">AT</span>[<span class="number">2</span>] + <span class="ident">w</span> * (<span class="ident">AT</span>[<span class="number">4</span>] + <span class="ident">w</span> * (<span class="ident">AT</span>[<span class="number">6</span>] + <span class="ident">w</span> * (<span class="ident">AT</span>[<span class="number">8</span>] + <span class="ident">w</span> * <span class="ident">AT</span>[<span class="number">10</span>])))));
+    <span class="kw">let</span> <span class="ident">s2</span> = <span class="ident">w</span> * (<span class="ident">AT</span>[<span class="number">1</span>] + <span class="ident">w</span> * (<span class="ident">AT</span>[<span class="number">3</span>] + <span class="ident">w</span> * (<span class="ident">AT</span>[<span class="number">5</span>] + <span class="ident">w</span> * (<span class="ident">AT</span>[<span class="number">7</span>] + <span class="ident">w</span> * <span class="ident">AT</span>[<span class="number">9</span>]))));
 
-    <span class="kw">if</span> <span class="ident">id</span> <span class="op">&lt;</span> <span class="number">0</span> {
-        <span class="kw">return</span> <span class="ident">x</span> <span class="op">-</span> <span class="ident">x</span> <span class="op">*</span> (<span class="ident">s1</span> <span class="op">+</span> <span class="ident">s2</span>);
+    <span class="kw">if</span> <span class="ident">id</span> &lt; <span class="number">0</span> {
+        <span class="kw">return</span> <span class="ident">x</span> - <span class="ident">x</span> * (<span class="ident">s1</span> + <span class="ident">s2</span>);
     }
 
-    <span class="kw">let</span> <span class="ident">z</span> <span class="op">=</span> <span class="macro">i!</span>(<span class="ident">ATANHI</span>, <span class="ident">id</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">-</span> (<span class="ident">x</span> <span class="op">*</span> (<span class="ident">s1</span> <span class="op">+</span> <span class="ident">s2</span>) <span class="op">-</span> <span class="macro">i!</span>(<span class="ident">ATANLO</span>, <span class="ident">id</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">-</span> <span class="ident">x</span>);
+    <span class="kw">let</span> <span class="ident">z</span> = <span class="macro">i!</span>(<span class="ident">ATANHI</span>, <span class="ident">id</span> <span class="kw">as</span> <span class="ident">usize</span>) - (<span class="ident">x</span> * (<span class="ident">s1</span> + <span class="ident">s2</span>) - <span class="macro">i!</span>(<span class="ident">ATANLO</span>, <span class="ident">id</span> <span class="kw">as</span> <span class="ident">usize</span>) - <span class="ident">x</span>);
 
-    <span class="kw">if</span> <span class="ident">sign</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
-        <span class="op">-</span><span class="ident">z</span>
+    <span class="kw">if</span> <span class="ident">sign</span> != <span class="number">0</span> {
+        -<span class="ident">z</span>
     } <span class="kw">else</span> {
         <span class="ident">z</span>
     }
@@ -327,19 +327,19 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">sanity_check</span>() {
         <span class="kw">for</span> (<span class="ident">input</span>, <span class="ident">answer</span>) <span class="kw">in</span> [
-            (<span class="number">3.0_f64</span>.<span class="ident">sqrt</span>() <span class="op">/</span> <span class="number">3.0</span>, <span class="ident">f64::consts::FRAC_PI_6</span>),
+            (<span class="number">3.0_f64</span>.<span class="ident">sqrt</span>() / <span class="number">3.0</span>, <span class="ident">f64::consts::FRAC_PI_6</span>),
             (<span class="number">1.0</span>, <span class="ident">f64::consts::FRAC_PI_4</span>),
             (<span class="number">3.0_f64</span>.<span class="ident">sqrt</span>(), <span class="ident">f64::consts::FRAC_PI_3</span>),
-            (<span class="op">-</span><span class="number">3.0_f64</span>.<span class="ident">sqrt</span>() <span class="op">/</span> <span class="number">3.0</span>, <span class="op">-</span><span class="ident">f64::consts::FRAC_PI_6</span>),
-            (<span class="op">-</span><span class="number">1.0</span>, <span class="op">-</span><span class="ident">f64::consts::FRAC_PI_4</span>),
-            (<span class="op">-</span><span class="number">3.0_f64</span>.<span class="ident">sqrt</span>(), <span class="op">-</span><span class="ident">f64::consts::FRAC_PI_3</span>),
+            (-<span class="number">3.0_f64</span>.<span class="ident">sqrt</span>() / <span class="number">3.0</span>, -<span class="ident">f64::consts::FRAC_PI_6</span>),
+            (-<span class="number">1.0</span>, -<span class="ident">f64::consts::FRAC_PI_4</span>),
+            (-<span class="number">3.0_f64</span>.<span class="ident">sqrt</span>(), -<span class="ident">f64::consts::FRAC_PI_3</span>),
         ]
         .<span class="ident">iter</span>()
         {
             <span class="macro">assert!</span>(
-                (<span class="ident">atan</span>(<span class="kw-2">*</span><span class="ident">input</span>) <span class="op">-</span> <span class="ident">answer</span>) <span class="op">/</span> <span class="ident">answer</span> <span class="op">&lt;</span> <span class="number">1e-5</span>,
+                (<span class="ident">atan</span>(<span class="kw-2">*</span><span class="ident">input</span>) - <span class="ident">answer</span>) / <span class="ident">answer</span> &lt; <span class="number">1e-5</span>,
                 <span class="string">&quot;\natan({:.4}/16) = {:.4}, actual: {}&quot;</span>,
-                <span class="ident">input</span> <span class="op">*</span> <span class="number">16.0</span>,
+                <span class="ident">input</span> * <span class="number">16.0</span>,
                 <span class="ident">answer</span>,
                 <span class="ident">atan</span>(<span class="kw-2">*</span><span class="ident">input</span>)
             );
@@ -358,7 +358,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">minus_infinity</span>() {
-        <span class="macro">assert_eq!</span>(<span class="ident">atan</span>(<span class="ident">f64::NEG_INFINITY</span>), <span class="op">-</span><span class="ident">f64::consts::FRAC_PI_2</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">atan</span>(<span class="ident">f64::NEG_INFINITY</span>), -<span class="ident">f64::consts::FRAC_PI_2</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -367,4 +367,4 @@
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (34a6cae28 2022-08-09)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f22819bcc 2022-08-12)" ></div></body></html>

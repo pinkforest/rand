@@ -20,7 +20,7 @@
     <span class="comment">// Since we do not support sNaN in Rust yet, we do not need to handle them.</span>
     <span class="comment">// FIXME(nagisa): due to https://bugs.llvm.org/show_bug.cgi?id=33303 we canonicalize by</span>
     <span class="comment">// multiplying by 1.0. Should switch to the `canonicalize` when it works.</span>
-    (<span class="kw">if</span> <span class="ident">y</span>.<span class="ident">is_nan</span>() <span class="op">|</span><span class="op">|</span> <span class="ident">x</span> <span class="op">&lt;</span> <span class="ident">y</span> { <span class="ident">x</span> } <span class="kw">else</span> { <span class="ident">y</span> }) <span class="op">*</span> <span class="number">1.0</span>
+    (<span class="kw">if</span> <span class="ident">y</span>.<span class="ident">is_nan</span>() || <span class="ident">x</span> &lt; <span class="ident">y</span> { <span class="ident">x</span> } <span class="kw">else</span> { <span class="ident">y</span> }) * <span class="number">1.0</span>
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (34a6cae28 2022-08-09)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f22819bcc 2022-08-12)" ></div></body></html>

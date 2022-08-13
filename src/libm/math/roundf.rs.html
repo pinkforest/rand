@@ -34,29 +34,29 @@
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic::no_panic</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">roundf</span>(<span class="ident">x</span>: <span class="ident">f32</span>) -&gt; <span class="ident">f32</span> {
-    <span class="ident">truncf</span>(<span class="ident">x</span> <span class="op">+</span> <span class="ident">copysignf</span>(<span class="number">0.5</span> <span class="op">-</span> <span class="number">0.25</span> <span class="op">*</span> <span class="ident">f32::EPSILON</span>, <span class="ident">x</span>))
+    <span class="ident">truncf</span>(<span class="ident">x</span> + <span class="ident">copysignf</span>(<span class="number">0.5</span> - <span class="number">0.25</span> * <span class="ident">f32::EPSILON</span>, <span class="ident">x</span>))
 }
 
 <span class="comment">// PowerPC tests are failing on LLVM 13: https://github.com/rust-lang/rust/issues/88520</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;powerpc64&quot;</span>))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_arch</span> = <span class="string">&quot;powerpc64&quot;</span>))]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::roundf</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">negative_zero</span>() {
-        <span class="macro">assert_eq!</span>(<span class="ident">roundf</span>(<span class="op">-</span><span class="number">0.0_f32</span>).<span class="ident">to_bits</span>(), (<span class="op">-</span><span class="number">0.0_f32</span>).<span class="ident">to_bits</span>());
+        <span class="macro">assert_eq!</span>(<span class="ident">roundf</span>(-<span class="number">0.0_f32</span>).<span class="ident">to_bits</span>(), (-<span class="number">0.0_f32</span>).<span class="ident">to_bits</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">sanity_check</span>() {
-        <span class="macro">assert_eq!</span>(<span class="ident">roundf</span>(<span class="op">-</span><span class="number">1.0</span>), <span class="op">-</span><span class="number">1.0</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">roundf</span>(-<span class="number">1.0</span>), -<span class="number">1.0</span>);
         <span class="macro">assert_eq!</span>(<span class="ident">roundf</span>(<span class="number">2.8</span>), <span class="number">3.0</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">roundf</span>(<span class="op">-</span><span class="number">0.5</span>), <span class="op">-</span><span class="number">1.0</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">roundf</span>(-<span class="number">0.5</span>), -<span class="number">1.0</span>);
         <span class="macro">assert_eq!</span>(<span class="ident">roundf</span>(<span class="number">0.5</span>), <span class="number">1.0</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">roundf</span>(<span class="op">-</span><span class="number">1.5</span>), <span class="op">-</span><span class="number">2.0</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">roundf</span>(-<span class="number">1.5</span>), -<span class="number">2.0</span>);
         <span class="macro">assert_eq!</span>(<span class="ident">roundf</span>(<span class="number">1.5</span>), <span class="number">2.0</span>);
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (34a6cae28 2022-08-09)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f22819bcc 2022-08-12)" ></div></body></html>

@@ -152,19 +152,19 @@
     <span class="kw">let</span> <span class="ident">c</span>: <span class="ident">f64</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ix</span>: <span class="ident">u32</span>;
 
-    <span class="ident">ix</span> <span class="op">=</span> <span class="ident">get_high_word</span>(<span class="ident">x</span>);
-    <span class="ident">ix</span> <span class="op">&amp;=</span> <span class="number">0x7fffffff</span>;
+    <span class="ident">ix</span> = <span class="ident">get_high_word</span>(<span class="ident">x</span>);
+    <span class="ident">ix</span> &amp;= <span class="number">0x7fffffff</span>;
 
     <span class="comment">/* |x| ~&lt; pi/4 */</span>
-    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0x3fe921fb</span> {
+    <span class="kw">if</span> <span class="ident">ix</span> &lt;= <span class="number">0x3fe921fb</span> {
         <span class="comment">/* if |x| &lt; 2**-27 * sqrt(2) */</span>
-        <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;</span> <span class="number">0x3e46a09e</span> {
+        <span class="kw">if</span> <span class="ident">ix</span> &lt; <span class="number">0x3e46a09e</span> {
             <span class="comment">/* raise inexact if x!=0 and underflow if subnormal */</span>
-            <span class="kw">let</span> <span class="ident">x1p120</span> <span class="op">=</span> <span class="ident">f64::from_bits</span>(<span class="number">0x4770000000000000</span>); <span class="comment">// 0x1p120 == 2^120</span>
-            <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&lt;</span> <span class="number">0x00100000</span> {
-                <span class="macro">force_eval!</span>(<span class="ident">x</span> <span class="op">/</span> <span class="ident">x1p120</span>);
+            <span class="kw">let</span> <span class="ident">x1p120</span> = <span class="ident">f64::from_bits</span>(<span class="number">0x4770000000000000</span>); <span class="comment">// 0x1p120 == 2^120</span>
+            <span class="kw">if</span> <span class="ident">ix</span> &lt; <span class="number">0x00100000</span> {
+                <span class="macro">force_eval!</span>(<span class="ident">x</span> / <span class="ident">x1p120</span>);
             } <span class="kw">else</span> {
-                <span class="macro">force_eval!</span>(<span class="ident">x</span> <span class="op">+</span> <span class="ident">x1p120</span>);
+                <span class="macro">force_eval!</span>(<span class="ident">x</span> + <span class="ident">x1p120</span>);
             }
             <span class="kw">return</span> (<span class="ident">x</span>, <span class="number">1.0</span>);
         }
@@ -172,20 +172,20 @@
     }
 
     <span class="comment">/* sincos(Inf or NaN) is NaN */</span>
-    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x7ff00000</span> {
-        <span class="kw">let</span> <span class="ident">rv</span> <span class="op">=</span> <span class="ident">x</span> <span class="op">-</span> <span class="ident">x</span>;
+    <span class="kw">if</span> <span class="ident">ix</span> &gt;= <span class="number">0x7ff00000</span> {
+        <span class="kw">let</span> <span class="ident">rv</span> = <span class="ident">x</span> - <span class="ident">x</span>;
         <span class="kw">return</span> (<span class="ident">rv</span>, <span class="ident">rv</span>);
     }
 
     <span class="comment">/* argument reduction needed */</span>
-    <span class="kw">let</span> (<span class="ident">n</span>, <span class="ident">y0</span>, <span class="ident">y1</span>) <span class="op">=</span> <span class="ident">rem_pio2</span>(<span class="ident">x</span>);
-    <span class="ident">s</span> <span class="op">=</span> <span class="ident">k_sin</span>(<span class="ident">y0</span>, <span class="ident">y1</span>, <span class="number">1</span>);
-    <span class="ident">c</span> <span class="op">=</span> <span class="ident">k_cos</span>(<span class="ident">y0</span>, <span class="ident">y1</span>);
-    <span class="kw">match</span> <span class="ident">n</span> <span class="op">&amp;</span> <span class="number">3</span> {
+    <span class="kw">let</span> (<span class="ident">n</span>, <span class="ident">y0</span>, <span class="ident">y1</span>) = <span class="ident">rem_pio2</span>(<span class="ident">x</span>);
+    <span class="ident">s</span> = <span class="ident">k_sin</span>(<span class="ident">y0</span>, <span class="ident">y1</span>, <span class="number">1</span>);
+    <span class="ident">c</span> = <span class="ident">k_cos</span>(<span class="ident">y0</span>, <span class="ident">y1</span>);
+    <span class="kw">match</span> <span class="ident">n</span> &amp; <span class="number">3</span> {
         <span class="number">0</span> =&gt; (<span class="ident">s</span>, <span class="ident">c</span>),
-        <span class="number">1</span> =&gt; (<span class="ident">c</span>, <span class="op">-</span><span class="ident">s</span>),
-        <span class="number">2</span> =&gt; (<span class="op">-</span><span class="ident">s</span>, <span class="op">-</span><span class="ident">c</span>),
-        <span class="number">3</span> =&gt; (<span class="op">-</span><span class="ident">c</span>, <span class="ident">s</span>),
+        <span class="number">1</span> =&gt; (<span class="ident">c</span>, -<span class="ident">s</span>),
+        <span class="number">2</span> =&gt; (-<span class="ident">s</span>, -<span class="ident">c</span>),
+        <span class="number">3</span> =&gt; (-<span class="ident">c</span>, <span class="ident">s</span>),
         <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">debug_assertions</span>)]</span>
         <span class="kw">_</span> =&gt; <span class="macro">unreachable!</span>(),
         <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">debug_assertions</span>))]</span>
@@ -198,25 +198,25 @@
 <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::sincos</span>;
 
-    <span class="kw">const</span> <span class="ident">TOLERANCE</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">1e-6</span>;
+    <span class="kw">const</span> <span class="ident">TOLERANCE</span>: <span class="ident">f64</span> = <span class="number">1e-6</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">with_pi</span>() {
-        <span class="kw">let</span> (<span class="ident">s</span>, <span class="ident">c</span>) <span class="op">=</span> <span class="ident">sincos</span>(<span class="ident">core::f64::consts::PI</span>);
+        <span class="kw">let</span> (<span class="ident">s</span>, <span class="ident">c</span>) = <span class="ident">sincos</span>(<span class="ident">core::f64::consts::PI</span>);
         <span class="macro">assert!</span>(
-            (<span class="ident">s</span> <span class="op">-</span> <span class="number">0.0</span>).<span class="ident">abs</span>() <span class="op">&lt;</span> <span class="ident">TOLERANCE</span>,
+            (<span class="ident">s</span> - <span class="number">0.0</span>).<span class="ident">abs</span>() &lt; <span class="ident">TOLERANCE</span>,
             <span class="string">&quot;|{} - {}| = {} &gt;= {}&quot;</span>,
             <span class="ident">s</span>,
             <span class="number">0.0</span>,
-            (<span class="ident">s</span> <span class="op">-</span> <span class="number">0.0</span>).<span class="ident">abs</span>(),
+            (<span class="ident">s</span> - <span class="number">0.0</span>).<span class="ident">abs</span>(),
             <span class="ident">TOLERANCE</span>
         );
         <span class="macro">assert!</span>(
-            (<span class="ident">c</span> <span class="op">+</span> <span class="number">1.0</span>).<span class="ident">abs</span>() <span class="op">&lt;</span> <span class="ident">TOLERANCE</span>,
+            (<span class="ident">c</span> + <span class="number">1.0</span>).<span class="ident">abs</span>() &lt; <span class="ident">TOLERANCE</span>,
             <span class="string">&quot;|{} + {}| = {} &gt;= {}&quot;</span>,
             <span class="ident">c</span>,
             <span class="number">1.0</span>,
-            (<span class="ident">s</span> <span class="op">+</span> <span class="number">1.0</span>).<span class="ident">abs</span>(),
+            (<span class="ident">s</span> + <span class="number">1.0</span>).<span class="ident">abs</span>(),
             <span class="ident">TOLERANCE</span>
         );
     }
@@ -224,47 +224,47 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">rotational_symmetry</span>() {
         <span class="kw">use</span> <span class="ident">core::f64::consts::PI</span>;
-        <span class="kw">const</span> <span class="ident">N</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">24</span>;
+        <span class="kw">const</span> <span class="ident">N</span>: <span class="ident">usize</span> = <span class="number">24</span>;
         <span class="kw">for</span> <span class="ident">n</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">N</span> {
-            <span class="kw">let</span> <span class="ident">theta</span> <span class="op">=</span> <span class="number">2.</span> <span class="op">*</span> <span class="ident">PI</span> <span class="op">*</span> (<span class="ident">n</span> <span class="kw">as</span> <span class="ident">f64</span>) <span class="op">/</span> (<span class="ident">N</span> <span class="kw">as</span> <span class="ident">f64</span>);
-            <span class="kw">let</span> (<span class="ident">s</span>, <span class="ident">c</span>) <span class="op">=</span> <span class="ident">sincos</span>(<span class="ident">theta</span>);
-            <span class="kw">let</span> (<span class="ident">s_plus</span>, <span class="ident">c_plus</span>) <span class="op">=</span> <span class="ident">sincos</span>(<span class="ident">theta</span> <span class="op">+</span> <span class="number">2.</span> <span class="op">*</span> <span class="ident">PI</span>);
-            <span class="kw">let</span> (<span class="ident">s_minus</span>, <span class="ident">c_minus</span>) <span class="op">=</span> <span class="ident">sincos</span>(<span class="ident">theta</span> <span class="op">-</span> <span class="number">2.</span> <span class="op">*</span> <span class="ident">PI</span>);
+            <span class="kw">let</span> <span class="ident">theta</span> = <span class="number">2.</span> * <span class="ident">PI</span> * (<span class="ident">n</span> <span class="kw">as</span> <span class="ident">f64</span>) / (<span class="ident">N</span> <span class="kw">as</span> <span class="ident">f64</span>);
+            <span class="kw">let</span> (<span class="ident">s</span>, <span class="ident">c</span>) = <span class="ident">sincos</span>(<span class="ident">theta</span>);
+            <span class="kw">let</span> (<span class="ident">s_plus</span>, <span class="ident">c_plus</span>) = <span class="ident">sincos</span>(<span class="ident">theta</span> + <span class="number">2.</span> * <span class="ident">PI</span>);
+            <span class="kw">let</span> (<span class="ident">s_minus</span>, <span class="ident">c_minus</span>) = <span class="ident">sincos</span>(<span class="ident">theta</span> - <span class="number">2.</span> * <span class="ident">PI</span>);
 
             <span class="macro">assert!</span>(
-                (<span class="ident">s</span> <span class="op">-</span> <span class="ident">s_plus</span>).<span class="ident">abs</span>() <span class="op">&lt;</span> <span class="ident">TOLERANCE</span>,
+                (<span class="ident">s</span> - <span class="ident">s_plus</span>).<span class="ident">abs</span>() &lt; <span class="ident">TOLERANCE</span>,
                 <span class="string">&quot;|{} - {}| = {} &gt;= {}&quot;</span>,
                 <span class="ident">s</span>,
                 <span class="ident">s_plus</span>,
-                (<span class="ident">s</span> <span class="op">-</span> <span class="ident">s_plus</span>).<span class="ident">abs</span>(),
+                (<span class="ident">s</span> - <span class="ident">s_plus</span>).<span class="ident">abs</span>(),
                 <span class="ident">TOLERANCE</span>
             );
             <span class="macro">assert!</span>(
-                (<span class="ident">s</span> <span class="op">-</span> <span class="ident">s_minus</span>).<span class="ident">abs</span>() <span class="op">&lt;</span> <span class="ident">TOLERANCE</span>,
+                (<span class="ident">s</span> - <span class="ident">s_minus</span>).<span class="ident">abs</span>() &lt; <span class="ident">TOLERANCE</span>,
                 <span class="string">&quot;|{} - {}| = {} &gt;= {}&quot;</span>,
                 <span class="ident">s</span>,
                 <span class="ident">s_minus</span>,
-                (<span class="ident">s</span> <span class="op">-</span> <span class="ident">s_minus</span>).<span class="ident">abs</span>(),
+                (<span class="ident">s</span> - <span class="ident">s_minus</span>).<span class="ident">abs</span>(),
                 <span class="ident">TOLERANCE</span>
             );
             <span class="macro">assert!</span>(
-                (<span class="ident">c</span> <span class="op">-</span> <span class="ident">c_plus</span>).<span class="ident">abs</span>() <span class="op">&lt;</span> <span class="ident">TOLERANCE</span>,
+                (<span class="ident">c</span> - <span class="ident">c_plus</span>).<span class="ident">abs</span>() &lt; <span class="ident">TOLERANCE</span>,
                 <span class="string">&quot;|{} - {}| = {} &gt;= {}&quot;</span>,
                 <span class="ident">c</span>,
                 <span class="ident">c_plus</span>,
-                (<span class="ident">c</span> <span class="op">-</span> <span class="ident">c_plus</span>).<span class="ident">abs</span>(),
+                (<span class="ident">c</span> - <span class="ident">c_plus</span>).<span class="ident">abs</span>(),
                 <span class="ident">TOLERANCE</span>
             );
             <span class="macro">assert!</span>(
-                (<span class="ident">c</span> <span class="op">-</span> <span class="ident">c_minus</span>).<span class="ident">abs</span>() <span class="op">&lt;</span> <span class="ident">TOLERANCE</span>,
+                (<span class="ident">c</span> - <span class="ident">c_minus</span>).<span class="ident">abs</span>() &lt; <span class="ident">TOLERANCE</span>,
                 <span class="string">&quot;|{} - {}| = {} &gt;= {}&quot;</span>,
                 <span class="ident">c</span>,
                 <span class="ident">c_minus</span>,
-                (<span class="ident">c</span> <span class="op">-</span> <span class="ident">c_minus</span>).<span class="ident">abs</span>(),
+                (<span class="ident">c</span> - <span class="ident">c_minus</span>).<span class="ident">abs</span>(),
                 <span class="ident">TOLERANCE</span>
             );
         }
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (34a6cae28 2022-08-09)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f22819bcc 2022-08-12)" ></div></body></html>

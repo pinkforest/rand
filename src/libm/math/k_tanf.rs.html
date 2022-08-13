@@ -56,7 +56,7 @@
  */</span>
 
 <span class="comment">/* |tan(x)/x - t(x)| &lt; 2**-25.5 (~[-2e-08, 2e-08]). */</span>
-<span class="kw">const</span> <span class="ident">T</span>: [<span class="ident">f64</span>; <span class="number">6</span>] <span class="op">=</span> [
+<span class="kw">const</span> <span class="ident">T</span>: [<span class="ident">f64</span>; <span class="number">6</span>] = [
     <span class="number">0.333331395030791399758</span>,   <span class="comment">/* 0x15554d3418c99f.0p-54 */</span>
     <span class="number">0.133392002712976742718</span>,   <span class="comment">/* 0x1112fd38999f72.0p-55 */</span>
     <span class="number">0.0533812378445670393523</span>,  <span class="comment">/* 0x1b54c91d865afe.0p-57 */</span>
@@ -67,7 +67,7 @@
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic::no_panic</span>)]</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">k_tanf</span>(<span class="ident">x</span>: <span class="ident">f64</span>, <span class="ident">odd</span>: <span class="ident">bool</span>) -&gt; <span class="ident">f32</span> {
-    <span class="kw">let</span> <span class="ident">z</span> <span class="op">=</span> <span class="ident">x</span> <span class="op">*</span> <span class="ident">x</span>;
+    <span class="kw">let</span> <span class="ident">z</span> = <span class="ident">x</span> * <span class="ident">x</span>;
     <span class="comment">/*
      * Split up the polynomial into small independent terms to give
      * opportunities for parallel evaluation.  The chosen splitting is
@@ -82,13 +82,13 @@
      * and would give results as accurate as Horner&#39;s method if the
      * small terms were added from highest degree down.
      */</span>
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">T</span>[<span class="number">4</span>] <span class="op">+</span> <span class="ident">z</span> <span class="op">*</span> <span class="ident">T</span>[<span class="number">5</span>];
-    <span class="kw">let</span> <span class="ident">t</span> <span class="op">=</span> <span class="ident">T</span>[<span class="number">2</span>] <span class="op">+</span> <span class="ident">z</span> <span class="op">*</span> <span class="ident">T</span>[<span class="number">3</span>];
-    <span class="kw">let</span> <span class="ident">w</span> <span class="op">=</span> <span class="ident">z</span> <span class="op">*</span> <span class="ident">z</span>;
-    <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">z</span> <span class="op">*</span> <span class="ident">x</span>;
-    <span class="kw">let</span> <span class="ident">u</span> <span class="op">=</span> <span class="ident">T</span>[<span class="number">0</span>] <span class="op">+</span> <span class="ident">z</span> <span class="op">*</span> <span class="ident">T</span>[<span class="number">1</span>];
-    <span class="ident">r</span> <span class="op">=</span> (<span class="ident">x</span> <span class="op">+</span> <span class="ident">s</span> <span class="op">*</span> <span class="ident">u</span>) <span class="op">+</span> (<span class="ident">s</span> <span class="op">*</span> <span class="ident">w</span>) <span class="op">*</span> (<span class="ident">t</span> <span class="op">+</span> <span class="ident">w</span> <span class="op">*</span> <span class="ident">r</span>);
-    (<span class="kw">if</span> <span class="ident">odd</span> { <span class="op">-</span><span class="number">1.</span> <span class="op">/</span> <span class="ident">r</span> } <span class="kw">else</span> { <span class="ident">r</span> }) <span class="kw">as</span> <span class="ident">f32</span>
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">r</span> = <span class="ident">T</span>[<span class="number">4</span>] + <span class="ident">z</span> * <span class="ident">T</span>[<span class="number">5</span>];
+    <span class="kw">let</span> <span class="ident">t</span> = <span class="ident">T</span>[<span class="number">2</span>] + <span class="ident">z</span> * <span class="ident">T</span>[<span class="number">3</span>];
+    <span class="kw">let</span> <span class="ident">w</span> = <span class="ident">z</span> * <span class="ident">z</span>;
+    <span class="kw">let</span> <span class="ident">s</span> = <span class="ident">z</span> * <span class="ident">x</span>;
+    <span class="kw">let</span> <span class="ident">u</span> = <span class="ident">T</span>[<span class="number">0</span>] + <span class="ident">z</span> * <span class="ident">T</span>[<span class="number">1</span>];
+    <span class="ident">r</span> = (<span class="ident">x</span> + <span class="ident">s</span> * <span class="ident">u</span>) + (<span class="ident">s</span> * <span class="ident">w</span>) * (<span class="ident">t</span> + <span class="ident">w</span> * <span class="ident">r</span>);
+    (<span class="kw">if</span> <span class="ident">odd</span> { -<span class="number">1.</span> / <span class="ident">r</span> } <span class="kw">else</span> { <span class="ident">r</span> }) <span class="kw">as</span> <span class="ident">f32</span>
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (34a6cae28 2022-08-09)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f22819bcc 2022-08-12)" ></div></body></html>

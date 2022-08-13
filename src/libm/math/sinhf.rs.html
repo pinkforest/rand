@@ -33,30 +33,30 @@
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic::no_panic</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sinhf</span>(<span class="ident">x</span>: <span class="ident">f32</span>) -&gt; <span class="ident">f32</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">h</span> <span class="op">=</span> <span class="number">0.5f32</span>;
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ix</span> <span class="op">=</span> <span class="ident">x</span>.<span class="ident">to_bits</span>();
-    <span class="kw">if</span> (<span class="ident">ix</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">31</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
-        <span class="ident">h</span> <span class="op">=</span> <span class="op">-</span><span class="ident">h</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">h</span> = <span class="number">0.5f32</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ix</span> = <span class="ident">x</span>.<span class="ident">to_bits</span>();
+    <span class="kw">if</span> (<span class="ident">ix</span> &gt;&gt; <span class="number">31</span>) != <span class="number">0</span> {
+        <span class="ident">h</span> = -<span class="ident">h</span>;
     }
     <span class="comment">/* |x| */</span>
-    <span class="ident">ix</span> <span class="op">&amp;=</span> <span class="number">0x7fffffff</span>;
-    <span class="kw">let</span> <span class="ident">absx</span> <span class="op">=</span> <span class="ident">f32::from_bits</span>(<span class="ident">ix</span>);
-    <span class="kw">let</span> <span class="ident">w</span> <span class="op">=</span> <span class="ident">ix</span>;
+    <span class="ident">ix</span> &amp;= <span class="number">0x7fffffff</span>;
+    <span class="kw">let</span> <span class="ident">absx</span> = <span class="ident">f32::from_bits</span>(<span class="ident">ix</span>);
+    <span class="kw">let</span> <span class="ident">w</span> = <span class="ident">ix</span>;
 
     <span class="comment">/* |x| &lt; log(FLT_MAX) */</span>
-    <span class="kw">if</span> <span class="ident">w</span> <span class="op">&lt;</span> <span class="number">0x42b17217</span> {
-        <span class="kw">let</span> <span class="ident">t</span> <span class="op">=</span> <span class="ident">expm1f</span>(<span class="ident">absx</span>);
-        <span class="kw">if</span> <span class="ident">w</span> <span class="op">&lt;</span> <span class="number">0x3f800000</span> {
-            <span class="kw">if</span> <span class="ident">w</span> <span class="op">&lt;</span> (<span class="number">0x3f800000</span> <span class="op">-</span> (<span class="number">12</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">23</span>)) {
+    <span class="kw">if</span> <span class="ident">w</span> &lt; <span class="number">0x42b17217</span> {
+        <span class="kw">let</span> <span class="ident">t</span> = <span class="ident">expm1f</span>(<span class="ident">absx</span>);
+        <span class="kw">if</span> <span class="ident">w</span> &lt; <span class="number">0x3f800000</span> {
+            <span class="kw">if</span> <span class="ident">w</span> &lt; (<span class="number">0x3f800000</span> - (<span class="number">12</span> &lt;&lt; <span class="number">23</span>)) {
                 <span class="kw">return</span> <span class="ident">x</span>;
             }
-            <span class="kw">return</span> <span class="ident">h</span> <span class="op">*</span> (<span class="number">2.</span> <span class="op">*</span> <span class="ident">t</span> <span class="op">-</span> <span class="ident">t</span> <span class="op">*</span> <span class="ident">t</span> <span class="op">/</span> (<span class="ident">t</span> <span class="op">+</span> <span class="number">1.</span>));
+            <span class="kw">return</span> <span class="ident">h</span> * (<span class="number">2.</span> * <span class="ident">t</span> - <span class="ident">t</span> * <span class="ident">t</span> / (<span class="ident">t</span> + <span class="number">1.</span>));
         }
-        <span class="kw">return</span> <span class="ident">h</span> <span class="op">*</span> (<span class="ident">t</span> <span class="op">+</span> <span class="ident">t</span> <span class="op">/</span> (<span class="ident">t</span> <span class="op">+</span> <span class="number">1.</span>));
+        <span class="kw">return</span> <span class="ident">h</span> * (<span class="ident">t</span> + <span class="ident">t</span> / (<span class="ident">t</span> + <span class="number">1.</span>));
     }
 
     <span class="comment">/* |x| &gt; logf(FLT_MAX) or nan */</span>
-    <span class="number">2.</span> <span class="op">*</span> <span class="ident">h</span> <span class="op">*</span> <span class="ident">k_expo2f</span>(<span class="ident">absx</span>)
+    <span class="number">2.</span> * <span class="ident">h</span> * <span class="ident">k_expo2f</span>(<span class="ident">absx</span>)
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (34a6cae28 2022-08-09)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f22819bcc 2022-08-12)" ></div></body></html>

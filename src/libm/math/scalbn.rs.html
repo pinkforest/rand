@@ -33,36 +33,36 @@
 <span id="33">33</span>
 </pre><pre class="rust"><code><span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic::no_panic</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scalbn</span>(<span class="ident">x</span>: <span class="ident">f64</span>, <span class="kw-2">mut</span> <span class="ident">n</span>: <span class="ident">i32</span>) -&gt; <span class="ident">f64</span> {
-    <span class="kw">let</span> <span class="ident">x1p1023</span> <span class="op">=</span> <span class="ident">f64::from_bits</span>(<span class="number">0x7fe0000000000000</span>); <span class="comment">// 0x1p1023 === 2 ^ 1023</span>
-    <span class="kw">let</span> <span class="ident">x1p53</span> <span class="op">=</span> <span class="ident">f64::from_bits</span>(<span class="number">0x4340000000000000</span>); <span class="comment">// 0x1p53 === 2 ^ 53</span>
-    <span class="kw">let</span> <span class="ident">x1p_1022</span> <span class="op">=</span> <span class="ident">f64::from_bits</span>(<span class="number">0x0010000000000000</span>); <span class="comment">// 0x1p-1022 === 2 ^ (-1022)</span>
+    <span class="kw">let</span> <span class="ident">x1p1023</span> = <span class="ident">f64::from_bits</span>(<span class="number">0x7fe0000000000000</span>); <span class="comment">// 0x1p1023 === 2 ^ 1023</span>
+    <span class="kw">let</span> <span class="ident">x1p53</span> = <span class="ident">f64::from_bits</span>(<span class="number">0x4340000000000000</span>); <span class="comment">// 0x1p53 === 2 ^ 53</span>
+    <span class="kw">let</span> <span class="ident">x1p_1022</span> = <span class="ident">f64::from_bits</span>(<span class="number">0x0010000000000000</span>); <span class="comment">// 0x1p-1022 === 2 ^ (-1022)</span>
 
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">y</span> <span class="op">=</span> <span class="ident">x</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">y</span> = <span class="ident">x</span>;
 
-    <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span> <span class="number">1023</span> {
-        <span class="ident">y</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p1023</span>;
-        <span class="ident">n</span> <span class="op">-</span><span class="op">=</span> <span class="number">1023</span>;
-        <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span> <span class="number">1023</span> {
-            <span class="ident">y</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p1023</span>;
-            <span class="ident">n</span> <span class="op">-</span><span class="op">=</span> <span class="number">1023</span>;
-            <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span> <span class="number">1023</span> {
-                <span class="ident">n</span> <span class="op">=</span> <span class="number">1023</span>;
+    <span class="kw">if</span> <span class="ident">n</span> &gt; <span class="number">1023</span> {
+        <span class="ident">y</span> <span class="kw-2">*</span>= <span class="ident">x1p1023</span>;
+        <span class="ident">n</span> -= <span class="number">1023</span>;
+        <span class="kw">if</span> <span class="ident">n</span> &gt; <span class="number">1023</span> {
+            <span class="ident">y</span> <span class="kw-2">*</span>= <span class="ident">x1p1023</span>;
+            <span class="ident">n</span> -= <span class="number">1023</span>;
+            <span class="kw">if</span> <span class="ident">n</span> &gt; <span class="number">1023</span> {
+                <span class="ident">n</span> = <span class="number">1023</span>;
             }
         }
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span> <span class="op">-</span><span class="number">1022</span> {
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">n</span> &lt; -<span class="number">1022</span> {
         <span class="comment">/* make sure final n &lt; -53 to avoid double
         rounding in the subnormal range */</span>
-        <span class="ident">y</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p_1022</span> <span class="op">*</span> <span class="ident">x1p53</span>;
-        <span class="ident">n</span> <span class="op">+</span><span class="op">=</span> <span class="number">1022</span> <span class="op">-</span> <span class="number">53</span>;
-        <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span> <span class="op">-</span><span class="number">1022</span> {
-            <span class="ident">y</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">x1p_1022</span> <span class="op">*</span> <span class="ident">x1p53</span>;
-            <span class="ident">n</span> <span class="op">+</span><span class="op">=</span> <span class="number">1022</span> <span class="op">-</span> <span class="number">53</span>;
-            <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span> <span class="op">-</span><span class="number">1022</span> {
-                <span class="ident">n</span> <span class="op">=</span> <span class="op">-</span><span class="number">1022</span>;
+        <span class="ident">y</span> <span class="kw-2">*</span>= <span class="ident">x1p_1022</span> * <span class="ident">x1p53</span>;
+        <span class="ident">n</span> += <span class="number">1022</span> - <span class="number">53</span>;
+        <span class="kw">if</span> <span class="ident">n</span> &lt; -<span class="number">1022</span> {
+            <span class="ident">y</span> <span class="kw-2">*</span>= <span class="ident">x1p_1022</span> * <span class="ident">x1p53</span>;
+            <span class="ident">n</span> += <span class="number">1022</span> - <span class="number">53</span>;
+            <span class="kw">if</span> <span class="ident">n</span> &lt; -<span class="number">1022</span> {
+                <span class="ident">n</span> = -<span class="number">1022</span>;
             }
         }
     }
-    <span class="ident">y</span> <span class="op">*</span> <span class="ident">f64::from_bits</span>(((<span class="number">0x3ff</span> <span class="op">+</span> <span class="ident">n</span>) <span class="kw">as</span> <span class="ident">u64</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">52</span>)
+    <span class="ident">y</span> * <span class="ident">f64::from_bits</span>(((<span class="number">0x3ff</span> + <span class="ident">n</span>) <span class="kw">as</span> <span class="ident">u64</span>) &lt;&lt; <span class="number">52</span>)
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (34a6cae28 2022-08-09)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f22819bcc 2022-08-12)" ></div></body></html>

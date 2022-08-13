@@ -48,31 +48,31 @@
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic::no_panic</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cosh</span>(<span class="kw-2">mut</span> <span class="ident">x</span>: <span class="ident">f64</span>) -&gt; <span class="ident">f64</span> {
     <span class="comment">/* |x| */</span>
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ix</span> <span class="op">=</span> <span class="ident">x</span>.<span class="ident">to_bits</span>();
-    <span class="ident">ix</span> <span class="op">&amp;=</span> <span class="number">0x7fffffffffffffff</span>;
-    <span class="ident">x</span> <span class="op">=</span> <span class="ident">f64::from_bits</span>(<span class="ident">ix</span>);
-    <span class="kw">let</span> <span class="ident">w</span> <span class="op">=</span> <span class="ident">ix</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">32</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ix</span> = <span class="ident">x</span>.<span class="ident">to_bits</span>();
+    <span class="ident">ix</span> &amp;= <span class="number">0x7fffffffffffffff</span>;
+    <span class="ident">x</span> = <span class="ident">f64::from_bits</span>(<span class="ident">ix</span>);
+    <span class="kw">let</span> <span class="ident">w</span> = <span class="ident">ix</span> &gt;&gt; <span class="number">32</span>;
 
     <span class="comment">/* |x| &lt; log(2) */</span>
-    <span class="kw">if</span> <span class="ident">w</span> <span class="op">&lt;</span> <span class="number">0x3fe62e42</span> {
-        <span class="kw">if</span> <span class="ident">w</span> <span class="op">&lt;</span> <span class="number">0x3ff00000</span> <span class="op">-</span> (<span class="number">26</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">20</span>) {
-            <span class="kw">let</span> <span class="ident">x1p120</span> <span class="op">=</span> <span class="ident">f64::from_bits</span>(<span class="number">0x4770000000000000</span>);
-            <span class="macro">force_eval!</span>(<span class="ident">x</span> <span class="op">+</span> <span class="ident">x1p120</span>);
+    <span class="kw">if</span> <span class="ident">w</span> &lt; <span class="number">0x3fe62e42</span> {
+        <span class="kw">if</span> <span class="ident">w</span> &lt; <span class="number">0x3ff00000</span> - (<span class="number">26</span> &lt;&lt; <span class="number">20</span>) {
+            <span class="kw">let</span> <span class="ident">x1p120</span> = <span class="ident">f64::from_bits</span>(<span class="number">0x4770000000000000</span>);
+            <span class="macro">force_eval!</span>(<span class="ident">x</span> + <span class="ident">x1p120</span>);
             <span class="kw">return</span> <span class="number">1.</span>;
         }
-        <span class="kw">let</span> <span class="ident">t</span> <span class="op">=</span> <span class="ident">expm1</span>(<span class="ident">x</span>); <span class="comment">// exponential minus 1</span>
-        <span class="kw">return</span> <span class="number">1.</span> <span class="op">+</span> <span class="ident">t</span> <span class="op">*</span> <span class="ident">t</span> <span class="op">/</span> (<span class="number">2.</span> <span class="op">*</span> (<span class="number">1.</span> <span class="op">+</span> <span class="ident">t</span>));
+        <span class="kw">let</span> <span class="ident">t</span> = <span class="ident">expm1</span>(<span class="ident">x</span>); <span class="comment">// exponential minus 1</span>
+        <span class="kw">return</span> <span class="number">1.</span> + <span class="ident">t</span> * <span class="ident">t</span> / (<span class="number">2.</span> * (<span class="number">1.</span> + <span class="ident">t</span>));
     }
 
     <span class="comment">/* |x| &lt; log(DBL_MAX) */</span>
-    <span class="kw">if</span> <span class="ident">w</span> <span class="op">&lt;</span> <span class="number">0x40862e42</span> {
-        <span class="kw">let</span> <span class="ident">t</span> <span class="op">=</span> <span class="ident">exp</span>(<span class="ident">x</span>);
+    <span class="kw">if</span> <span class="ident">w</span> &lt; <span class="number">0x40862e42</span> {
+        <span class="kw">let</span> <span class="ident">t</span> = <span class="ident">exp</span>(<span class="ident">x</span>);
         <span class="comment">/* note: if x&gt;log(0x1p26) then the 1/t is not needed */</span>
-        <span class="kw">return</span> <span class="number">0.5</span> <span class="op">*</span> (<span class="ident">t</span> <span class="op">+</span> <span class="number">1.</span> <span class="op">/</span> <span class="ident">t</span>);
+        <span class="kw">return</span> <span class="number">0.5</span> * (<span class="ident">t</span> + <span class="number">1.</span> / <span class="ident">t</span>);
     }
 
     <span class="comment">/* |x| &gt; log(DBL_MAX) or nan */</span>
     <span class="ident">k_expo2</span>(<span class="ident">x</span>)
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (34a6cae28 2022-08-09)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f22819bcc 2022-08-12)" ></div></body></html>

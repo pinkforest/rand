@@ -30,37 +30,37 @@
 <span id="30">30</span>
 <span id="31">31</span>
 <span id="32">32</span>
-</pre><pre class="rust"><code><span class="kw">const</span> <span class="ident">FP_ILOGBNAN</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="op">-</span><span class="number">1</span> <span class="op">-</span> <span class="number">0x7fffffff</span>;
-<span class="kw">const</span> <span class="ident">FP_ILOGB0</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">FP_ILOGBNAN</span>;
+</pre><pre class="rust"><code><span class="kw">const</span> <span class="ident">FP_ILOGBNAN</span>: <span class="ident">i32</span> = -<span class="number">1</span> - <span class="number">0x7fffffff</span>;
+<span class="kw">const</span> <span class="ident">FP_ILOGB0</span>: <span class="ident">i32</span> = <span class="ident">FP_ILOGBNAN</span>;
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">assert_no_panic</span>), <span class="ident">no_panic::no_panic</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ilogb</span>(<span class="ident">x</span>: <span class="ident">f64</span>) -&gt; <span class="ident">i32</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="ident">x</span>.<span class="ident">to_bits</span>();
-    <span class="kw">let</span> <span class="ident">e</span> <span class="op">=</span> ((<span class="ident">i</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">52</span>) <span class="op">&amp;</span> <span class="number">0x7ff</span>) <span class="kw">as</span> <span class="ident">i32</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span>: <span class="ident">u64</span> = <span class="ident">x</span>.<span class="ident">to_bits</span>();
+    <span class="kw">let</span> <span class="ident">e</span> = ((<span class="ident">i</span> &gt;&gt; <span class="number">52</span>) &amp; <span class="number">0x7ff</span>) <span class="kw">as</span> <span class="ident">i32</span>;
 
-    <span class="kw">if</span> <span class="ident">e</span> <span class="op">==</span> <span class="number">0</span> {
-        <span class="ident">i</span> <span class="op">&lt;</span><span class="op">&lt;</span><span class="op">=</span> <span class="number">12</span>;
-        <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="number">0</span> {
-            <span class="macro">force_eval!</span>(<span class="number">0.0</span> <span class="op">/</span> <span class="number">0.0</span>);
+    <span class="kw">if</span> <span class="ident">e</span> == <span class="number">0</span> {
+        <span class="ident">i</span> &lt;&lt;= <span class="number">12</span>;
+        <span class="kw">if</span> <span class="ident">i</span> == <span class="number">0</span> {
+            <span class="macro">force_eval!</span>(<span class="number">0.0</span> / <span class="number">0.0</span>);
             <span class="kw">return</span> <span class="ident">FP_ILOGB0</span>;
         }
         <span class="comment">/* subnormal x */</span>
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">e</span> <span class="op">=</span> <span class="op">-</span><span class="number">0x3ff</span>;
-        <span class="kw">while</span> (<span class="ident">i</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">63</span>) <span class="op">==</span> <span class="number">0</span> {
-            <span class="ident">e</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
-            <span class="ident">i</span> <span class="op">&lt;</span><span class="op">&lt;</span><span class="op">=</span> <span class="number">1</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">e</span> = -<span class="number">0x3ff</span>;
+        <span class="kw">while</span> (<span class="ident">i</span> &gt;&gt; <span class="number">63</span>) == <span class="number">0</span> {
+            <span class="ident">e</span> -= <span class="number">1</span>;
+            <span class="ident">i</span> &lt;&lt;= <span class="number">1</span>;
         }
         <span class="ident">e</span>
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">e</span> <span class="op">==</span> <span class="number">0x7ff</span> {
-        <span class="macro">force_eval!</span>(<span class="number">0.0</span> <span class="op">/</span> <span class="number">0.0</span>);
-        <span class="kw">if</span> (<span class="ident">i</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">12</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">e</span> == <span class="number">0x7ff</span> {
+        <span class="macro">force_eval!</span>(<span class="number">0.0</span> / <span class="number">0.0</span>);
+        <span class="kw">if</span> (<span class="ident">i</span> &lt;&lt; <span class="number">12</span>) != <span class="number">0</span> {
             <span class="ident">FP_ILOGBNAN</span>
         } <span class="kw">else</span> {
             <span class="ident">i32::max_value</span>()
         }
     } <span class="kw">else</span> {
-        <span class="ident">e</span> <span class="op">-</span> <span class="number">0x3ff</span>
+        <span class="ident">e</span> - <span class="number">0x3ff</span>
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (34a6cae28 2022-08-09)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="libm" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f22819bcc 2022-08-12)" ></div></body></html>
