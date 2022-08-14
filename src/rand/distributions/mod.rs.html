@@ -229,8 +229,6 @@
 <span id="227">227</span>
 <span id="228">228</span>
 <span id="229">229</span>
-<span id="230">230</span>
-<span id="231">231</span>
 </pre><pre class="rust"><code><span class="comment">// Copyright 2018 Developers of the Rand project.</span>
 <span class="comment">// Copyright 2013-2017 The Rust Project Developers.</span>
 <span class="comment">//</span>
@@ -395,11 +393,9 @@
 <span class="doccomment">/// compound types where all component types are supported:</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// *   Tuples (up to 12 elements): each element is generated sequentially.</span>
-<span class="doccomment">/// *   Arrays (up to 32 elements): each element is generated sequentially;</span>
+<span class="doccomment">/// *   Arrays: each element is generated sequentially;</span>
 <span class="doccomment">///     see also [`Rng::fill`] which supports arbitrary array length for integer</span>
 <span class="doccomment">///     and float types and tends to be faster for `u32` and smaller types.</span>
-<span class="doccomment">///     When using `rustc` ≥ 1.51, enable the `min_const_gen` feature to support</span>
-<span class="doccomment">///     arrays larger than 32 elements.</span>
 <span class="doccomment">///     Note that [`Rng::fill`] and `Standard`&#39;s array support are *not* equivalent:</span>
 <span class="doccomment">///     the former is optimised for integer types (using fewer RNG calls for</span>
 <span class="doccomment">///     element types smaller than the RNG word size), while the latter supports</span>
