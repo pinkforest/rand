@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/num-traits-0.2.15/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><a class="sidebar-logo" href="../../num_traits/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../num_traits/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/num-traits-0.2.15/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ef244fc9943488f7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-c11f492748536797.css"><link rel="stylesheet" disabled href="../../static.files/dark-a78f946771c40031.css"><link rel="stylesheet" disabled href="../../static.files/ayu-70b683d68cb31790.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-74087aa2e88f4475.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-0dede64717b247ca.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-201a7e04dc4c6fce.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../num_traits/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -654,14 +654,14 @@
 //!
 //! The `num-traits` crate is tested for rustc 1.8 and greater.
 
-</span><span class="attribute">#![doc(html_root_url = <span class="string">&quot;https://docs.rs/num-traits/0.2&quot;</span>)]
+</span><span class="attr">#![doc(html_root_url = <span class="string">&quot;https://docs.rs/num-traits/0.2&quot;</span>)]
 #![deny(unconditional_recursion)]
 #![no_std]
 #[cfg(feature = <span class="string">&quot;std&quot;</span>)]
 </span><span class="kw">extern crate </span>std;
 
 <span class="comment">// Only `no_std` builds actually use `libm`.
-</span><span class="attribute">#[cfg(all(not(feature = <span class="string">&quot;std&quot;</span>), feature = <span class="string">&quot;libm&quot;</span>))]
+</span><span class="attr">#[cfg(all(not(feature = <span class="string">&quot;std&quot;</span>), feature = <span class="string">&quot;libm&quot;</span>))]
 </span><span class="kw">extern crate </span>libm;
 
 <span class="kw">use </span>core::fmt;
@@ -670,7 +670,7 @@
 <span class="kw">use </span>core::ops::{AddAssign, DivAssign, MulAssign, RemAssign, SubAssign};
 
 <span class="kw">pub use </span>bounds::Bounded;
-<span class="attribute">#[cfg(any(feature = <span class="string">&quot;std&quot;</span>, feature = <span class="string">&quot;libm&quot;</span>))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;std&quot;</span>, feature = <span class="string">&quot;libm&quot;</span>))]
 </span><span class="kw">pub use </span>float::Float;
 <span class="kw">pub use </span>float::FloatConst;
 <span class="comment">// pub use real::{FloatCore, Real}; // NOTE: Don&#39;t do this, it breaks `use num_traits::*;`.
@@ -690,7 +690,7 @@
 <span class="kw">pub use </span>pow::{checked_pow, pow, Pow};
 <span class="kw">pub use </span>sign::{abs, abs_sub, signum, Signed, Unsigned};
 
-<span class="attribute">#[macro_use]
+<span class="attr">#[macro_use]
 </span><span class="kw">mod </span>macros;
 
 <span class="kw">pub mod </span>bounds;
@@ -803,7 +803,7 @@
     (<span class="macro-nonterminal">$name</span>:ident <span class="kw">for </span>$(<span class="macro-nonterminal">$t</span>:ty)<span class="kw-2">*</span>) =&gt; ($(
         <span class="kw">impl </span><span class="macro-nonterminal">$name </span><span class="kw">for </span><span class="macro-nonterminal">$t </span>{
             <span class="kw">type </span>FromStrRadixErr = ::core::num::ParseIntError;
-            <span class="attribute">#[inline]
+            <span class="attr">#[inline]
             </span><span class="kw">fn </span>from_str_radix(s: <span class="kw-2">&amp;</span>str, radix: u32)
                               -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, ::core::num::ParseIntError&gt;
             {
@@ -813,7 +813,7 @@
     )<span class="kw-2">*</span>)
 }
 <span class="macro">int_trait_impl!</span>(Num <span class="kw">for </span>usize u8 u16 u32 u64 isize i8 i16 i32 i64);
-<span class="attribute">#[cfg(has_i128)]
+<span class="attr">#[cfg(has_i128)]
 </span><span class="macro">int_trait_impl!</span>(Num <span class="kw">for </span>u128 i128);
 
 <span class="kw">impl</span>&lt;T: Num&gt; Num <span class="kw">for </span>Wrapping&lt;T&gt;
@@ -826,14 +826,14 @@
     }
 }
 
-<span class="attribute">#[derive(Debug)]
+<span class="attr">#[derive(Debug)]
 </span><span class="kw">pub enum </span>FloatErrorKind {
     Empty,
     Invalid,
 }
 <span class="comment">// FIXME: core::num::ParseFloatError is stable in 1.0, but opaque to us,
 // so there&#39;s not really any way for us to reuse it.
-</span><span class="attribute">#[derive(Debug)]
+</span><span class="attr">#[derive(Debug)]
 </span><span class="kw">pub struct </span>ParseFloatError {
     <span class="kw">pub </span>kind: FloatErrorKind,
 }
@@ -1015,7 +1015,7 @@
                             <span class="prelude-val">None             </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(PFE { kind: Invalid }),
                         };
 
-                        <span class="attribute">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+                        <span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
                         </span><span class="kw">fn </span>pow(base: <span class="macro-nonterminal">$t</span>, exp: usize) -&gt; <span class="macro-nonterminal">$t </span>{
                             Float::powi(base, exp <span class="kw">as </span>i32)
                         }
@@ -1044,7 +1044,7 @@
 ///  Otherwise this returns input.
 ///
 /// **Panics** in debug mode if `!(min &lt;= max)`.
-</span><span class="attribute">#[inline]
+</span><span class="attr">#[inline]
 </span><span class="kw">pub fn </span>clamp&lt;T: PartialOrd&gt;(input: T, min: T, max: T) -&gt; T {
     <span class="macro">debug_assert!</span>(min &lt;= max, <span class="string">&quot;min must be less than or equal to max&quot;</span>);
     <span class="kw">if </span>input &lt; min {
@@ -1063,7 +1063,7 @@
 ///  `clamp_min(std::f32::NAN, 1.0)` preserves `NAN` different from `f32::min(std::f32::NAN, 1.0)`.
 ///
 /// **Panics** in debug mode if `!(min == min)`. (This occurs if `min` is `NAN`.)
-</span><span class="attribute">#[inline]
+</span><span class="attr">#[inline]
 </span><span class="kw">pub fn </span>clamp_min&lt;T: PartialOrd&gt;(input: T, min: T) -&gt; T {
     <span class="macro">debug_assert!</span>(min == min, <span class="string">&quot;min must not be NAN&quot;</span>);
     <span class="kw">if </span>input &lt; min {
@@ -1080,7 +1080,7 @@
 ///  `clamp_max(std::f32::NAN, 1.0)` preserves `NAN` different from `f32::max(std::f32::NAN, 1.0)`.
 ///
 /// **Panics** in debug mode if `!(max == max)`. (This occurs if `max` is `NAN`.)
-</span><span class="attribute">#[inline]
+</span><span class="attr">#[inline]
 </span><span class="kw">pub fn </span>clamp_max&lt;T: PartialOrd&gt;(input: T, max: T) -&gt; T {
     <span class="macro">debug_assert!</span>(max == max, <span class="string">&quot;max must not be NAN&quot;</span>);
     <span class="kw">if </span>input &gt; max {
@@ -1090,7 +1090,7 @@
     }
 }
 
-<span class="attribute">#[test]
+<span class="attr">#[test]
 </span><span class="kw">fn </span>clamp_test() {
     <span class="comment">// Int test
     </span><span class="macro">assert_eq!</span>(<span class="number">1</span>, clamp(<span class="number">1</span>, -<span class="number">1</span>, <span class="number">2</span>));
@@ -1114,42 +1114,42 @@
     <span class="macro">assert!</span>(clamp_max(::core::f32::NAN, <span class="number">1.0</span>).is_nan());
 }
 
-<span class="attribute">#[test]
+<span class="attr">#[test]
 #[should_panic]
 #[cfg(debug_assertions)]
 </span><span class="kw">fn </span>clamp_nan_min() {
     clamp(<span class="number">0.</span>, ::core::f32::NAN, <span class="number">1.</span>);
 }
 
-<span class="attribute">#[test]
+<span class="attr">#[test]
 #[should_panic]
 #[cfg(debug_assertions)]
 </span><span class="kw">fn </span>clamp_nan_max() {
     clamp(<span class="number">0.</span>, -<span class="number">1.</span>, ::core::f32::NAN);
 }
 
-<span class="attribute">#[test]
+<span class="attr">#[test]
 #[should_panic]
 #[cfg(debug_assertions)]
 </span><span class="kw">fn </span>clamp_nan_min_max() {
     clamp(<span class="number">0.</span>, ::core::f32::NAN, ::core::f32::NAN);
 }
 
-<span class="attribute">#[test]
+<span class="attr">#[test]
 #[should_panic]
 #[cfg(debug_assertions)]
 </span><span class="kw">fn </span>clamp_min_nan_min() {
     clamp_min(<span class="number">0.</span>, ::core::f32::NAN);
 }
 
-<span class="attribute">#[test]
+<span class="attr">#[test]
 #[should_panic]
 #[cfg(debug_assertions)]
 </span><span class="kw">fn </span>clamp_max_nan_max() {
     clamp_max(<span class="number">0.</span>, ::core::f32::NAN);
 }
 
-<span class="attribute">#[test]
+<span class="attr">#[test]
 </span><span class="kw">fn </span>from_str_radix_unwrap() {
     <span class="comment">// The Result error must impl Debug to allow unwrap()
 
@@ -1160,7 +1160,7 @@
     <span class="macro">assert_eq!</span>(f, <span class="number">0.0</span>);
 }
 
-<span class="attribute">#[test]
+<span class="attr">#[test]
 </span><span class="kw">fn </span>from_str_radix_multi_byte_fail() {
     <span class="comment">// Ensure parsing doesn&#39;t panic, even on invalid sign characters
     </span><span class="macro">assert!</span>(f32::from_str_radix(<span class="string">&quot;™0.2&quot;</span>, <span class="number">10</span>).is_err());
@@ -1169,7 +1169,7 @@
     </span><span class="macro">assert!</span>(f32::from_str_radix(<span class="string">&quot;0.2E™1&quot;</span>, <span class="number">10</span>).is_err());
 }
 
-<span class="attribute">#[test]
+<span class="attr">#[test]
 </span><span class="kw">fn </span>from_str_radix_ignore_case() {
     <span class="macro">assert_eq!</span>(
         f32::from_str_radix(<span class="string">&quot;InF&quot;</span>, <span class="number">16</span>).unwrap(),
@@ -1191,14 +1191,14 @@
     <span class="macro">assert!</span>(f32::from_str_radix(<span class="string">&quot;-nAn&quot;</span>, <span class="number">4</span>).unwrap().is_nan());
 }
 
-<span class="attribute">#[test]
+<span class="attr">#[test]
 </span><span class="kw">fn </span>wrapping_is_num() {
     <span class="kw">fn </span>require_num&lt;T: Num&gt;(<span class="kw">_</span>: <span class="kw-2">&amp;</span>T) {}
     require_num(<span class="kw-2">&amp;</span>Wrapping(<span class="number">42_u32</span>));
     require_num(<span class="kw-2">&amp;</span>Wrapping(-<span class="number">42</span>));
 }
 
-<span class="attribute">#[test]
+<span class="attr">#[test]
 </span><span class="kw">fn </span>wrapping_from_str_radix() {
     <span class="macro">macro_rules! </span>test_wrapping_from_str_radix {
         ($(<span class="macro-nonterminal">$t</span>:ty)+) =&gt; {
@@ -1214,7 +1214,7 @@
     <span class="macro">test_wrapping_from_str_radix!</span>(usize u8 u16 u32 u64 isize i8 i16 i32 i64);
 }
 
-<span class="attribute">#[test]
+<span class="attr">#[test]
 </span><span class="kw">fn </span>check_num_ops() {
     <span class="kw">fn </span>compute&lt;T: Num + Copy&gt;(x: T, y: T) -&gt; T {
         x * y / y % y + y - y
@@ -1222,7 +1222,7 @@
     <span class="macro">assert_eq!</span>(compute(<span class="number">1</span>, <span class="number">2</span>), <span class="number">1</span>)
 }
 
-<span class="attribute">#[test]
+<span class="attr">#[test]
 </span><span class="kw">fn </span>check_numref_ops() {
     <span class="kw">fn </span>compute&lt;T: NumRef&gt;(x: T, y: <span class="kw-2">&amp;</span>T) -&gt; T {
         x * y / y % y + y - y
@@ -1230,7 +1230,7 @@
     <span class="macro">assert_eq!</span>(compute(<span class="number">1</span>, <span class="kw-2">&amp;</span><span class="number">2</span>), <span class="number">1</span>)
 }
 
-<span class="attribute">#[test]
+<span class="attr">#[test]
 </span><span class="kw">fn </span>check_refnum_ops() {
     <span class="kw">fn </span>compute&lt;T: Copy&gt;(x: <span class="kw-2">&amp;</span>T, y: T) -&gt; T
     <span class="kw">where
@@ -1241,7 +1241,7 @@
     <span class="macro">assert_eq!</span>(compute(<span class="kw-2">&amp;</span><span class="number">1</span>, <span class="number">2</span>), <span class="number">1</span>)
 }
 
-<span class="attribute">#[test]
+<span class="attr">#[test]
 </span><span class="kw">fn </span>check_refref_ops() {
     <span class="kw">fn </span>compute&lt;T&gt;(x: <span class="kw-2">&amp;</span>T, y: <span class="kw-2">&amp;</span>T) -&gt; T
     <span class="kw">where
@@ -1252,7 +1252,7 @@
     <span class="macro">assert_eq!</span>(compute(<span class="kw-2">&amp;</span><span class="number">1</span>, <span class="kw-2">&amp;</span><span class="number">2</span>), <span class="number">1</span>)
 }
 
-<span class="attribute">#[test]
+<span class="attr">#[test]
 </span><span class="kw">fn </span>check_numassign_ops() {
     <span class="kw">fn </span>compute&lt;T: NumAssign + Copy&gt;(<span class="kw-2">mut </span>x: T, y: T) -&gt; T {
         x <span class="kw-2">*</span>= y;
@@ -1265,7 +1265,7 @@
     <span class="macro">assert_eq!</span>(compute(<span class="number">1</span>, <span class="number">2</span>), <span class="number">1</span>)
 }
 
-<span class="attribute">#[cfg(has_int_assignop_ref)]
+<span class="attr">#[cfg(has_int_assignop_ref)]
 #[test]
 </span><span class="kw">fn </span>check_numassignref_ops() {
     <span class="kw">fn </span>compute&lt;T: NumAssignRef + Copy&gt;(<span class="kw-2">mut </span>x: T, y: <span class="kw-2">&amp;</span>T) -&gt; T {
@@ -1279,4 +1279,4 @@
     <span class="macro">assert_eq!</span>(compute(<span class="number">1</span>, <span class="kw-2">&amp;</span><span class="number">2</span>), <span class="number">1</span>)
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="num_traits" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (a6b7274a4 2022-10-10)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="num_traits" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (85f4f41de 2022-11-08)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>

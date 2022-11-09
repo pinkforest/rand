@@ -1,6 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.7/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" href="https://www.rust-lang.org/favicon.ico"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><a class="sidebar-logo" href="../../getrandom/index.html"><div class="logo-container">
-                    <img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk.png" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../getrandom/index.html">
-                        <img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk.png" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.8/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ef244fc9943488f7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-c11f492748536797.css"><link rel="stylesheet" disabled href="../../static.files/dark-a78f946771c40031.css"><link rel="stylesheet" disabled href="../../static.files/ayu-70b683d68cb31790.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-74087aa2e88f4475.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-0dede64717b247ca.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-201a7e04dc4c6fce.css"></noscript><link rel="icon" href="https://www.rust-lang.org/favicon.ico"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../getrandom/index.html">
+                        <img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -263,6 +262,34 @@
 <span id="261">261</span>
 <span id="262">262</span>
 <span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
 </pre><pre class="rust"><code><span class="comment">// Copyright 2019 Developers of the Rand project.
 //
 // Licensed under the Apache License, Version 2.0 &lt;LICENSE-APACHE or
@@ -295,8 +322,7 @@
 //! | ESP-IDF           | `*‑espidf`         | [`esp_fill_random`]
 //! | Emscripten        | `*‑emscripten`     | `/dev/random` (identical to `/dev/urandom`)
 //! | WASI              | `wasm32‑wasi`      | [`random_get`]
-//! | Web Browser       | `wasm32‑*‑unknown` | [`Crypto.getRandomValues`], see [WebAssembly support]
-//! | Node.js           | `wasm32‑*‑unknown` | [`crypto.randomBytes`], see [WebAssembly support]
+//! | Web Browser and Node.js | `wasm32‑*‑unknown` | [`Crypto.getRandomValues`] if available, then [`crypto.randomFillSync`] if on Node.js, see [WebAssembly support]
 //! | SOLID             | `*-kmc-solid_*`    | `SOLID_RNG_SampleRandomBytes`
 //! | Nintendo 3DS      | `armv6k-nintendo-3ds` | [`getrandom`][1]
 //!
@@ -337,10 +363,36 @@
 //! that you are building for an environment containing JavaScript, and will
 //! call the appropriate methods. Both web browser (main window and Web Workers)
 //! and Node.js environments are supported, invoking the methods
-//! [described above](#supported-targets) using the
-//! [wasm-bindgen](https://github.com/rust-lang/rust-bindgen) toolchain.
+//! [described above](#supported-targets) using the [`wasm-bindgen`] toolchain.
+//!
+//! To enable the `js` Cargo feature, add the following to the `dependencies`
+//! section in your `Cargo.toml` file:
+//! ```toml
+//! [dependencies]
+//! getrandom = { version = &quot;0.2&quot;, features = [&quot;js&quot;] }
+//! ```
+//!
+//! This can be done even if `getrandom` is not a direct dependency. Cargo
+//! allows crates to enable features for indirect dependencies.
+//!
+//! This feature should only be enabled for binary, test, or benchmark crates.
+//! Library crates should generally not enable this feature, leaving such a
+//! decision to *users* of their library. Also, libraries should not introduce
+//! their own `js` features *just* to enable `getrandom`&#39;s `js` feature.
 //!
 //! This feature has no effect on targets other than `wasm32-unknown-unknown`.
+//!
+//! #### Node.js ES module support
+//!
+//! Node.js supports both [CommonJS modules] and [ES modules]. Due to
+//! limitations in wasm-bindgen&#39;s [`module`] support, we cannot directly
+//! support ES Modules running on Node.js. However, on Node v15 and later, the
+//! module author can add a simple shim to support the Web Cryptography API:
+//! ```js
+//! import { webcrypto } from &#39;node:crypto&#39;
+//! globalThis.crypto = webcrypto
+//! ```
+//! This crate will then use the provided `webcrypto` implementation.
 //!
 //! ### Custom implementations
 //!
@@ -353,16 +405,6 @@
 //! that would otherwise not compile. Any supported targets (including those
 //! using `rdrand` and `js` Cargo features) continue using their normal
 //! implementations even if a function is registered.
-//!
-//! ### Indirect Dependencies
-//!
-//! If `getrandom` is not a direct dependency of your crate, you can still
-//! enable any of the above fallback behaviors by enabling the relevant
-//! feature in your root crate&#39;s `Cargo.toml`:
-//! ```toml
-//! [dependencies]
-//! getrandom = { version = &quot;0.2&quot;, features = [&quot;js&quot;] }
-//! ```
 //!
 //! ## Early boot
 //!
@@ -380,13 +422,22 @@
 //! entropy yet. To avoid returning low-entropy bytes, we first poll
 //! `/dev/random` and only switch to `/dev/urandom` once this has succeeded.
 //!
+//! On OpenBSD, this kind of entropy accounting isn&#39;t available, and on
+//! NetBSD, blocking on it is discouraged. On these platforms, nonblocking
+//! interfaces are used, even when reliable entropy may not be available.
+//! On the platforms where it is used, the reliability of entropy accounting
+//! itself isn&#39;t free from controversy. This library provides randomness
+//! sourced according to the platform&#39;s best practices, but each platform has
+//! its own limits on the grade of randomness it can promise in environments
+//! with few sources of entropy.
+//!
 //! ## Error handling
 //!
-//! We always choose failure over returning insecure &quot;random&quot; bytes. In general,
-//! on supported platforms, failure is highly unlikely, though not impossible.
-//! If an error does occur, then it is likely that it will occur on every call to
-//! `getrandom`, hence after the first successful call one can be reasonably
-//! confident that no errors will occur.
+//! We always choose failure over returning known insecure &quot;random&quot; bytes. In
+//! general, on supported platforms, failure is highly unlikely, though not
+//! impossible. If an error does occur, then it is likely that it will occur
+//! on every call to `getrandom`, hence after the first successful call one
+//! can be reasonably confident that no errors will occur.
 //!
 //! [1]: http://man7.org/linux/man-pages/man2/getrandom.2.html
 //! [2]: http://man7.org/linux/man-pages/man4/urandom.4.html
@@ -406,15 +457,19 @@
 //! [`RDRAND`]: https://software.intel.com/en-us/articles/intel-digital-random-number-generator-drng-software-implementation-guide
 //! [`SecRandomCopyBytes`]: https://developer.apple.com/documentation/security/1399291-secrandomcopybytes?language=objc
 //! [`cprng_draw`]: https://fuchsia.dev/fuchsia-src/zircon/syscalls/cprng_draw
-//! [`crypto.randomBytes`]: https://nodejs.org/api/crypto.html#crypto_crypto_randombytes_size_callback
+//! [`crypto.randomFillSync`]: https://nodejs.org/api/crypto.html#cryptorandomfillsyncbuffer-offset-size
 //! [`esp_fill_random`]: https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/random.html#_CPPv415esp_fill_randomPv6size_t
 //! [`random_get`]: https://github.com/WebAssembly/WASI/blob/main/phases/snapshot/docs.md#-random_getbuf-pointeru8-buf_len-size---errno
 //! [WebAssembly support]: #webassembly-support
+//! [`wasm-bindgen`]: https://github.com/rustwasm/wasm-bindgen
+//! [`module`]: https://rustwasm.github.io/wasm-bindgen/reference/attributes/on-js-imports/module.html
+//! [CommonJS modules]: https://nodejs.org/api/modules.html
+//! [ES modules]: https://nodejs.org/api/esm.html
 
-</span><span class="attribute">#![doc(
+</span><span class="attr">#![doc(
     html_logo_url = <span class="string">&quot;https://www.rust-lang.org/logos/rust-logo-128x128-blk.png&quot;</span>,
     html_favicon_url = <span class="string">&quot;https://www.rust-lang.org/favicon.ico&quot;</span>,
-    html_root_url = <span class="string">&quot;https://docs.rs/getrandom/0.2.7&quot;
+    html_root_url = <span class="string">&quot;https://docs.rs/getrandom/0.2.8&quot;
 </span>)]
 #![no_std]
 #![warn(rust_2018_idioms, unused_lifetimes, missing_docs)]
@@ -427,9 +482,9 @@
 <span class="kw">mod </span>util;
 <span class="comment">// To prevent a breaking change when targets are added, we always export the
 // register_custom_getrandom macro, so old Custom RNG crates continue to build.
-</span><span class="attribute">#[cfg(feature = <span class="string">&quot;custom&quot;</span>)]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;custom&quot;</span>)]
 </span><span class="kw">mod </span>custom;
-<span class="attribute">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
 </span><span class="kw">mod </span>error_impls;
 
 <span class="kw">pub use </span><span class="kw">crate</span>::error::Error;
@@ -438,65 +493,65 @@
 //
 // These should all provide getrandom_inner with the same signature as getrandom.
 </span><span class="macro">cfg_if! </span>{
-    <span class="kw">if </span><span class="attribute">#[cfg(any(target_os = <span class="string">&quot;emscripten&quot;</span>, target_os = <span class="string">&quot;haiku&quot;</span>,
+    <span class="kw">if </span><span class="attr">#[cfg(any(target_os = <span class="string">&quot;emscripten&quot;</span>, target_os = <span class="string">&quot;haiku&quot;</span>,
                  target_os = <span class="string">&quot;redox&quot;</span>))] </span>{
         <span class="kw">mod </span>util_libc;
-        <span class="attribute">#[path = <span class="string">&quot;use_file.rs&quot;</span>] </span><span class="kw">mod </span>imp;
-    } <span class="kw">else if </span><span class="attribute">#[cfg(any(target_os = <span class="string">&quot;android&quot;</span>, target_os = <span class="string">&quot;linux&quot;</span>))] </span>{
+        <span class="attr">#[path = <span class="string">&quot;use_file.rs&quot;</span>] </span><span class="kw">mod </span>imp;
+    } <span class="kw">else if </span><span class="attr">#[cfg(any(target_os = <span class="string">&quot;android&quot;</span>, target_os = <span class="string">&quot;linux&quot;</span>))] </span>{
         <span class="kw">mod </span>util_libc;
         <span class="kw">mod </span>use_file;
-        <span class="attribute">#[path = <span class="string">&quot;linux_android.rs&quot;</span>] </span><span class="kw">mod </span>imp;
-    } <span class="kw">else if </span><span class="attribute">#[cfg(any(target_os = <span class="string">&quot;illumos&quot;</span>, target_os = <span class="string">&quot;solaris&quot;</span>))] </span>{
+        <span class="attr">#[path = <span class="string">&quot;linux_android.rs&quot;</span>] </span><span class="kw">mod </span>imp;
+    } <span class="kw">else if </span><span class="attr">#[cfg(any(target_os = <span class="string">&quot;illumos&quot;</span>, target_os = <span class="string">&quot;solaris&quot;</span>))] </span>{
         <span class="kw">mod </span>util_libc;
         <span class="kw">mod </span>use_file;
-        <span class="attribute">#[path = <span class="string">&quot;solaris_illumos.rs&quot;</span>] </span><span class="kw">mod </span>imp;
-    } <span class="kw">else if </span><span class="attribute">#[cfg(any(target_os = <span class="string">&quot;freebsd&quot;</span>, target_os = <span class="string">&quot;netbsd&quot;</span>))] </span>{
+        <span class="attr">#[path = <span class="string">&quot;solaris_illumos.rs&quot;</span>] </span><span class="kw">mod </span>imp;
+    } <span class="kw">else if </span><span class="attr">#[cfg(any(target_os = <span class="string">&quot;freebsd&quot;</span>, target_os = <span class="string">&quot;netbsd&quot;</span>))] </span>{
         <span class="kw">mod </span>util_libc;
-        <span class="attribute">#[path = <span class="string">&quot;bsd_arandom.rs&quot;</span>] </span><span class="kw">mod </span>imp;
-    } <span class="kw">else if </span><span class="attribute">#[cfg(target_os = <span class="string">&quot;dragonfly&quot;</span>)] </span>{
-        <span class="kw">mod </span>util_libc;
-        <span class="kw">mod </span>use_file;
-        <span class="attribute">#[path = <span class="string">&quot;dragonfly.rs&quot;</span>] </span><span class="kw">mod </span>imp;
-    } <span class="kw">else if </span><span class="attribute">#[cfg(target_os = <span class="string">&quot;fuchsia&quot;</span>)] </span>{
-        <span class="attribute">#[path = <span class="string">&quot;fuchsia.rs&quot;</span>] </span><span class="kw">mod </span>imp;
-    } <span class="kw">else if </span><span class="attribute">#[cfg(target_os = <span class="string">&quot;ios&quot;</span>)] </span>{
-        <span class="attribute">#[path = <span class="string">&quot;ios.rs&quot;</span>] </span><span class="kw">mod </span>imp;
-    } <span class="kw">else if </span><span class="attribute">#[cfg(target_os = <span class="string">&quot;macos&quot;</span>)] </span>{
+        <span class="attr">#[path = <span class="string">&quot;bsd_arandom.rs&quot;</span>] </span><span class="kw">mod </span>imp;
+    } <span class="kw">else if </span><span class="attr">#[cfg(target_os = <span class="string">&quot;dragonfly&quot;</span>)] </span>{
         <span class="kw">mod </span>util_libc;
         <span class="kw">mod </span>use_file;
-        <span class="attribute">#[path = <span class="string">&quot;macos.rs&quot;</span>] </span><span class="kw">mod </span>imp;
-    } <span class="kw">else if </span><span class="attribute">#[cfg(target_os = <span class="string">&quot;openbsd&quot;</span>)] </span>{
+        <span class="attr">#[path = <span class="string">&quot;dragonfly.rs&quot;</span>] </span><span class="kw">mod </span>imp;
+    } <span class="kw">else if </span><span class="attr">#[cfg(target_os = <span class="string">&quot;fuchsia&quot;</span>)] </span>{
+        <span class="attr">#[path = <span class="string">&quot;fuchsia.rs&quot;</span>] </span><span class="kw">mod </span>imp;
+    } <span class="kw">else if </span><span class="attr">#[cfg(target_os = <span class="string">&quot;ios&quot;</span>)] </span>{
+        <span class="attr">#[path = <span class="string">&quot;ios.rs&quot;</span>] </span><span class="kw">mod </span>imp;
+    } <span class="kw">else if </span><span class="attr">#[cfg(target_os = <span class="string">&quot;macos&quot;</span>)] </span>{
         <span class="kw">mod </span>util_libc;
-        <span class="attribute">#[path = <span class="string">&quot;openbsd.rs&quot;</span>] </span><span class="kw">mod </span>imp;
-    } <span class="kw">else if </span><span class="attribute">#[cfg(target_os = <span class="string">&quot;wasi&quot;</span>)] </span>{
-        <span class="attribute">#[path = <span class="string">&quot;wasi.rs&quot;</span>] </span><span class="kw">mod </span>imp;
-    } <span class="kw">else if </span><span class="attribute">#[cfg(all(target_arch = <span class="string">&quot;x86_64&quot;</span>, target_os = <span class="string">&quot;hermit&quot;</span>))] </span>{
-        <span class="attribute">#[path = <span class="string">&quot;rdrand.rs&quot;</span>] </span><span class="kw">mod </span>imp;
-    } <span class="kw">else if </span><span class="attribute">#[cfg(target_os = <span class="string">&quot;vxworks&quot;</span>)] </span>{
+        <span class="kw">mod </span>use_file;
+        <span class="attr">#[path = <span class="string">&quot;macos.rs&quot;</span>] </span><span class="kw">mod </span>imp;
+    } <span class="kw">else if </span><span class="attr">#[cfg(target_os = <span class="string">&quot;openbsd&quot;</span>)] </span>{
         <span class="kw">mod </span>util_libc;
-        <span class="attribute">#[path = <span class="string">&quot;vxworks.rs&quot;</span>] </span><span class="kw">mod </span>imp;
-    } <span class="kw">else if </span><span class="attribute">#[cfg(target_os = <span class="string">&quot;solid_asp3&quot;</span>)] </span>{
-        <span class="attribute">#[path = <span class="string">&quot;solid.rs&quot;</span>] </span><span class="kw">mod </span>imp;
-    } <span class="kw">else if </span><span class="attribute">#[cfg(target_os = <span class="string">&quot;espidf&quot;</span>)] </span>{
-        <span class="attribute">#[path = <span class="string">&quot;espidf.rs&quot;</span>] </span><span class="kw">mod </span>imp;
-    } <span class="kw">else if </span><span class="attribute">#[cfg(windows)] </span>{
-        <span class="attribute">#[path = <span class="string">&quot;windows.rs&quot;</span>] </span><span class="kw">mod </span>imp;
-    } <span class="kw">else if </span><span class="attribute">#[cfg(all(target_arch = <span class="string">&quot;x86_64&quot;</span>, target_env = <span class="string">&quot;sgx&quot;</span>))] </span>{
-        <span class="attribute">#[path = <span class="string">&quot;rdrand.rs&quot;</span>] </span><span class="kw">mod </span>imp;
-    } <span class="kw">else if </span><span class="attribute">#[cfg(all(feature = <span class="string">&quot;rdrand&quot;</span>,
+        <span class="attr">#[path = <span class="string">&quot;openbsd.rs&quot;</span>] </span><span class="kw">mod </span>imp;
+    } <span class="kw">else if </span><span class="attr">#[cfg(target_os = <span class="string">&quot;wasi&quot;</span>)] </span>{
+        <span class="attr">#[path = <span class="string">&quot;wasi.rs&quot;</span>] </span><span class="kw">mod </span>imp;
+    } <span class="kw">else if </span><span class="attr">#[cfg(all(target_arch = <span class="string">&quot;x86_64&quot;</span>, target_os = <span class="string">&quot;hermit&quot;</span>))] </span>{
+        <span class="attr">#[path = <span class="string">&quot;rdrand.rs&quot;</span>] </span><span class="kw">mod </span>imp;
+    } <span class="kw">else if </span><span class="attr">#[cfg(target_os = <span class="string">&quot;vxworks&quot;</span>)] </span>{
+        <span class="kw">mod </span>util_libc;
+        <span class="attr">#[path = <span class="string">&quot;vxworks.rs&quot;</span>] </span><span class="kw">mod </span>imp;
+    } <span class="kw">else if </span><span class="attr">#[cfg(target_os = <span class="string">&quot;solid_asp3&quot;</span>)] </span>{
+        <span class="attr">#[path = <span class="string">&quot;solid.rs&quot;</span>] </span><span class="kw">mod </span>imp;
+    } <span class="kw">else if </span><span class="attr">#[cfg(target_os = <span class="string">&quot;espidf&quot;</span>)] </span>{
+        <span class="attr">#[path = <span class="string">&quot;espidf.rs&quot;</span>] </span><span class="kw">mod </span>imp;
+    } <span class="kw">else if </span><span class="attr">#[cfg(windows)] </span>{
+        <span class="attr">#[path = <span class="string">&quot;windows.rs&quot;</span>] </span><span class="kw">mod </span>imp;
+    } <span class="kw">else if </span><span class="attr">#[cfg(all(target_arch = <span class="string">&quot;x86_64&quot;</span>, target_env = <span class="string">&quot;sgx&quot;</span>))] </span>{
+        <span class="attr">#[path = <span class="string">&quot;rdrand.rs&quot;</span>] </span><span class="kw">mod </span>imp;
+    } <span class="kw">else if </span><span class="attr">#[cfg(all(feature = <span class="string">&quot;rdrand&quot;</span>,
                         any(target_arch = <span class="string">&quot;x86_64&quot;</span>, target_arch = <span class="string">&quot;x86&quot;</span>)))] </span>{
-        <span class="attribute">#[path = <span class="string">&quot;rdrand.rs&quot;</span>] </span><span class="kw">mod </span>imp;
-    } <span class="kw">else if </span><span class="attribute">#[cfg(all(feature = <span class="string">&quot;js&quot;</span>,
+        <span class="attr">#[path = <span class="string">&quot;rdrand.rs&quot;</span>] </span><span class="kw">mod </span>imp;
+    } <span class="kw">else if </span><span class="attr">#[cfg(all(feature = <span class="string">&quot;js&quot;</span>,
                         target_arch = <span class="string">&quot;wasm32&quot;</span>, target_os = <span class="string">&quot;unknown&quot;</span>))] </span>{
-        <span class="attribute">#[path = <span class="string">&quot;js.rs&quot;</span>] </span><span class="kw">mod </span>imp;
-    } <span class="kw">else if </span><span class="attribute">#[cfg(all(target_os = <span class="string">&quot;horizon&quot;</span>, target_arch = <span class="string">&quot;arm&quot;</span>))] </span>{
+        <span class="attr">#[path = <span class="string">&quot;js.rs&quot;</span>] </span><span class="kw">mod </span>imp;
+    } <span class="kw">else if </span><span class="attr">#[cfg(all(target_os = <span class="string">&quot;horizon&quot;</span>, target_arch = <span class="string">&quot;arm&quot;</span>))] </span>{
         <span class="comment">// We check for target_arch = &quot;arm&quot; because the Nintendo Switch also
         // uses Horizon OS (it is aarch64).
         </span><span class="kw">mod </span>util_libc;
-        <span class="attribute">#[path = <span class="string">&quot;3ds.rs&quot;</span>] </span><span class="kw">mod </span>imp;
-    } <span class="kw">else if </span><span class="attribute">#[cfg(feature = <span class="string">&quot;custom&quot;</span>)] </span>{
+        <span class="attr">#[path = <span class="string">&quot;3ds.rs&quot;</span>] </span><span class="kw">mod </span>imp;
+    } <span class="kw">else if </span><span class="attr">#[cfg(feature = <span class="string">&quot;custom&quot;</span>)] </span>{
         <span class="kw">use </span>custom <span class="kw">as </span>imp;
-    } <span class="kw">else if </span><span class="attribute">#[cfg(all(target_arch = <span class="string">&quot;wasm32&quot;</span>, target_os = <span class="string">&quot;unknown&quot;</span>))] </span>{
+    } <span class="kw">else if </span><span class="attr">#[cfg(all(target_arch = <span class="string">&quot;wasm32&quot;</span>, target_os = <span class="string">&quot;unknown&quot;</span>))] </span>{
         <span class="macro">compile_error!</span>(<span class="string">&quot;the wasm32-unknown-unknown target is not supported by \
                         default, you may need to enable the \&quot;js\&quot; feature. \
                         For more information see: \
@@ -527,4 +582,4 @@
     imp::getrandom_inner(dest)
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="getrandom" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (a6b7274a4 2022-10-10)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="getrandom" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (85f4f41de 2022-11-08)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>

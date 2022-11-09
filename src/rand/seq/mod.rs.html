@@ -1,6 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/seq/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://www.rust-lang.org/favicon.ico"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><a class="sidebar-logo" href="../../../rand/index.html"><div class="logo-container">
-                    <img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk.png" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../rand/index.html">
-                        <img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk.png" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/seq/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ef244fc9943488f7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-c11f492748536797.css"><link rel="stylesheet" disabled href="../../../static.files/dark-a78f946771c40031.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-70b683d68cb31790.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-74087aa2e88f4475.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-0dede64717b247ca.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-201a7e04dc4c6fce.css"></noscript><link rel="icon" href="https://www.rust-lang.org/favicon.ico"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../rand/index.html">
+                        <img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -1363,7 +1362,6 @@
 <span id="1361">1361</span>
 <span id="1362">1362</span>
 <span id="1363">1363</span>
-<span id="1364">1364</span>
 </pre><pre class="rust"><code><span class="comment">// Copyright 2018 Developers of the Rand project.
 //
 // Licensed under the Apache License, Version 2.0 &lt;LICENSE-APACHE or
@@ -1391,17 +1389,17 @@
 //! small performance boost in some cases).
 
 
-</span><span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
 #[cfg_attr(doc_cfg, doc(cfg(feature = <span class="string">&quot;alloc&quot;</span>)))]
 </span><span class="kw">pub mod </span>index;
 
-<span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)] </span><span class="kw">use </span>core::ops::Index;
+<span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)] </span><span class="kw">use </span>core::ops::Index;
 
-<span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)] </span><span class="kw">use </span>alloc::vec::Vec;
+<span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)] </span><span class="kw">use </span>alloc::vec::Vec;
 
-<span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::distributions::uniform::{SampleBorrow, SampleUniform};
-<span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)] </span><span class="kw">use </span><span class="kw">crate</span>::distributions::WeightedError;
+<span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)] </span><span class="kw">use </span><span class="kw">crate</span>::distributions::WeightedError;
 <span class="kw">use </span><span class="kw">crate</span>::Rng;
 
 <span class="doccomment">/// Extension trait on slices, providing random mutation and sampling methods.
@@ -1476,7 +1474,7 @@
     ///     *slot = *b;
     /// }
     /// ```
-    </span><span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
     #[cfg_attr(doc_cfg, doc(cfg(feature = <span class="string">&quot;alloc&quot;</span>)))]
     </span><span class="kw">fn </span>choose_multiple&lt;R&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, rng: <span class="kw-2">&amp;mut </span>R, amount: usize) -&gt; SliceChooseIter&lt;<span class="self">Self</span>, <span class="self">Self</span>::Item&gt;
     <span class="kw">where </span>R: Rng + <span class="question-mark">?</span>Sized;
@@ -1508,7 +1506,7 @@
     /// [`choose`]: SliceRandom::choose
     /// [`choose_weighted_mut`]: SliceRandom::choose_weighted_mut
     /// [`distributions::WeightedIndex`]: crate::distributions::WeightedIndex
-    </span><span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
     #[cfg_attr(doc_cfg, doc(cfg(feature = <span class="string">&quot;alloc&quot;</span>)))]
     </span><span class="kw">fn </span>choose_weighted&lt;R, F, B, X&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>, rng: <span class="kw-2">&amp;mut </span>R, weight: F,
@@ -1539,7 +1537,7 @@
     /// [`choose_mut`]: SliceRandom::choose_mut
     /// [`choose_weighted`]: SliceRandom::choose_weighted
     /// [`distributions::WeightedIndex`]: crate::distributions::WeightedIndex
-    </span><span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
     #[cfg_attr(doc_cfg, doc(cfg(feature = <span class="string">&quot;alloc&quot;</span>)))]
     </span><span class="kw">fn </span>choose_weighted_mut&lt;R, F, B, X&gt;(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>, rng: <span class="kw-2">&amp;mut </span>R, weight: F,
@@ -1565,10 +1563,9 @@
     /// If all of the weights are equal, even if they are all zero, each element has
     /// an equal likelihood of being selected.
     ///
-    /// The complexity of this method depends on the feature `partition_at_index`.
-    /// If the feature is enabled, then for slices of length `n`, the complexity
-    /// is `O(n)` space and `O(n)` time. Otherwise, the complexity is `O(n)` space and
-    /// `O(n * log amount)` time.
+    /// This implementation uses `O(length + amount)` space and `O(length)` time
+    /// if the &quot;nightly&quot; feature is enabled, or `O(length)` space and
+    /// `O(length + amount * log length)` time otherwise.
     ///
     /// # Example
     ///
@@ -1588,7 +1585,7 @@
     </span><span class="comment">//
     // Note: this is feature-gated on std due to usage of f64::powf.
     // If necessary, we may use alloc+libm as an alternative (see PR #1089).
-    </span><span class="attribute">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
     #[cfg_attr(doc_cfg, doc(cfg(feature = <span class="string">&quot;std&quot;</span>)))]
     </span><span class="kw">fn </span>choose_multiple_weighted&lt;R, F, X&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>, rng: <span class="kw-2">&amp;mut </span>R, amount: usize, weight: F,
@@ -1835,7 +1832,7 @@
     ///
     /// Complexity is `O(n)` where `n` is the length of the iterator.
     /// For slices, prefer [`SliceRandom::choose_multiple`].
-    </span><span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
     #[cfg_attr(doc_cfg, doc(cfg(feature = <span class="string">&quot;alloc&quot;</span>)))]
     </span><span class="kw">fn </span>choose_multiple&lt;R&gt;(<span class="kw-2">mut </span><span class="self">self</span>, rng: <span class="kw-2">&amp;mut </span>R, amount: usize) -&gt; Vec&lt;<span class="self">Self</span>::Item&gt;
     <span class="kw">where </span>R: Rng + <span class="question-mark">?</span>Sized {
@@ -1885,7 +1882,7 @@
         }
     }
 
-    <span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
     </span><span class="kw">fn </span>choose_multiple&lt;R&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, rng: <span class="kw-2">&amp;mut </span>R, amount: usize) -&gt; SliceChooseIter&lt;<span class="self">Self</span>, <span class="self">Self</span>::Item&gt;
     <span class="kw">where </span>R: Rng + <span class="question-mark">?</span>Sized {
         <span class="kw">let </span>amount = ::core::cmp::min(amount, <span class="self">self</span>.len());
@@ -1896,7 +1893,7 @@
         }
     }
 
-    <span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
     </span><span class="kw">fn </span>choose_weighted&lt;R, F, B, X&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>, rng: <span class="kw-2">&amp;mut </span>R, weight: F,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>::Item, WeightedError&gt;
@@ -1915,7 +1912,7 @@
         <span class="prelude-val">Ok</span>(<span class="kw-2">&amp;</span><span class="self">self</span>[distr.sample(rng)])
     }
 
-    <span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
     </span><span class="kw">fn </span>choose_weighted_mut&lt;R, F, B, X&gt;(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>, rng: <span class="kw-2">&amp;mut </span>R, weight: F,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>::Item, WeightedError&gt;
@@ -1934,7 +1931,7 @@
         <span class="prelude-val">Ok</span>(<span class="kw-2">&amp;mut </span><span class="self">self</span>[distr.sample(rng)])
     }
 
-    <span class="attribute">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
     </span><span class="kw">fn </span>choose_multiple_weighted&lt;R, F, X&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>, rng: <span class="kw-2">&amp;mut </span>R, amount: usize, weight: F,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;SliceChooseIter&lt;<span class="self">Self</span>, <span class="self">Self</span>::Item&gt;, WeightedError&gt;
@@ -1993,7 +1990,7 @@
 ///
 /// This struct is created by
 /// [`SliceRandom::choose_multiple`](trait.SliceRandom.html#tymethod.choose_multiple).
-</span><span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
 #[cfg_attr(doc_cfg, doc(cfg(feature = <span class="string">&quot;alloc&quot;</span>)))]
 #[derive(Debug)]
 </span><span class="kw">pub struct </span>SliceChooseIter&lt;<span class="lifetime">&#39;a</span>, S: <span class="question-mark">?</span>Sized + <span class="lifetime">&#39;a</span>, T: <span class="lifetime">&#39;a</span>&gt; {
@@ -2002,7 +1999,7 @@
     indices: index::IndexVecIntoIter,
 }
 
-<span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
 </span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, S: Index&lt;usize, Output = T&gt; + <span class="question-mark">?</span>Sized + <span class="lifetime">&#39;a</span>, T: <span class="lifetime">&#39;a</span>&gt; Iterator <span class="kw">for </span>SliceChooseIter&lt;<span class="lifetime">&#39;a</span>, S, T&gt; {
     <span class="kw">type </span>Item = <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T;
 
@@ -2016,7 +2013,7 @@
     }
 }
 
-<span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
 </span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, S: Index&lt;usize, Output = T&gt; + <span class="question-mark">?</span>Sized + <span class="lifetime">&#39;a</span>, T: <span class="lifetime">&#39;a</span>&gt; ExactSizeIterator
     <span class="kw">for </span>SliceChooseIter&lt;<span class="lifetime">&#39;a</span>, S, T&gt;
 {
@@ -2029,7 +2026,7 @@
 <span class="comment">// Sample a number uniformly between 0 and `ubound`. Uses 32-bit sampling where
 // possible, primarily in order to produce the same output on 32-bit and 64-bit
 // platforms.
-</span><span class="attribute">#[inline]
+</span><span class="attr">#[inline]
 </span><span class="kw">fn </span>gen_index&lt;R: Rng + <span class="question-mark">?</span>Sized&gt;(rng: <span class="kw-2">&amp;mut </span>R, ubound: usize) -&gt; usize {
     <span class="kw">if </span>ubound &lt;= (core::u32::MAX <span class="kw">as </span>usize) {
         rng.gen_range(<span class="number">0</span>..ubound <span class="kw">as </span>u32) <span class="kw">as </span>usize
@@ -2039,13 +2036,13 @@
 }
 
 
-<span class="attribute">#[cfg(test)]
+<span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>test {
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
-    <span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)] </span><span class="kw">use </span><span class="kw">crate</span>::Rng;
-    <span class="attribute">#[cfg(all(feature = <span class="string">&quot;alloc&quot;</span>, not(feature = <span class="string">&quot;std&quot;</span>)))] </span><span class="kw">use </span>alloc::vec::Vec;
+    <span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)] </span><span class="kw">use </span><span class="kw">crate</span>::Rng;
+    <span class="attr">#[cfg(all(feature = <span class="string">&quot;alloc&quot;</span>, not(feature = <span class="string">&quot;std&quot;</span>)))] </span><span class="kw">use </span>alloc::vec::Vec;
 
-    <span class="attribute">#[test]
+    <span class="attr">#[test]
     </span><span class="kw">fn </span>test_slice_choose() {
         <span class="kw">let </span><span class="kw-2">mut </span>r = <span class="kw">crate</span>::test::rng(<span class="number">107</span>);
         <span class="kw">let </span>chars = [
@@ -2075,7 +2072,7 @@
         <span class="macro">assert_eq!</span>(v.choose_mut(<span class="kw-2">&amp;mut </span>r), <span class="prelude-val">None</span>);
     }
 
-    <span class="attribute">#[test]
+    <span class="attr">#[test]
     </span><span class="kw">fn </span>value_stability_slice() {
         <span class="kw">let </span><span class="kw-2">mut </span>r = <span class="kw">crate</span>::test::rng(<span class="number">413</span>);
         <span class="kw">let </span>chars = [
@@ -2086,7 +2083,7 @@
         <span class="macro">assert_eq!</span>(chars.choose(<span class="kw-2">&amp;mut </span>r), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="string">&#39;l&#39;</span>));
         <span class="macro">assert_eq!</span>(nums.choose_mut(<span class="kw-2">&amp;mut </span>r), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;mut </span><span class="number">10</span>));
 
-        <span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
         </span><span class="macro">assert_eq!</span>(
             <span class="kw-2">&amp;</span>chars
                 .choose_multiple(<span class="kw-2">&amp;mut </span>r, <span class="number">8</span>)
@@ -2095,9 +2092,9 @@
             <span class="kw-2">&amp;</span>[<span class="string">&#39;d&#39;</span>, <span class="string">&#39;m&#39;</span>, <span class="string">&#39;b&#39;</span>, <span class="string">&#39;n&#39;</span>, <span class="string">&#39;c&#39;</span>, <span class="string">&#39;k&#39;</span>, <span class="string">&#39;h&#39;</span>, <span class="string">&#39;e&#39;</span>]
         );
 
-        <span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
         </span><span class="macro">assert_eq!</span>(chars.choose_weighted(<span class="kw-2">&amp;mut </span>r, |<span class="kw">_</span>| <span class="number">1</span>), <span class="prelude-val">Ok</span>(<span class="kw-2">&amp;</span><span class="string">&#39;f&#39;</span>));
-        <span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
         </span><span class="macro">assert_eq!</span>(nums.choose_weighted_mut(<span class="kw-2">&amp;mut </span>r, |<span class="kw">_</span>| <span class="number">1</span>), <span class="prelude-val">Ok</span>(<span class="kw-2">&amp;mut </span><span class="number">5</span>));
 
         <span class="kw">let </span><span class="kw-2">mut </span>r = <span class="kw">crate</span>::test::rng(<span class="number">414</span>);
@@ -2109,7 +2106,7 @@
         <span class="macro">assert_eq!</span>(res.<span class="number">1</span>, <span class="kw-2">&amp;mut </span>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">12</span>, <span class="number">11</span>, <span class="number">5</span>, <span class="number">10</span>]);
     }
 
-    <span class="attribute">#[derive(Clone)]
+    <span class="attr">#[derive(Clone)]
     </span><span class="kw">struct </span>UnhintedIterator&lt;I: Iterator + Clone&gt; {
         iter: I,
     }
@@ -2121,7 +2118,7 @@
         }
     }
 
-    <span class="attribute">#[derive(Clone)]
+    <span class="attr">#[derive(Clone)]
     </span><span class="kw">struct </span>ChunkHintedIterator&lt;I: ExactSizeIterator + Iterator + Clone&gt; {
         iter: I,
         chunk_remaining: usize,
@@ -2152,7 +2149,7 @@
         }
     }
 
-    <span class="attribute">#[derive(Clone)]
+    <span class="attr">#[derive(Clone)]
     </span><span class="kw">struct </span>WindowHintedIterator&lt;I: ExactSizeIterator + Iterator + Clone&gt; {
         iter: I,
         window_size: usize,
@@ -2177,7 +2174,7 @@
         }
     }
 
-    <span class="attribute">#[test]
+    <span class="attr">#[test]
     #[cfg_attr(miri, ignore)] </span><span class="comment">// Miri is too slow
     </span><span class="kw">fn </span>test_iterator_choose() {
         <span class="kw">let </span>r = <span class="kw-2">&amp;mut </span><span class="kw">crate</span>::test::rng(<span class="number">109</span>);
@@ -2201,7 +2198,7 @@
 
         test_iter(r, <span class="number">0</span>..<span class="number">9</span>);
         test_iter(r, [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>].iter().cloned());
-        <span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
         </span>test_iter(r, (<span class="number">0</span>..<span class="number">9</span>).collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;().into_iter());
         test_iter(r, UnhintedIterator { iter: <span class="number">0</span>..<span class="number">9 </span>});
         test_iter(r, ChunkHintedIterator {
@@ -2231,7 +2228,7 @@
         <span class="macro">assert_eq!</span>(UnhintedIterator { iter: <span class="number">0</span>..<span class="number">0 </span>}.choose(r), <span class="prelude-val">None</span>);
     }
 
-    <span class="attribute">#[test]
+    <span class="attr">#[test]
     #[cfg_attr(miri, ignore)] </span><span class="comment">// Miri is too slow
     </span><span class="kw">fn </span>test_iterator_choose_stable() {
         <span class="kw">let </span>r = <span class="kw-2">&amp;mut </span><span class="kw">crate</span>::test::rng(<span class="number">109</span>);
@@ -2255,7 +2252,7 @@
 
         test_iter(r, <span class="number">0</span>..<span class="number">9</span>);
         test_iter(r, [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>].iter().cloned());
-        <span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
         </span>test_iter(r, (<span class="number">0</span>..<span class="number">9</span>).collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;().into_iter());
         test_iter(r, UnhintedIterator { iter: <span class="number">0</span>..<span class="number">9 </span>});
         test_iter(r, ChunkHintedIterator {
@@ -2285,7 +2282,7 @@
         <span class="macro">assert_eq!</span>(UnhintedIterator { iter: <span class="number">0</span>..<span class="number">0 </span>}.choose(r), <span class="prelude-val">None</span>);
     }
 
-    <span class="attribute">#[test]
+    <span class="attr">#[test]
     #[cfg_attr(miri, ignore)] </span><span class="comment">// Miri is too slow
     </span><span class="kw">fn </span>test_iterator_choose_stable_stability() {
         <span class="kw">fn </span>test_iter(iter: <span class="kw">impl </span>Iterator&lt;Item = usize&gt; + Clone) -&gt; [i32; <span class="number">9</span>] {
@@ -2301,7 +2298,7 @@
         <span class="kw">let </span>reference = test_iter(<span class="number">0</span>..<span class="number">9</span>);
         <span class="macro">assert_eq!</span>(test_iter([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>].iter().cloned()), reference);
 
-        <span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
         </span><span class="macro">assert_eq!</span>(test_iter((<span class="number">0</span>..<span class="number">9</span>).collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;().into_iter()), reference);
         <span class="macro">assert_eq!</span>(test_iter(UnhintedIterator { iter: <span class="number">0</span>..<span class="number">9 </span>}), reference);
         <span class="macro">assert_eq!</span>(test_iter(ChunkHintedIterator {
@@ -2328,7 +2325,7 @@
         }), reference);
     }
 
-    <span class="attribute">#[test]
+    <span class="attr">#[test]
     #[cfg_attr(miri, ignore)] </span><span class="comment">// Miri is too slow
     </span><span class="kw">fn </span>test_shuffle() {
         <span class="kw">let </span><span class="kw-2">mut </span>r = <span class="kw">crate</span>::test::rng(<span class="number">108</span>);
@@ -2378,7 +2375,7 @@
         }
     }
 
-    <span class="attribute">#[test]
+    <span class="attr">#[test]
     </span><span class="kw">fn </span>test_partial_shuffle() {
         <span class="kw">let </span><span class="kw-2">mut </span>r = <span class="kw">crate</span>::test::rng(<span class="number">118</span>);
 
@@ -2394,7 +2391,7 @@
         </span><span class="macro">assert!</span>(res.<span class="number">1</span>[<span class="number">0</span>] == <span class="number">1 </span>|| res.<span class="number">1</span>[<span class="number">1</span>] == <span class="number">2 </span>|| res.<span class="number">1</span>[<span class="number">2</span>] == <span class="number">3</span>);
     }
 
-    <span class="attribute">#[test]
+    <span class="attr">#[test]
     #[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
     </span><span class="kw">fn </span>test_sample_iter() {
         <span class="kw">let </span>min_val = <span class="number">1</span>;
@@ -2415,7 +2412,7 @@
             .all(|e| { <span class="kw-2">**</span>e &gt;= min_val &amp;&amp; <span class="kw-2">**</span>e &lt;= max_val }));
     }
 
-    <span class="attribute">#[test]
+    <span class="attr">#[test]
     #[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
     #[cfg_attr(miri, ignore)] </span><span class="comment">// Miri is too slow
     </span><span class="kw">fn </span>test_weighted() {
@@ -2487,7 +2484,7 @@
         );
     }
 
-    <span class="attribute">#[test]
+    <span class="attr">#[test]
     </span><span class="kw">fn </span>value_stability_choose() {
         <span class="kw">fn </span>choose&lt;I: Iterator&lt;Item = u32&gt;&gt;(iter: I) -&gt; <span class="prelude-ty">Option</span>&lt;u32&gt; {
             <span class="kw">let </span><span class="kw-2">mut </span>rng = <span class="kw">crate</span>::test::rng(<span class="number">411</span>);
@@ -2533,7 +2530,7 @@
         );
     }
 
-    <span class="attribute">#[test]
+    <span class="attr">#[test]
     </span><span class="kw">fn </span>value_stability_choose_stable() {
         <span class="kw">fn </span>choose&lt;I: Iterator&lt;Item = u32&gt;&gt;(iter: I) -&gt; <span class="prelude-ty">Option</span>&lt;u32&gt; {
             <span class="kw">let </span><span class="kw-2">mut </span>rng = <span class="kw">crate</span>::test::rng(<span class="number">411</span>);
@@ -2579,7 +2576,7 @@
         );
     }
 
-    <span class="attribute">#[test]
+    <span class="attr">#[test]
     </span><span class="kw">fn </span>value_stability_choose_multiple() {
         <span class="kw">fn </span>do_test&lt;I: Iterator&lt;Item = u32&gt;&gt;(iter: I, v: <span class="kw-2">&amp;</span>[u32]) {
             <span class="kw">let </span><span class="kw-2">mut </span>rng = <span class="kw">crate</span>::test::rng(<span class="number">412</span>);
@@ -2592,7 +2589,7 @@
         do_test(<span class="number">0</span>..<span class="number">8</span>, <span class="kw-2">&amp;</span>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>]);
         do_test(<span class="number">0</span>..<span class="number">100</span>, <span class="kw-2">&amp;</span>[<span class="number">58</span>, <span class="number">78</span>, <span class="number">80</span>, <span class="number">92</span>, <span class="number">43</span>, <span class="number">8</span>, <span class="number">96</span>, <span class="number">7</span>]);
 
-        <span class="attribute">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
         </span>{
             <span class="kw">fn </span>do_test&lt;I: Iterator&lt;Item = u32&gt;&gt;(iter: I, v: <span class="kw-2">&amp;</span>[u32]) {
                 <span class="kw">let </span><span class="kw-2">mut </span>rng = <span class="kw">crate</span>::test::rng(<span class="number">412</span>);
@@ -2605,7 +2602,7 @@
         }
     }
 
-    <span class="attribute">#[test]
+    <span class="attr">#[test]
     #[cfg(feature = <span class="string">&quot;std&quot;</span>)]
     </span><span class="kw">fn </span>test_multiple_weighted_edge_cases() {
         <span class="kw">use super</span>::<span class="kw-2">*</span>;
@@ -2682,7 +2679,7 @@
             .is_ok());
     }
 
-    <span class="attribute">#[test]
+    <span class="attr">#[test]
     #[cfg(feature = <span class="string">&quot;std&quot;</span>)]
     </span><span class="kw">fn </span>test_multiple_weighted_distributions() {
         <span class="kw">use super</span>::<span class="kw-2">*</span>;
@@ -2729,4 +2726,4 @@
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="rand" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (a6b7274a4 2022-10-10)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rand" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (85f4f41de 2022-11-08)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>
